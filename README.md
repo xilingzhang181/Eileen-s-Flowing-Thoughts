@@ -4,7 +4,7 @@
 
 我的个人网站，展示作品、思考、文档和视频。
 
-🌐 **在线访问：** `https://YOUR_USERNAME.github.io/Eileen-s-Flowing-Thoughts/`
+🌐 **在线访问：** `https://xilingzhang181.github.io/Eileen-s-Flowing-Thoughts/`
 
 ## 📖 内容板块
 

@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:chr15m.github.io)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(git commit -m 'feat: initialize Eileen'\\\\''s Flowing Thoughts site with DoodleCSS *、)",
+      "Bash(winget install *)",
+      "Bash($GH repo *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
