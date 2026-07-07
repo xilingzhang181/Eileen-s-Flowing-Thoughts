@@ -10,25 +10,26 @@
 <body class="doodle">
 
   <header class="site-header">
-    <h1>✦ Eileen's Flowing Thoughts ✦</h1>
+    <h1>Eileen's Flowing Thoughts</h1>
     <nav>
       <ul>
         <li><a href="index.html">首页</a></li>
         <li><a href="works.html">作品</a></li>
         <li><a href="thoughts.html">思考</a></li>
-        <li><a href="docs.html">文档</a></li>
+        <li><a href="docs.html" class="active">文档</a></li>
         <li><a href="videos.html">视频</a></li>
         <li><a href="about.html">关于</a></li>
       </ul>
     </nav>
   </header>
 
-  <h1>📚 文档与笔记</h1>
+  <hr>
+
+  <h1>文档与笔记</h1>
   <p>学习笔记、技术文档、工具指南——那些值得记录下来的知识。</p>
 
-  <!-- Filter -->
   <div class="filter-bar">
-    <button class="filter-btn active" data-tag="all">全部</button>
+    <button class="filter-btn" data-tag="all">全部</button>
     <button class="filter-btn" data-tag="tech">技术</button>
     <button class="filter-btn" data-tag="design">设计</button>
     <button class="filter-btn" data-tag="tool">工具</button>
@@ -36,58 +37,60 @@
   </div>
 
   <div class="card-grid">
-    <article class="card" data-tags="tech">
+    <article class="card border" data-tags="tech">
       <h3>Git 常用命令速查</h3>
       <p>日常开发中最常用的 Git 命令整理，包含分支管理、合并冲突、回滚等场景。</p>
-      <span class="card-tag">技术</span>
-      <div class="card-meta">2026.07 · 更新中</div>
+      <small class="card-tag">技术</small>
+      <small class="card-meta">2026.07 · 更新中</small>
     </article>
 
-    <article class="card" data-tags="design">
+    <article class="card border" data-tags="design">
       <h3>配色入门指南</h3>
       <p>从色轮基础到实际配色技巧，适合设计新手的色彩学习笔记。</p>
-      <span class="card-tag">设计</span>
-      <div class="card-meta">2026.06</div>
+      <small class="card-tag">设计</small>
+      <small class="card-meta">2026.06</small>
     </article>
 
-    <article class="card" data-tags="tool">
+    <article class="card border" data-tags="tool">
       <h3>我的效率工具箱</h3>
       <p>日常使用的软件和工具推荐，从笔记应用到终端美化，持续更新。</p>
-      <span class="card-tag">工具</span>
-      <div class="card-meta">2026.06 · 持续更新</div>
+      <small class="card-tag">工具</small>
+      <small class="card-meta">2026.06 · 持续更新</small>
     </article>
 
-    <article class="card" data-tags="tech">
+    <article class="card border" data-tags="tech">
       <h3>CSS Grid 布局笔记</h3>
       <p>Grid 布局的核心概念和实用示例，包含网格容器、网格项、区域命名等。</p>
-      <span class="card-tag">技术</span>
-      <div class="card-meta">2026.05</div>
+      <small class="card-tag">技术</small>
+      <small class="card-meta">2026.05</small>
     </article>
 
-    <article class="card" data-tags="reading">
+    <article class="card border" data-tags="reading">
       <h3>《设计心理学》读书笔记</h3>
       <p>唐·诺曼的经典之作，关于日常设计中的人机交互原则。</p>
-      <span class="card-tag">阅读</span>
-      <div class="card-meta">2026.04</div>
+      <small class="card-tag">阅读</small>
+      <small class="card-meta">2026.04</small>
     </article>
 
-    <article class="card" data-tags="tech,tool">
+    <article class="card border" data-tags="tech,tool">
       <h3>Markdown 写作技巧</h3>
       <p>从基础语法到高级用法，用 Markdown 高效写作的完整指南。</p>
-      <span class="card-tag">技术</span><span class="card-tag">工具</span>
-      <div class="card-meta">2026.03</div>
+      <small class="card-tag">技术</small> <small class="card-tag">工具</small>
+      <small class="card-meta">2026.03</small>
     </article>
 
-    <article class="card" data-tags="design">
+    <article class="card border" data-tags="design">
       <h3>字体选择速查表</h3>
       <p>中英文字体搭配建议，不同场景下的字体选择指南。</p>
-      <span class="card-tag">设计</span>
-      <div class="card-meta">2026.02</div>
+      <small class="card-tag">设计</small>
+      <small class="card-meta">2026.02</small>
     </article>
   </div>
 
+  <hr>
+
   <footer class="site-footer">
-    <p>✦ Eileen's Flowing Thoughts ✦ · 用 DoodleCSS 构建</p>
+    <p>Eileen's Flowing Thoughts · 用 DoodleCSS 构建</p>
   </footer>
 
   <script src="js/main.js"></script>
