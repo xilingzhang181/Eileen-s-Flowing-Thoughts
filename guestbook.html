@@ -29,30 +29,20 @@
   <h1>留言板</h1>
   <article class="border" style="padding:1.5rem;margin:1.5rem 0;">
     <p>欢迎在这里留下你的想法、建议或问候 :)</p>
-    <p>留言通过 <a href="https://giscus.app/zh-CN" target="_blank">Giscus</a> 实现，数据存储在本站的 <a href="https://github.com/xilingzhang181/Eileen-s-Flowing-Thoughts/discussions" target="_blank">GitHub Discussions</a> 中。需要 GitHub 账号才能留言。</p>
+    <p>无需登录，填个昵称就能留言。留言会在审核后显示。</p>
   </article>
 
   <hr>
 
-  <!-- Giscus 留言区 -->
-  <div style="margin:1.5rem 0;">
-    <script src="https://giscus.app/client.js"
-      data-repo="xilingzhang181/Eileen-s-Flowing-Thoughts"
-      data-repo-id="R_kgDOTQoweQ"
-      data-category="General"
-      data-category-id="DIC_kwDOTQowec4DAs5w"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="light"
-      data-lang="zh-CN"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async>
-    </script>
-  </div>
+  <!-- Cusdis 留言区 -->
+  <div id="cusdis_thread"
+    data-host="https://cusdis.com"
+    data-app-id="02539078-9cd4-4982-a33c-dd8753948c4d"
+    data-page-id="guestbook"
+    data-page-url="https://xilingzhang181.github.io/Eileen-s-Flowing-Thoughts/guestbook.html"
+    data-page-title="留言板"
+  ></div>
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
   <hr>
 
