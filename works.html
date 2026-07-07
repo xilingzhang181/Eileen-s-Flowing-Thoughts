@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品 · Eileen's Flowing Thoughts</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/doodle.css@0.0.2/doodle.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="doodle">
+
+  <header class="site-header">
+    <h1>✦ Eileen's Flowing Thoughts ✦</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="works.html">作品</a></li>
+        <li><a href="thoughts.html">思考</a></li>
+        <li><a href="docs.html">文档</a></li>
+        <li><a href="videos.html">视频</a></li>
+        <li><a href="about.html">关于</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>🎨 作品集</h1>
+  <p>这里展示我的创作，每一件作品都是一段思绪的凝固。</p>
+
+  <!-- Filter -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-tag="all">全部</button>
+    <button class="filter-btn" data-tag="design">设计</button>
+    <button class="filter-btn" data-tag="art">绘画</button>
+    <button class="filter-btn" data-tag="photo">摄影</button>
+    <button class="filter-btn" data-tag="code">代码</button>
+  </div>
+
+  <div class="card-grid">
+    <article class="card" data-tags="design">
+      <div class="card-cover" style="background:#f5e6d3;display:flex;align-items:center;justify-content:center;font-size:3rem;">🎨</div>
+      <h3>品牌视觉设计</h3>
+      <p>为某品牌设计的整套视觉识别系统，包含 logo、配色、字体规范。</p>
+      <span class="card-tag">设计</span>
+      <div class="card-meta">2026.07</div>
+    </article>
+
+    <article class="card" data-tags="art">
+      <div class="card-cover" style="background:#e6d3f5;display:flex;align-items:center;justify-content:center;font-size:3rem;">🖌️</div>
+      <h3>水彩系列：四季</h3>
+      <p>用水彩记录四季的色彩变化，从春日嫩绿到冬雪皑皑。</p>
+      <span class="card-tag">绘画</span>
+      <div class="card-meta">2026.05</div>
+    </article>
+
+    <article class="card" data-tags="photo">
+      <div class="card-cover" style="background:#d3f5e6;display:flex;align-items:center;justify-content:center;font-size:3rem;">📷</div>
+      <h3>街拍日记</h3>
+      <p>城市街头的光影与故事，用镜头捕捉那些转瞬即逝的瞬间。</p>
+      <span class="card-tag">摄影</span>
+      <div class="card-meta">2026.04</div>
+    </article>
+
+    <article class="card" data-tags="code">
+      <div class="card-cover" style="background:#f5f0d3;display:flex;align-items:center;justify-content:center;font-size:3rem;">💻</div>
+      <h3>开源小工具</h3>
+      <p>一个提升日常效率的命令行工具，用 Python 编写。</p>
+      <span class="card-tag">代码</span>
+      <div class="card-meta">2026.03</div>
+    </article>
+
+    <article class="card" data-tags="design,art">
+      <div class="card-cover" style="background:#f5d3d3;display:flex;align-items:center;justify-content:center;font-size:3rem;">🌸</div>
+      <h3>插画合集</h3>
+      <p>一系列以花卉为主题的数字插画，探索自然与色彩的关系。</p>
+      <span class="card-tag">设计</span><span class="card-tag">绘画</span>
+      <div class="card-meta">2026.02</div>
+    </article>
+
+    <article class="card" data-tags="photo">
+      <div class="card-cover" style="background:#d3e0f5;display:flex;align-items:center;justify-content:center;font-size:3rem;">🌅</div>
+      <h3>日落收集计划</h3>
+      <p>在不同城市、不同季节记录的日落，每一帧都是独一无二的告别。</p>
+      <span class="card-tag">摄影</span>
+      <div class="card-meta">2026.01</div>
+    </article>
+  </div>
+
+  <footer class="site-footer">
+    <p>✦ Eileen's Flowing Thoughts ✦ · 用 DoodleCSS 构建</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
