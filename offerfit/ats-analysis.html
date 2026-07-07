@@ -3,9 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中国ATS招聘管理系统发展现状全景报告 · OfferFit产品开发实录</title>
+  <title>中国ATS招聘管理系统全景报告 · OfferFit产品开发实录</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/doodle.css@0.0.2/doodle.css">
   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ========== Report-specific styles ========== */
+
+    /* Key stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card.border {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+    }
+    .stat-card .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .stat-label {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    /* Pyramid chart */
+    .pyramid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+      gap: 0.5rem;
+    }
+    .pyramid-tier {
+      text-align: center;
+      padding: 1rem;
+      border: 2px solid #333;
+    }
+    .pyramid-tier.tier-3 {
+      width: 30%;
+      background: #f5e6d3;
+    }
+    .pyramid-tier.tier-2 {
+      width: 60%;
+      background: #d3e6f5;
+    }
+    .pyramid-tier.tier-1 {
+      width: 90%;
+      background: #e6f5d3;
+    }
+    .pyramid-tier strong {
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Evaluation matrix */
+    .eval-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .eval-matrix th, .eval-matrix td {
+      padding: 0.7rem 0.5rem;
+      text-align: center;
+      border: 1.5px solid #333;
+    }
+    .eval-matrix th {
+      background: #f5f0e6;
+      font-weight: bold;
+    }
+    .eval-matrix td:first-child {
+      text-align: left;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* Score dots */
+    .score {
+      display: inline-block;
+      font-size: 0.85rem;
+    }
+    .score-high { color: #2d8a4e; font-weight: bold; }
+    .score-mid { color: #b8860b; }
+    .score-low { color: #c0392b; }
+
+    /* Radar-like bar chart */
+    .bar-chart {
+      margin: 1.5rem 0;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+    }
+    .bar-label {
+      width: 100px;
+      font-size: 0.85rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 22px;
+      border: 1.5px solid #333;
+      position: relative;
+      background: #fafafa;
+    }
+    .bar-fill {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.4rem;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+
+    /* Feature comparison grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .feature-card.border {
+      padding: 1rem;
+    }
+    .feature-card h4 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+    .feature-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #999;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+    }
+    .timeline-item::before {
+      content: '●';
+      position: absolute;
+      left: -1.8rem;
+      top: 1rem;
+      font-size: 1.2rem;
+    }
+    .timeline-item h4 {
+      margin: 0 0 0.3rem;
+    }
+
+    /* Section anchor links */
+    .toc {
+      margin: 1.5rem 0;
+    }
+    .toc ol {
+      padding-left: 1.5rem;
+    }
+    .toc li {
+      margin-bottom: 0.3rem;
+    }
+
+    @media (max-width: 600px) {
+      .pyramid-tier.tier-3 { width: 60%; }
+      .pyramid-tier.tier-2 { width: 80%; }
+      .pyramid-tier.tier-1 { width: 100%; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .eval-matrix { font-size: 0.75rem; }
+      .eval-matrix th, .eval-matrix td { padding: 0.4rem 0.3rem; }
+      .bar-label { width: 70px; font-size: 0.75rem; }
+    }
+  </style>
 </head>
 <body class="doodle">
 
@@ -28,211 +219,423 @@
 
   <p><a href="index.html">← 返回 OfferFit 产品开发实录</a></p>
 
-  <h1>中国ATS招聘管理系统发展现状全景报告</h1>
-  <small class="card-meta">2026.07 · 市场调研 / 竞品分析</small>
+  <h1>中国ATS招聘管理系统全景报告</h1>
+  <small class="card-meta">2026.07 · 市场调研 / 竞品分析 / 评估矩阵</small>
 
   <hr>
 
-  <article style="line-height:1.9;">
+  <!-- TOC -->
+  <nav class="toc border" style="padding:1.2rem;">
+    <strong>目录</strong>
+    <ol>
+      <li><a href="#market">市场全景：规模与格局</a></li>
+      <li><a href="#vendors">主流供应商竞品分析</a></li>
+      <li><a href="#ai">AI 能力深度拆解</a></li>
+      <li><a href="#features">核心功能模块</a></li>
+      <li><a href="#ats-mechanism">ATS 简历筛选机制</a></li>
+      <li><a href="#insights">对 OfferFit 的启示</a></li>
+    </ol>
+  </nav>
 
-    <h2>一、发展现状与市场格局</h2>
+  <!-- ==================== 1. 市场全景 ==================== -->
+  <h2 id="market">一、市场全景：规模与格局</h2>
 
-    <h3>1.1 市场规模与增长趋势</h3>
-    <p>中国ATS市场正处于高速增长期。据QYR调研，2025年中国AI驱动的人力资源工具市场销售收入已达可观规模，预计2032年将达到7166百万美元，2026-2032年间年复合增长率达20.0%。全球申请人跟踪软件市场中，美国占据超过50%的份额，中国和欧洲合计占有超过20%的份额。</p>
-    <p>2026年，ATS市场已进入成熟期，产品分化加剧，头部品牌凭借技术、场景、服务优势领跑，中小厂商则聚焦垂直赛道突围。</p>
+  <h3>关键数据</h3>
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number">$71.66亿</span>
+      <span class="stat-label">2032年中国AI人力资源工具市场预估规模（美元）</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">20%</span>
+      <span class="stat-label">2026-2032年复合年增长率</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">47%</span>
+      <span class="stat-label">500人以上企业仍在用Excel管理招聘</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">52h</span>
+      <span class="stat-label">部署ATS后HR月均节省的重复操作时间</span>
+    </div>
+  </div>
 
-    <h3>1.2 市场格局：三层金字塔结构</h3>
-    <p>2026年的中国AI招聘系统市场呈现出清晰的三层金字塔结构：</p>
-    <ul>
-      <li><strong>塔基——ATS管理工具</strong>：以Moka、北森为代表。这类系统本质上是成熟的流程管理软件，通过叠加AI模块实现简历解析与流转，侧重于存量数据的管理。</li>
-      <li><strong>塔身——AI面试与测评平台</strong>：以牛客、得贤为代表。在人才评估环节表现卓越，但运行前提是需要足够的候选人流量输入。</li>
-      <li><strong>塔尖——原生AI智能体</strong>：以世纪云猎为代表。解决最核心的"源头开源"问题，被视为所有数字化招聘系统的前置基础设施。</li>
-    </ul>
+  <h3>市场金字塔结构</h3>
+  <div class="pyramid">
+    <div class="pyramid-tier tier-3 border">
+      <strong>塔尖 · 原生AI智能体</strong>
+      世纪云猎等 · 解决"源头开源"问题
+    </div>
+    <div class="pyramid-tier tier-2 border">
+      <strong>塔身 · AI面试与测评平台</strong>
+      牛客、得贤等 · 人才评估卓越，需候选人流量输入
+    </div>
+    <div class="pyramid-tier tier-1 border">
+      <strong>塔基 · ATS管理工具</strong>
+      Moka、北森等 · 流程管理+AI叠加，侧重存量数据管理
+    </div>
+  </div>
+  <p><em>全球市场中，美国占据50%+份额，中国和欧洲合计20%+。中国市场仍处于从"流程在线化"向"决策智能化"的转型期。</em></p>
 
-    <h3>1.3 一个值得关注的现象</h3>
-    <p>据2026年中国企业招聘效能调研数据，仍有<strong>47%的500人以上规模企业在用Excel或邮件管理招聘流程</strong>。这意味着尽管市场已进入成熟期，仍有大量企业尚未完成招聘管理的数字化升级，市场空间依然广阔。</p>
-    <p>与此同时，已部署招聘管理系统的企业中，平均每个HR每月节省52小时重复性操作，单次招聘成本降低31%。</p>
+  <hr>
 
-    <hr>
+  <!-- ==================== 2. 竞品分析 ==================== -->
+  <h2 id="vendors">二、主流供应商竞品分析</h2>
 
-    <h2>二、主流ATS供应商与核心功能</h2>
+  <h3>供应商总览</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>厂商</th>
+        <th>定位</th>
+        <th>适用企业</th>
+        <th>价格参考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>用友大易</strong></td>
+        <td>全行业全场景AI招聘管理系统，行业榜首</td>
+        <td>200人以上中大型企业</td>
+        <td>模块化采购</td>
+      </tr>
+      <tr>
+        <td><strong>Moka</strong></td>
+        <td>国内招聘管理软件市场份额第一</td>
+        <td>中小型企业、初创公司</td>
+        <td>年费1万-10万</td>
+      </tr>
+      <tr>
+        <td><strong>北森</strong></td>
+        <td>招聘+测评+入职一体化</td>
+        <td>中大型企业、高评估要求行业</td>
+        <td>年费3万-20万+</td>
+      </tr>
+      <tr>
+        <td><strong>i人事</strong></td>
+        <td>国内前三HR管理系统，市场份额30%</td>
+        <td>全规模企业</td>
+        <td>按需报价</td>
+      </tr>
+      <tr>
+        <td><strong>牛客招聘</strong></td>
+        <td>专注技术人才评测和校园招聘</td>
+        <td>技术招聘、校招需求型企业</td>
+        <td>按需报价</td>
+      </tr>
+      <tr>
+        <td><strong>科锐国际</strong></td>
+        <td>中高端人才招聘与人力资源服务龙头</td>
+        <td>中高端人才招聘需求企业</td>
+        <td>按需报价</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <h3>2.1 主要供应商概览</h3>
-    <table>
+  <h3>竞品评估矩阵</h3>
+  <p>从六个维度对第一梯队厂商进行横向评估（★★★ = 领先，★★ = 中等，★ = 基础）：</p>
+
+  <div style="overflow-x:auto;">
+    <table class="eval-matrix">
       <thead>
         <tr>
-          <th>厂商</th>
-          <th>定位</th>
-          <th>适用企业</th>
-          <th>价格参考</th>
+          <th>评估维度</th>
+          <th>用友大易</th>
+          <th>Moka</th>
+          <th>北森</th>
+          <th>牛客</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>用友大易</strong></td>
-          <td>全行业&amp;全场景AI招聘管理系统，行业榜首</td>
-          <td>200人以上中大型企业</td>
-          <td>模块化采购</td>
+          <td>AI 技术深度</td>
+          <td class="score-high">★★★ 自研大模型</td>
+          <td class="score-mid">★★ 模块化叠加</td>
+          <td class="score-high">★★★ 多Agent架构</td>
+          <td class="score-mid">★★ 垂直场景</td>
         </tr>
         <tr>
-          <td><strong>Moka</strong></td>
-          <td>国内招聘管理软件市场份额第一</td>
-          <td>中小型企业、初创公司</td>
-          <td>年费1万-10万</td>
+          <td>简历解析能力</td>
+          <td class="score-high">★★★ 98%准确率</td>
+          <td class="score-high">★★★ NLP深度</td>
+          <td class="score-mid">★★ 标准水平</td>
+          <td class="score-high">★★★ 20min/1000份</td>
         </tr>
         <tr>
-          <td><strong>北森</strong></td>
-          <td>招聘+测评+入职一体化</td>
-          <td>中大型企业、对人才评估要求高的行业</td>
-          <td>年费3万-20万+</td>
+          <td>AI 面试能力</td>
+          <td class="score-high">★★★ 92.3%一致性</td>
+          <td class="score-mid">★★ 智能纪要</td>
+          <td class="score-high">★★★ 300+岗位模型</td>
+          <td class="score-low">★ 非核心方向</td>
         </tr>
         <tr>
-          <td><strong>i人事</strong></td>
-          <td>国内排名前三的人力资源管理系统，市场份额30%</td>
-          <td>全规模企业</td>
-          <td>按需报价</td>
+          <td>人才库运营</td>
+          <td class="score-high">★★★ ATS+TRM双引擎</td>
+          <td class="score-mid">★★ 人才推荐</td>
+          <td class="score-mid">★★ 人才盘点</td>
+          <td class="score-low">★ 弱</td>
         </tr>
         <tr>
-          <td><strong>牛客招聘</strong></td>
-          <td>专注技术人才评测和校园招聘</td>
-          <td>技术招聘、校招需求型企业</td>
-          <td>按需报价</td>
+          <td>中小企业友好度</td>
+          <td class="score-low">★ 偏中大型</td>
+          <td class="score-high">★★★ 核心优势</td>
+          <td class="score-low">★ 偏中大型</td>
+          <td class="score-mid">★★ 校招场景</td>
         </tr>
         <tr>
-          <td><strong>科锐国际</strong></td>
-          <td>中高端人才招聘与人力资源服务龙头</td>
-          <td>中高端人才招聘需求企业</td>
-          <td>按需报价</td>
+          <td>生态整合能力</td>
+          <td class="score-high">★★★ 用友生态</td>
+          <td class="score-mid">★★ 开放API</td>
+          <td class="score-high">★★★ HR全模块</td>
+          <td class="score-mid">★★ 对接主流ATS</td>
         </tr>
       </tbody>
     </table>
+  </div>
 
-    <h3>2.2 核心功能模块</h3>
-    <p>一套成熟的ATS通常包含六大核心能力模块：</p>
+  <hr>
 
-    <h4>（1）简历解析与管理</h4>
-    <p>这是ATS最基础也最容易被低估的能力。AI简历解析能在0.5秒内完成一份简历的结构化处理，准确提取100+字段信息，包括教育背景、工作经历、技能标签、项目经验等。一家300人规模的互联网公司，每月收到的简历量通常在800-1500份之间，ATS可将数据录入时间从40-75小时压缩至秒级。</p>
+  <!-- ==================== 3. AI 能力 ==================== -->
+  <h2 id="ai">三、AI 能力深度拆解</h2>
 
-    <h4>（2）渠道整合与统一管理</h4>
-    <p>2026年，一家企业平均使用4.7个招聘渠道（招聘网站、社交媒体、内推、猎头、校招等）。ATS将所有渠道的简历汇入统一人才池，自动去重、自动标记来源，让HR在一个界面完成所有操作。</p>
+  <h3>各厂商 AI 技术路线对比</h3>
+  <div class="feature-grid">
+    <div class="feature-card border">
+      <h4>用友大易</h4>
+      <p><strong>路线：垂直大模型驱动</strong></p>
+      <ul>
+        <li>自研 YonGPT 2.0，18年招聘数据训练</li>
+        <li>简历解析准确率 98%</li>
+        <li>AI面试评分一致性 92.3%</li>
+        <li>ATS + TRM 双引擎</li>
+        <li>模块化采购，灵活组合</li>
+      </ul>
+    </div>
+    <div class="feature-card border">
+      <h4>Moka</h4>
+      <p><strong>路线：AI原生架构</strong></p>
+      <ul>
+        <li>AI能力深度嵌入每个模块</li>
+        <li>Moka Eva 招聘智能体</li>
+        <li>智能面试纪要 + 评估报告</li>
+        <li>HR效能提升 45%</li>
+        <li class="card-meta">⚠ 底层为模块化辅助，AI整合深度存疑</li>
+      </ul>
+    </div>
+    <div class="feature-card border">
+      <h4>北森</h4>
+      <p><strong>路线：多Agent协同</strong></p>
+      <ul>
+        <li>SenClaw Agent 架构</li>
+        <li>5大专家级Agent：寻聘官、招聘官、面试官、面试助手、应聘助手</li>
+        <li>300+岗位模型，8维度评估</li>
+        <li>AI Family客户超300家</li>
+      </ul>
+    </div>
+    <div class="feature-card border">
+      <h4>牛客招聘</h4>
+      <p><strong>路线：垂直场景极致效率</strong></p>
+      <ul>
+        <li>20分钟处理1000份简历</li>
+        <li>7×24小时不间断</li>
+        <li>三重筛选保障匹配度</li>
+        <li>无缝对接主流ATS</li>
+      </ul>
+    </div>
+  </div>
 
-    <h4>（3）候选人流程跟踪</h4>
-    <p>从投递到入职，一个候选人平均经历6-8个状态节点。ATS用可视化的管道视图呈现每个候选人的实时状态，任何环节的停滞都能被即时发现。使用管道管理的企业，候选人流失率比未使用的低18%。</p>
+  <h3>AI 能力评分可视化</h3>
+  <div class="bar-chart">
+    <p><strong>用友大易</strong></p>
+    <div class="bar-row">
+      <span class="bar-label">AI深度</span>
+      <div class="bar-track"><div class="bar-fill" style="width:95%;background:#2d8a4e;">95</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">面试能力</span>
+      <div class="bar-track"><div class="bar-fill" style="width:92%;background:#2d8a4e;">92</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">人才运营</span>
+      <div class="bar-track"><div class="bar-fill" style="width:90%;background:#2d8a4e;">90</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">中小企业</span>
+      <div class="bar-track"><div class="bar-fill" style="width:40%;background:#c0392b;">40</div></div>
+    </div>
 
-    <h4>（4）面试协调与评估</h4>
-    <p>手动安排一场多轮面试平均需要45分钟的沟通成本，而ATS的智能排期功能可在2分钟内完成匹配。面试结束后，结构化的评估表和AI生成的面试纪要，让用人部门的决策从凭感觉变成看数据。</p>
+    <p style="margin-top:1rem;"><strong>Moka</strong></p>
+    <div class="bar-row">
+      <span class="bar-label">AI深度</span>
+      <div class="bar-track"><div class="bar-fill" style="width:65%;background:#b8860b;">65</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">面试能力</span>
+      <div class="bar-track"><div class="bar-fill" style="width:70%;background:#b8860b;">70</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">人才运营</span>
+      <div class="bar-track"><div class="bar-fill" style="width:70%;background:#b8860b;">70</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">中小企业</span>
+      <div class="bar-track"><div class="bar-fill" style="width:95%;background:#2d8a4e;">95</div></div>
+    </div>
 
-    <h4>（5）数据分析与报表</h4>
-    <p>ATS能自动生成多维度的招聘报表，如渠道效果、各环节转化率、招聘周期等。用友大易的TRM系统可分析简历投递、面试通过率、岗位需求等多维度数据，帮助企业预见未来的招聘趋势。</p>
+    <p style="margin-top:1rem;"><strong>北森</strong></p>
+    <div class="bar-row">
+      <span class="bar-label">AI深度</span>
+      <div class="bar-track"><div class="bar-fill" style="width:90%;background:#2d8a4e;">90</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">面试能力</span>
+      <div class="bar-track"><div class="bar-fill" style="width:90%;background:#2d8a4e;">90</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">人才运营</span>
+      <div class="bar-track"><div class="bar-fill" style="width:75%;background:#b8860b;">75</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">中小企业</span>
+      <div class="bar-track"><div class="bar-fill" style="width:35%;background:#c0392b;">35</div></div>
+    </div>
 
-    <h4>（6）人才库管理</h4>
-    <p>对候选人信息进行分类、打标签并归档沉淀。即使候选人本次未成功入职，未来有合适岗位时也可快速激活。大厂正在把招聘系统当作基础设施，用来沉淀、识别、触达并持续激活目标人群——把人才关系从一次性交易变成可复用的长期资产。</p>
+    <p style="margin-top:1rem;"><strong>牛客招聘</strong></p>
+    <div class="bar-row">
+      <span class="bar-label">AI深度</span>
+      <div class="bar-track"><div class="bar-fill" style="width:60%;background:#b8860b;">60</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">面试能力</span>
+      <div class="bar-track"><div class="bar-fill" style="width:40%;background:#c0392b;">40</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">人才运营</span>
+      <div class="bar-track"><div class="bar-fill" style="width:30%;background:#c0392b;">30</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">中小企业</span>
+      <div class="bar-track"><div class="bar-fill" style="width:70%;background:#b8860b;">70</div></div>
+    </div>
+  </div>
 
-    <hr>
+  <h3>行业AI趋势</h3>
+  <div class="timeline">
+    <div class="timeline-item border">
+      <h4>趋势一：AI Agent化与全流程AI原生化</h4>
+      <p>从"AI增强"（在现有流程中叠加AI工具）转向"AI原生化"（AI作为底层基因，重塑招聘全流程）。主流厂商纷纷推出具备自主决策和执行能力的AI Agent。</p>
+    </div>
+    <div class="timeline-item border">
+      <h4>趋势二：一体化与生态化融合</h4>
+      <p>AI招聘系统加速与企业内部HR模块及外部生态深度融合，实现"招-用-育-留"数据的无缝流转。</p>
+    </div>
+  </div>
 
-    <h2>三、各厂商AI特点深度解析</h2>
+  <hr>
 
-    <h3>3.1 用友大易：垂直大模型驱动</h3>
-    <p>用友大易稳居2026年ATS行业榜首，其AI核心优势在于：</p>
-    <ul>
-      <li><strong>自研YonGPT 2.0企业服务大模型</strong>：国内首个HR招聘领域垂直大模型，经18年招聘数据训练</li>
-      <li><strong>简历解析准确率达98%</strong></li>
-      <li><strong>AI面试与资深面试官评分一致性达92.3%</strong>，领先行业3-5年</li>
-      <li><strong>ATS+TRM双引擎模式</strong>：从"单次招聘"转向"人才长期运营"</li>
-      <li><strong>模块化采购</strong>：可单独购买ATS、AI面试、AI筛选等功能</li>
-      <li><strong>AI+招聘产品系列</strong>：集成AI智能问答、AI简历评估、AI面试、AI面试助手及AI智能推荐等</li>
-    </ul>
+  <!-- ==================== 4. 核心功能 ==================== -->
+  <h2 id="features">四、核心功能模块</h2>
+  <p>一套成熟的ATS通常包含六大核心能力：</p>
 
-    <h3>3.2 Moka：AI原生架构与智能体</h3>
-    <p>Moka连续多年招聘管理软件市场份额位列第一，其AI特点包括：</p>
-    <ul>
-      <li><strong>AI原生架构</strong>：2025版基于AI原生架构，通过机器学习、NLP与深度学习算法，将AI能力深度嵌入每个模块</li>
-      <li><strong>Moka Eva AI招聘智能体</strong>：HR只需定义一次岗位画像，标准就会智能贯穿后续所有环节</li>
-      <li><strong>智能面试纪要</strong>：支持生成候选人评估报告，精准还原候选人潜力与软实力</li>
-      <li><strong>融合大模型的人才推荐</strong>：智能构建人才画像，激活人才储备</li>
-      <li><strong>全场景AI能力体系</strong>：从2018年启动AI技术研发至今，已形成"招聘—绩效—人才盘点—组织发展"全场景AI能力体系，平均帮助企业HR效能提升45%</li>
-    </ul>
-    <blockquote>值得注意的是，有分析指出Moka走的是"模块化辅助"路线——底层为传统ATS架构，AI能力以"贴牌"方式叠加：简历解析调用一个引擎，智能问答接另一个，AI面试集成第三方。这意味着其AI能力在底层整合深度上可能与自研大模型的厂商存在差异。</blockquote>
+  <div class="feature-grid">
+    <div class="feature-card border">
+      <h4>📄 简历解析与管理</h4>
+      <p>0.5秒完成一份简历的结构化处理，提取100+字段。300人公司月收800-1500份简历，数据录入从40-75小时压缩至秒级。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>🔗 渠道整合</h4>
+      <p>企业平均使用4.7个招聘渠道。ATS将所有渠道汇入统一人才池，自动去重、标记来源。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>📊 流程跟踪</h4>
+      <p>候选人平均经历6-8个状态节点。可视化管道视图，使用企业候选人流失率低18%。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>🎯 面试协调</h4>
+      <p>手动安排多轮面试需45分钟，ATS智能排期2分钟完成。结构化评估表让决策从感觉变数据。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>📈 数据分析</h4>
+      <p>自动生成多维度报表：渠道效果、各环节转化率、招聘周期，预见未来招聘趋势。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>👥 人才库管理</h4>
+      <p>分类打标签归档沉淀，未入职候选人可快速激活。把人才关系从一次性交易变成长期资产。</p>
+    </div>
+  </div>
 
-    <h3>3.3 北森：多Agent协同的AI专家团</h3>
-    <p>北森基于自研SenClaw Agent架构，打造了由<strong>5大专家级Agent</strong>组成的AI招聘专家团：</p>
-    <ul>
-      <li><strong>AI寻聘官</strong>：7×24小时自动在各大招聘平台巡游，精准锁定"被动型人才"</li>
-      <li><strong>AI招聘官</strong>：覆盖招聘前端核心场景，10分钟即可完成用人部门反复打磨的工作</li>
-      <li><strong>AI面试官</strong>：已升级至2.0版本，覆盖超300个岗位模型，支持通用能力、岗位胜任力、心理风险等8个维度评估</li>
-      <li><strong>AI面试助手</strong>：辅助面试过程</li>
-      <li><strong>AI应聘助手</strong>：服务候选人端</li>
-    </ul>
-    <p>北森还融合20余年人才管理技术和知识，发布了AI招聘助手、AI面试官、AI员工助手、AI做课助手、AI陪练助手、AI测评、AI个人领导力教练等7大AI助手。截至2025年3月31日，北森AI Family客户数超300家。</p>
+  <hr>
 
-    <h3>3.4 牛客招聘：AI简历筛选的"闪电级"效率</h3>
-    <p>牛客聚焦技术人才评测和校园招聘，其AI能力特点为：</p>
-    <ul>
-      <li><strong>闪电级吞吐量</strong>：20分钟可智能处理1000份简历，相当于HR人工8小时的工作量</li>
-      <li><strong>7×24小时不间断工作</strong>：突破人力限制，夜间及节假日也能持续处理新投递简历</li>
-      <li><strong>三重筛选保障人机高匹配度</strong></li>
-      <li><strong>自动化流转</strong>：无缝对接主流ATS系统，实现简历接收→筛选→评分→推送的全流程自动化</li>
-    </ul>
+  <!-- ==================== 5. ATS筛选机制 ==================== -->
+  <h2 id="ats-mechanism">五、ATS 简历筛选机制</h2>
 
-    <h3>3.5 行业整体AI趋势</h3>
-    <p>2025年AI招聘系统正朝着两大核心趋势发展：</p>
-    <p><strong>趋势一：AI Agent化与全流程AI原生化</strong></p>
-    <p>市场正从传统的"AI增强"模式（在现有流程中叠加AI工具）转向"AI原生化"模式（AI作为底层基因，重塑招聘全流程）。主流厂商纷纷推出具备自主决策和执行能力的AI Agent，如"AI寻聘官"、"AI面试官"、"AI招聘助手"等。</p>
-    <p><strong>趋势二：一体化与生态化融合</strong></p>
-    <p>AI招聘系统正加速与企业内部其他HR模块以及外部生态的深度融合，实现"招-用-育-留"数据的无缝流转。</p>
+  <h3>技术链路</h3>
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number" style="font-size:1.2rem;">ATS 系统</span>
+      <span class="stat-label">流程管理 · "管道"和"中枢"</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number" style="font-size:1.2rem;">AI 能力模块</span>
+      <span class="stat-label">解析/匹配/自动化 · "加速器"和"放大器"</span>
+    </div>
+  </div>
 
-    <hr>
+  <h3>筛选流程</h3>
+  <div class="timeline">
+    <div class="timeline-item border">
+      <h4>第一步：简历解析</h4>
+      <p>NLP技术将PDF/Word等非结构化简历转化为结构化数据。0.5秒处理一份，提取100+字段，按统一格式存入人才库。</p>
+    </div>
+    <div class="timeline-item border">
+      <h4>第二步：关键词初筛</h4>
+      <p>HR设置关键词、学历、专业等筛选条件。系统自动打分排序，只有达标的简历进入下一轮。</p>
+    </div>
+    <div class="timeline-item border">
+      <h4>第三步：AI语义匹配</h4>
+      <p>超越关键词匹配，进入语义理解阶段：多维度匹配评估、技能关联性推理、软技能与文化契合度分析。</p>
+    </div>
+  </div>
 
-    <h2>四、简历如何通过ATS——筛选机制全解析</h2>
-
-    <h3>4.1 ATS简历处理的技术链路</h3>
-    <p>ATS对简历的处理分为两个层面：</p>
-    <ul>
-      <li><strong>ATS（应聘者跟踪系统）</strong>：负责流程管理，是"管道"和"中枢"</li>
-      <li><strong>AI能力模块</strong>：嵌在ATS里或作为外挂工具，负责简历解析、匹配和自动化动作，是"加速器"和"放大器"</li>
-    </ul>
-
-    <h3>4.2 简历解析：从非结构化到结构化</h3>
-    <p>这是ATS处理简历的第一步，也是最关键的一步。系统通过NLP（自然语言处理）技术，将PDF、Word等非结构化简历转化为结构化数据：</p>
+  <h3>给求职者的启示</h3>
+  <article class="border" style="padding:1.2rem;">
     <ol>
-      <li><strong>信息提取</strong>：在0.5秒内完成一份简历的处理，准确提取100+字段信息</li>
-      <li><strong>字段分类</strong>：包括教育背景、工作经历、技能标签、项目经验等</li>
-      <li><strong>标准化存储</strong>：将提取的信息按统一格式存入人才库</li>
+      <li><strong>关键词镜像</strong> — 简历中包含岗位描述的核心关键词</li>
+      <li><strong>格式极简</strong> — 避免复杂排版、图片、表格干扰机器解析</li>
+      <li><strong>内容机器可读</strong> — 使用标准化标题和段落结构</li>
+      <li><strong>命名规范</strong> — 清晰的文件命名格式</li>
+      <li><strong>投递时机</strong> — 避开系统高峰期</li>
     </ol>
+  </article>
 
-    <h3>4.3 关键词匹配与初筛</h3>
-    <p>在大型企业的校招中，由于收到的简历数量庞大，通常会先通过ATS进行初步过滤：</p>
-    <ol>
-      <li><strong>关键词设置</strong>：HR根据岗位需求设置关键词、学历、专业等筛选条件</li>
-      <li><strong>自动打分与排序</strong>：系统自动对简历进行打分和排序</li>
-      <li><strong>阈值过滤</strong>：只有符合基本要求、得分较高的简历才能进入下一轮人工筛选</li>
-    </ol>
+  <hr>
 
-    <h3>4.4 AI人岗匹配：从关键词到语义理解</h3>
-    <p>现代ATS的简历筛选已超越简单的关键词匹配，进入AI驱动的语义理解阶段：</p>
+  <!-- ==================== 6. 对OfferFit的启示 ==================== -->
+  <h2 id="insights">六、对 OfferFit 的启示</h2>
+
+  <article class="border" style="padding:1.5rem;line-height:1.9;">
+    <h3>市场机会</h3>
     <ul>
-      <li><strong>多维度匹配评估</strong>：通过更精准的多维度匹配评估，让简历呈现更具差异化、核心亮点提炼更精准</li>
-      <li><strong>技能关联性推理</strong>：系统可通过候选人技能描述的关联性推理（如从"熟悉某C++开发框架"推断出"具备C++开发能力"）</li>
-      <li><strong>软技能评估</strong>：基于大模型和深度学习，系统不仅能分析候选人的硬性技能和经验，还能通过NLP和多模态分析评估其软技能、文化契合度与发展潜力</li>
+      <li><strong>47%的企业仍在用Excel管理招聘</strong> — 数字化升级空间巨大</li>
+      <li><strong>中小企业被忽视</strong> — Moka是唯一面向中小企业的头部玩家，其余偏中大型</li>
+      <li><strong>AI原生化是趋势</strong> — 从"AI增强"到"AI原生"的转型窗口期</li>
     </ul>
 
-    <h3>4.5 简历如何"通关"——给求职者的启示</h3>
-    <p>了解ATS筛选机制后，求职者需注意：</p>
-    <ol>
-      <li><strong>关键词镜像</strong>：简历中应包含岗位描述中的核心关键词</li>
-      <li><strong>格式极简</strong>：避免复杂排版、图片、表格等可能干扰机器解析的元素</li>
-      <li><strong>内容机器可读</strong>：使用标准化的标题和段落结构</li>
-      <li><strong>简历命名规范</strong>：使用清晰的命名格式</li>
-      <li><strong>投递时机</strong>：注意投递时间，避免在系统高峰期投递</li>
-    </ol>
+    <h3>竞品启示</h3>
+    <ul>
+      <li><strong>用友大易</strong>证明了垂直大模型的价值 — 18年数据积累是护城河</li>
+      <li><strong>Moka</strong>证明了中小企业市场的潜力 — 年费1万起，门槛低</li>
+      <li><strong>北森</strong>证明了多Agent架构的可行性 — 5个专家Agent各司其职</li>
+      <li><strong>牛客</strong>证明了垂直场景的价值 — 技术招聘做到了极致效率</li>
+    </ul>
 
-    <hr>
-
-    <h2>五、总结</h2>
-    <p>中国ATS市场正处于从"流程在线化"向"决策智能化"演进的关键阶段。2023年之前，ATS的核心价值是流程在线化；2026年，它的核心价值已经演变为决策智能化。</p>
-    <p>从供应商格局来看，用友大易、Moka、北森形成第一梯队，各自以不同的技术路线（垂直大模型、AI原生架构、多Agent协同）展开竞争。从功能层面看，ATS已从单一的简历管理工具，发展为覆盖招聘全流程的智能化平台。从AI应用来看，市场正从"AI增强"走向"AI原生化"，AI Agent正成为各厂商竞相布局的重点。</p>
-    <p>而关于简历筛选，ATS的机制也从简单的关键词过滤，演进为基于大模型的语义理解与多维度评估。对于企业而言，选择合适的ATS不仅要看功能清单，更要关注其AI技术的底层实力与场景适配能力。</p>
-
+    <h3>差异化方向建议</h3>
+    <ul>
+      <li>聚焦中小企业 + AI原生体验（vs Moka的传统架构+AI叠加）</li>
+      <li>极致的候选人体验（现有产品重企业端，轻候选人端）</li>
+      <li>轻量化、低门槛、快速上手（vs 北森/用友的重型系统）</li>
+      <li>数据驱动的智能推荐（不只是流程管理，而是主动匹配）</li>
+    </ul>
   </article>
 
   <hr>
