@@ -231,6 +231,77 @@ nav ul li a.active {
   opacity: 0.6;
 }
 
+/* ========== Search ========== */
+.search-wrapper {
+  position: relative;
+  max-width: 260px;
+  margin: 0.8rem auto 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Short Stack', cursive;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 2px solid #333;
+  z-index: 100;
+  max-height: 320px;
+  overflow-y: auto;
+  display: none;
+}
+
+.search-results.show {
+  display: block;
+}
+
+.search-result-item {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px dashed #ccc;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover,
+.search-result-item.active {
+  background: #f5f0e6;
+}
+
+.search-result-item .result-title {
+  font-weight: bold;
+  display: block;
+}
+
+.search-result-item .result-desc {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 0.15rem;
+}
+
+.search-result-item .result-section {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.search-no-result {
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
 /* ========== Responsive ========== */
 @media (max-width: 600px) {
   body.doodle {
@@ -248,5 +319,9 @@ nav ul li a.active {
 
   .hero {
     padding: 1.5rem 0;
+  }
+
+  .search-wrapper {
+    max-width: 200px;
   }
 }
