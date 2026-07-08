@@ -33,8 +33,8 @@ body.doodle {
 }
 
 .doodle nav ul li {
-  list-style: none;
-  list-style-type: none;
+  list-style: none !important;
+  list-style-type: none !important;
 }
 
 nav ul li a.active {
