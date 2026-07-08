@@ -48,6 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ===== Search Toggle =====
+  document.querySelectorAll('.search-toggle').forEach(toggle => {
+    const wrapper = toggle.closest('.search-wrapper');
+    const box = wrapper.querySelector('.search-box');
+    const input = wrapper.querySelector('.search-input');
+    const closeBtn = wrapper.querySelector('.search-close');
+
+    toggle.addEventListener('click', () => {
+      box.classList.add('show');
+      toggle.style.display = 'none';
+      input.focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      box.classList.remove('show');
+      toggle.style.display = '';
+      input.value = '';
+      const results = wrapper.querySelector('.search-results');
+      results.classList.remove('show');
+      results.innerHTML = '';
+    });
+  });
+
   // ===== Search =====
   const searchIndex = [
     { title: '首页', section: '页面', url: 'index.html', keywords: '首页 欢迎 主页' },
@@ -154,7 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else if (e.key === 'Escape') {
         resultsDiv.classList.remove('show');
-        input.blur();
+        input.value = '';
+        const wrapper = input.closest('.search-wrapper');
+        const box = wrapper.querySelector('.search-box');
+        const toggle = wrapper.querySelector('.search-toggle');
+        box.classList.remove('show');
+        toggle.style.display = '';
       }
     });
 
