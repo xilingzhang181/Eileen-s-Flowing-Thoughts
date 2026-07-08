@@ -23,8 +23,8 @@ body.doodle {
   margin-bottom: 1.2rem;
 }
 
-/* Nav — let DoodleCSS style the list, just lay it out horizontally */
-nav ul {
+/* Nav — override DoodleCSS list-style and lay out horizontally */
+.doodle nav ul {
   display: flex;
   justify-content: center;
   gap: 1.8rem;
@@ -32,8 +32,9 @@ nav ul {
   padding-left: 0;
 }
 
-nav ul li {
+.doodle nav ul li {
   list-style: none;
+  list-style-type: none;
 }
 
 nav ul li a.active {
