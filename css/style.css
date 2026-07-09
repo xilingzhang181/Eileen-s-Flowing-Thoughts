@@ -1,234 +1,426 @@
-/* Eileen's Flowing Thoughts — Minimal overrides, let DoodleCSS do the work */
-@import url('https://fonts.googleapis.com/css2?family=Short+Stack&display=swap');
+/* Eileen's Flowing Thoughts — Hand-drawn sketch style */
+@import url('https://fonts.googleapis.com/css2?family=Short+Stack&family=Caveat:wght@400;600&display=swap');
 
-/* ========== Layout ========== */
-body.doodle {
-  max-width: 900px;
+/* ========== CSS Variables ========== */
+:root {
+  --bg: #f5f0e6;
+  --bg-card: #fdfaf4;
+  --ink: #3a3226;
+  --ink-light: #6b5e4f;
+  --accent: #e8a87c;
+  --accent-warm: #c8896a;
+  --border: #8B7355;
+  --border-light: #c4b5a0;
+  --blue-light: #b8d4e3;
+  --green: #7a9e7e;
+  --green-light: #a8c5a0;
+  --yellow: #fff5d4;
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 960px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 2rem;
-  font-family: 'Short Stack', cursive;
+  padding: 1.5rem 2rem 2rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Short Stack', 'Segoe UI', cursive;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* ========== Header ========== */
 .site-header {
   text-align: center;
-  padding: 1.5rem 0 0.5rem;
+  padding: 2rem 0 0.8rem;
+  position: relative;
 }
 
 .site-header h1 {
-  margin-bottom: 0.2rem;
+  margin: 0;
+  font-size: 2.6rem;
+  font-family: 'Caveat', 'Short Stack', cursive;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.site-title {
+  position: relative;
+  display: inline-block;
+}
+
+/* Header decorative elements */
+.header-deco-left {
+  position: absolute;
+  left: 10%;
+  top: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  opacity: 0.6;
+}
+
+.header-deco-right {
+  position: absolute;
+  right: 12%;
+  top: 1rem;
+  opacity: 0.6;
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  opacity: 0.65;
-  margin-bottom: 1.2rem;
+  font-size: 1.05rem;
+  color: var(--ink-light);
+  margin: 0.3rem 0 1.2rem;
+  opacity: 0.7;
 }
 
-/* Nav — override DoodleCSS list-style and lay out horizontally */
-.doodle nav ul {
+/* Stars */
+.star {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.star-small {
+  font-size: 0.7rem;
+}
+
+.star-swing {
+  font-size: 1.2rem;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-deco {
+  position: absolute;
+  top: 5px;
+  right: -10px;
+  font-size: 0.8rem;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; transform: rotate(0deg); }
+  50% { opacity: 1; transform: rotate(15deg); }
+}
+
+/* Nav */
+nav ul {
   display: flex;
   justify-content: center;
-  gap: 1.8rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.doodle nav ul li {
+nav ul li {
   list-style: none !important;
-  list-style-type: none !important;
+}
+
+nav ul li a {
+  font-size: 1.15rem;
+  padding: 0.2rem 0;
+  transition: color 0.2s;
 }
 
 nav ul li a.active {
   text-decoration: underline;
-  text-decoration-thickness: 3px;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--border-light);
+}
+
+/* ========== Dividers ========== */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.8rem 0;
+  user-select: none;
+}
+
+.divider-line {
+  flex: 1;
+  height: 0;
+  border-top: 1.5px dashed var(--border-light);
+}
+
+.dot-dot-dot {
+  color: var(--border-light);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+}
+
+.leaf-deco {
+  font-size: 0.9rem;
+  opacity: 0.5;
 }
 
 /* ========== Hero ========== */
 .hero {
-  text-align: center;
-  padding: 2.5rem 0 1.5rem;
+  padding: 2rem 0;
 }
 
-.hero p {
-  max-width: 600px;
+.hero-decorations {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.hero-deco {
+  flex: 0 0 auto;
+  position: relative;
+  opacity: 0.85;
+}
+
+.hero-center {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.hero-title {
+  font-family: 'Caveat', 'Short Stack', cursive;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem;
+  color: var(--ink);
+}
+
+.heart-icon {
+  color: #f0b0a0;
+  font-size: 1.2rem;
+  vertical-align: super;
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--ink-light);
+  line-height: 2;
+  margin: 0 0 1rem;
+}
+
+.hero-dash-line {
   margin: 0.5rem auto;
+  max-width: 320px;
+  opacity: 0.5;
+}
+
+.hero-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-top: 0.8rem;
+  opacity: 0.75;
+}
+
+.hero-icon {
+  transition: transform 0.3s;
+}
+
+.hero-icon:hover {
+  transform: translateY(-3px) rotate(5deg);
+}
+
+/* Hero decorations positioning */
+.hero-deco-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.hero-deco-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.deco-cloud {
+  margin-top: -10px;
+  margin-left: -20px;
+}
+
+.deco-plant {
+  margin-top: -15px;
 }
 
 /* ========== Section Titles ========== */
 .section-title {
-  margin: 2.5rem 0 1rem;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Caveat', 'Short Stack', cursive;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.8rem;
+  color: var(--ink);
 }
 
-/* ========== Cards — use DoodleCSS .border class ========== */
+.section-icon {
+  opacity: 0.7;
+}
+
+/* ========== Cards ========== */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin: 1rem 0;
 }
 
-.card.border {
+.sketch-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 3px;
   padding: 1.2rem;
-}
-
-.card.border h3 {
-  margin-top: 0.3rem;
-}
-
-.card .card-cover {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.card .card-meta {
-  font-size: 0.85rem;
-  opacity: 0.55;
-  margin-top: 0.5rem;
-}
-
-.card .card-tag {
-  display: inline-block;
-  font-size: 0.8rem;
-  margin-right: 0.3rem;
-}
-
-/* ========== Video Grid ========== */
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin: 1rem 0;
-}
-
-.video-card.border {
-  padding: 1rem;
-}
-
-.video-wrapper {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  margin-bottom: 0.8rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 2px 2px 0 rgba(139,115,85,0.08);
 }
 
-.video-wrapper iframe,
-.video-wrapper .video-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
+.sketch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0 rgba(139,115,85,0.12);
 }
 
-.video-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+.sketch-card h3 {
+  margin: 0.5rem 0 0.3rem;
+  font-family: 'Caveat', 'Short Stack', cursive;
+  font-size: 1.3rem;
 }
 
-.video-card.border h3 {
-  margin: 0 0 0.2rem;
+.sketch-card p {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  margin: 0.3rem 0;
 }
 
-/* ========== Thought List ========== */
-.thought-list {
-  margin: 1rem 0;
+.sketch-card a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border-light);
 }
 
-.thought-item.border {
-  padding: 1.2rem;
-  margin-bottom: 1.2rem;
+.sketch-card a:hover {
+  border-bottom-color: var(--accent);
 }
 
-.thought-item h3 {
-  margin-top: 0.2rem;
-}
-
-.thought-date {
-  font-size: 0.85rem;
+.card-meta {
+  font-size: 0.82rem;
+  color: var(--ink-light);
   opacity: 0.55;
-  margin-bottom: 0.3rem;
 }
 
-.thought-body {
-  display: none;
-  margin-top: 0.8rem;
-  line-height: 1.8;
-}
-
-.thought-item.expanded .thought-body {
-  display: block;
-}
-
-.read-more {
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 0.4rem;
-  display: inline-block;
-}
-
-/* ========== Filter Bar — use DoodleCSS buttons ========== */
-.filter-bar {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.filter-btn.active {
-  font-weight: bold;
-}
-
-/* ========== About ========== */
-.about-section {
-  max-width: 650px;
-  margin: 2rem auto;
-  text-align: center;
-}
-
-.about-section .avatar-placeholder {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
+/* Card cover */
+.card-cover {
+  width: 100%;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5rem;
-  margin: 0 auto 1rem;
+  position: relative;
+  border: 1px dashed var(--border-light);
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
 }
 
-.bio {
-  line-height: 1.8;
-  margin: 1rem 0;
+.card-cover-emoji {
+  font-size: 3rem;
 }
 
-.social-links {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-/* ========== Footer ========== */
-.site-footer {
-  text-align: center;
-  padding: 1.5rem 0 1rem;
-  margin-top: 3rem;
-  font-size: 0.9rem;
+.card-star {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.8rem;
   opacity: 0.6;
+}
+
+/* Tape decoration */
+.tape {
+  position: absolute;
+  width: 50px;
+  height: 18px;
+  opacity: 0.35;
+  z-index: 2;
+}
+
+.tape-left {
+  top: -6px;
+  left: 18px;
+  background: var(--blue-light);
+  transform: rotate(-35deg);
+  border: 0.5px solid #9fc5d8;
+}
+
+.tape-right {
+  top: -6px;
+  right: 18px;
+  background: var(--accent);
+  transform: rotate(25deg);
+  border: 0.5px solid var(--accent-warm);
+}
+
+/* Paperclip decoration */
+.paperclip {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  width: 16px;
+  height: 30px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px 8px 0 0;
+  opacity: 0.35;
+}
+
+.paperclip::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  width: 8px;
+  height: 18px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 5px 5px 0 0;
+  border-bottom: none;
+}
+
+/* Section link */
+.section-link {
+  margin: 0.8rem 0 0;
+}
+
+.section-link a {
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  border-bottom: 1px dashed var(--border-light);
+}
+
+.section-link a:hover {
+  color: var(--accent-warm);
+  border-bottom-color: var(--accent-warm);
 }
 
 /* ========== Search ========== */
@@ -240,18 +432,20 @@ nav ul li a.active {
 }
 
 .search-toggle {
-  background: none;
-  border: none;
+  background: var(--bg);
+  border: 1.5px solid var(--border-light);
+  border-radius: 4px;
   cursor: pointer;
-  padding: 0.3rem;
+  padding: 0.35rem 0.45rem;
   display: flex;
   align-items: center;
   opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, border-color 0.2s;
 }
 
 .search-toggle:hover {
   opacity: 1;
+  border-color: var(--border);
 }
 
 .search-box {
@@ -272,7 +466,16 @@ nav ul li a.active {
   padding: 0.35rem 0.6rem;
   font-family: 'Short Stack', cursive;
   font-size: 0.9rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: 3px;
+  background: var(--bg-card);
+  color: var(--ink);
   box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .search-close {
@@ -280,13 +483,14 @@ nav ul li a.active {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  opacity: 0.6;
+  color: var(--ink-light);
   padding: 0.2rem;
   font-family: 'Short Stack', cursive;
+  line-height: 1;
 }
 
 .search-close:hover {
-  opacity: 1;
+  color: var(--ink);
 }
 
 .search-results {
@@ -294,13 +498,15 @@ nav ul li a.active {
   top: 100%;
   right: 0;
   width: 300px;
-  background: #fff;
-  border: 2px solid #333;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: 3px;
   z-index: 201;
   max-height: 320px;
   overflow-y: auto;
   display: none;
   margin-top: 0.3rem;
+  box-shadow: 2px 3px 0 rgba(139,115,85,0.1);
 }
 
 .search-results.show {
@@ -309,7 +515,7 @@ nav ul li a.active {
 
 .search-result-item {
   padding: 0.6rem 0.8rem;
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 1px dashed var(--border-light);
   cursor: pointer;
   font-size: 0.85rem;
 }
@@ -320,7 +526,7 @@ nav ul li a.active {
 
 .search-result-item:hover,
 .search-result-item.active {
-  background: #f5f0e6;
+  background: var(--yellow);
 }
 
 .search-result-item .result-title {
@@ -340,26 +546,74 @@ nav ul li a.active {
   opacity: 0.6;
 }
 
+/* ========== Footer ========== */
+.site-footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  margin-top: 2rem;
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  opacity: 0.5;
+}
+
 /* ========== Responsive ========== */
-@media (max-width: 600px) {
-  body.doodle {
-    padding: 0.5rem 1rem;
+@media (max-width: 768px) {
+  body {
+    padding: 1rem 1.2rem 1.5rem;
   }
 
-  .card-grid,
-  .video-grid {
+  .site-header h1 {
+    font-size: 2rem;
+  }
+
+  .hero-decorations {
+    flex-direction: column;
+  }
+
+  .hero-deco {
+    display: none;
+  }
+
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .card-grid {
     grid-template-columns: 1fr;
   }
 
   nav ul {
-    gap: 0.8rem;
+    gap: 1rem;
   }
 
-  .hero {
-    padding: 1.5rem 0;
+  nav ul li a {
+    font-size: 1rem;
+  }
+
+  .header-deco-left,
+  .header-deco-right {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header h1 {
+    font-size: 1.6rem;
+  }
+
+  nav ul {
+    gap: 0.6rem;
+  }
+
+  .hero-icons {
+    gap: 1.5rem;
   }
 
   .search-wrapper {
-    max-width: 200px;
+    right: 0.5rem;
+  }
+
+  .search-input {
+    width: 160px;
   }
 }
