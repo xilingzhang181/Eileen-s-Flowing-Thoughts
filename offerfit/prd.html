@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OfferMind 产品需求文档 · OfferFit产品开发实录</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/doodle.css@0.0.2/doodle.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ========== PRD-specific styles ========== */
+
+    /* Hero badge */
+    .prd-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card.border {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+    }
+    .stat-card .stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .stat-label {
+      font-size: 0.82rem;
+      opacity: 0.7;
+    }
+
+    /* Feature grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .feature-card.border {
+      padding: 1rem;
+    }
+    .feature-card h4 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+    .feature-card p, .feature-card ul {
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    .feature-card ul {
+      padding-left: 1.2rem;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+    }
+    .highlight-box blockquote {
+      margin: 0;
+      font-style: italic;
+      opacity: 0.85;
+    }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.7rem 0.6rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .compare-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    /* Pipeline / flow row */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .flow-step {
+      padding: 0.6rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .flow-arrow {
+      font-size: 1.2rem;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #999;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+    }
+    .timeline-item::before {
+      content: '●';
+      position: absolute;
+      left: -1.8rem;
+      top: 1rem;
+      font-size: 1.1rem;
+    }
+    .timeline-item h4 {
+      margin: 0 0 0.3rem;
+    }
+    .timeline-item .phase-tag {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* Code block styling */
+    .code-block {
+      background: #faf8f5;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Illustration */
+    .illustration {
+      text-align: center;
+      margin: 2rem 0;
+      opacity: 0.85;
+    }
+    .illustration svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* User persona cards */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .persona-card.border {
+      padding: 1rem;
+      text-align: center;
+    }
+    .persona-card .persona-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .persona-card h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+    }
+    .persona-card p {
+      font-size: 0.82rem;
+      margin: 0.2rem 0;
+      opacity: 0.75;
+    }
+
+    /* Ethics list */
+    .ethics-list {
+      counter-reset: ethics;
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .ethics-list li {
+      counter-increment: ethics;
+      padding: 0.6rem 0 0.6rem 2.2rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .ethics-list li::before {
+      content: counter(ethics);
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 2px solid #c0392b;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.5rem;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #c0392b;
+    }
+
+    /* Principle cards */
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .principle-card.border {
+      padding: 1rem;
+      text-align: center;
+    }
+    .principle-card .principle-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .principle-card h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.9rem;
+    }
+    .principle-card p {
+      font-size: 0.8rem;
+      margin: 0;
+      opacity: 0.7;
+    }
+
+    /* Color swatches */
+    .color-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .color-swatch {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0.2rem;
+      font-size: 0.6rem;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Report output table */
+    .output-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .output-table th, .output-table td {
+      padding: 0.6rem 0.5rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .output-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .persona-grid { grid-template-columns: 1fr 1fr; }
+      .principle-grid { grid-template-columns: 1fr 1fr; }
+      .compare-table { font-size: 0.75rem; }
+      .compare-table th, .compare-table td { padding: 0.4rem 0.3rem; }
+    }
+  </style>
+</head>
+<body class="doodle">
+
+  <header class="site-header">
+    <h1>Eileen's Flowing Thoughts</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../works.html">作品</a></li>
+        <li><a href="../thoughts.html">思考</a></li>
+        <li><a href="../docs.html" class="active">文档</a></li>
+        <li><a href="../videos.html">视频</a></li>
+        <li><a href="../guestbook.html">留言</a></li>
+        <li><a href="../about.html">关于</a></li>
+      </ul>
+    </nav>
+    <div class="search-wrapper">
+      <button class="search-toggle" aria-label="搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10.5" cy="10.5" r="7" stroke="#333" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M16 16 L21 21" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="search-box">
+        <input type="text" class="search-input" />
+        <button class="search-close">×</button>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  </header>
+
+  <hr>
+
+  <p><a href="index.html">← 返回 OfferFit 产品开发实录</a></p>
+
+  <h1>OfferMind 产品需求文档</h1>
+  <small class="card-meta">V3.0 · 2026年7月 · AI 职业顾问</small>
+  <div style="margin:0.8rem 0;">
+    <small class="prd-badge border">产品设计</small>
+    <small class="prd-badge border">需求文档</small>
+    <small class="prd-badge border">PRD</small>
+  </div>
+
+  <!-- Header illustration: career advisor concept -->
+  <div class="illustration">
+    <svg width="520" height="140" viewBox="0 0 520 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- person -->
+      <circle cx="80" cy="45" r="18" stroke="#333" stroke-width="2.5" fill="#f5e6d3"/>
+      <path d="M62 63 Q60 85 70 105 Q80 112 90 105 Q100 85 98 63" stroke="#333" stroke-width="2.5" fill="#d3e6f5"/>
+      <!-- thought bubble -->
+      <circle cx="130" cy="25" r="5" stroke="#999" stroke-width="1.5" fill="none"/>
+      <circle cx="145" cy="15" r="8" stroke="#999" stroke-width="1.5" fill="none"/>
+      <ellipse cx="175" cy="12" rx="30" ry="14" stroke="#333" stroke-width="2" fill="#f5f0d3"/>
+      <text x="175" y="16" font-size="9" fill="#333" text-anchor="middle">未来在哪？</text>
+      <!-- AI brain -->
+      <rect x="250" y="20" width="70" height="55" rx="10" stroke="#333" stroke-width="2.5" fill="#e8f0fe"/>
+      <circle cx="272" cy="42" r="6" fill="#7c3aed" opacity="0.7"/>
+      <circle cx="298" cy="42" r="6" fill="#ec4899" opacity="0.7"/>
+      <circle cx="285" cy="55" r="5" fill="#38bdf8" opacity="0.7"/>
+      <path d="M272 42 L298 42" stroke="#666" stroke-width="1"/>
+      <path d="M272 42 L285 55" stroke="#666" stroke-width="1"/>
+      <path d="M298 42 L285 55" stroke="#666" stroke-width="1"/>
+      <!-- antenna -->
+      <path d="M285 20 L285 8" stroke="#333" stroke-width="2"/>
+      <circle cx="285" cy="5" r="3" fill="#ec4899"/>
+      <!-- label under AI -->
+      <text x="285" y="90" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">OfferMind</text>
+      <text x="285" y="102" font-size="8" fill="#666" text-anchor="middle">AI 职业顾问</text>
+      <!-- arrow from person to AI -->
+      <path d="M100 50 Q160 35 245 42" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+      <path d="M245 42 L240 37 L240 47 Z" fill="#999"/>
+      <!-- output: reports -->
+      <path d="M325 42 L365 42" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+      <path d="M365 42 L360 37 L360 47 Z" fill="#333"/>
+      <!-- report 1: diagnosis -->
+      <rect x="375" y="10" width="55" height="40" rx="4" stroke="#333" stroke-width="2" fill="#fff"/>
+      <path d="M385 22 L420 22" stroke="#7c3aed" stroke-width="2"/>
+      <path d="M385 30 L415 30" stroke="#999" stroke-width="1.5"/>
+      <path d="M385 38 L405 38" stroke="#999" stroke-width="1.5"/>
+      <text x="402" y="60" font-size="8" fill="#7c3aed" text-anchor="middle">诊断报告</text>
+      <!-- report 2: rewrite -->
+      <rect x="375" y="70" width="55" height="40" rx="4" stroke="#333" stroke-width="2" fill="#fff"/>
+      <path d="M385 82 L420 82" stroke="#ec4899" stroke-width="2"/>
+      <path d="M385 90 L415 90" stroke="#999" stroke-width="1.5"/>
+      <path d="M385 98 L405 98" stroke="#999" stroke-width="1.5"/>
+      <text x="402" y="120" font-size="8" fill="#ec4899" text-anchor="middle">优化简历</text>
+      <!-- report 3: plan -->
+      <rect x="445" y="40" width="55" height="40" rx="4" stroke="#333" stroke-width="2" fill="#fff"/>
+      <path d="M455 52 L490 52" stroke="#38bdf8" stroke-width="2"/>
+      <path d="M455 60 L485 60" stroke="#999" stroke-width="1.5"/>
+      <path d="M455 68 L475 68" stroke="#999" stroke-width="1.5"/>
+      <text x="472" y="90" font-size="8" fill="#38bdf8" text-anchor="middle">职业规划</text>
+      <!-- sparkles -->
+      <path d="M440 15 L443 10 L446 15 L443 20 Z" fill="#7c3aed" opacity="0.5"/>
+      <path d="M500 30 L503 25 L506 30 L503 35 Z" fill="#ec4899" opacity="0.5"/>
+      <path d="M355 100 L358 95 L361 100 L358 105 Z" fill="#38bdf8" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 一、产品定位 ==================== -->
+  <h2>一、产品定位与命名</h2>
+
+  <div class="highlight-box border">
+    <h3 style="margin-top:0;">OfferMind</h3>
+    <p><strong>释义</strong>：Offer（面试机会/录用通知）+ Mind（心智/决策）<br>
+    寓意求职者运用"职业心智"，主动做出清醒的职业选择，而非被动等待机会。</p>
+  </div>
+
+  <h3>产品定位：AI 职业顾问</h3>
+  <p>这是一个<strong>"决策支持型"</strong>产品，而非"工具型"产品：</p>
+
+  <div style="overflow-x:auto;">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>工具（Tool）</th>
+          <th>顾问（Advisor）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>角色</strong></td>
+          <td>被动响应，你问什么它答什么</td>
+          <td>主动引导，告诉你应该考虑什么</td>
+        </tr>
+        <tr>
+          <td><strong>输出</strong></td>
+          <td>一份报告</td>
+          <td>一条可执行的路径</td>
+        </tr>
+        <tr>
+          <td><strong>关系</strong></td>
+          <td>一次性使用</td>
+          <td>长期陪伴</td>
+        </tr>
+        <tr>
+          <td><strong>价值</strong></td>
+          <td>提高效率</td>
+          <td>降低决策风险</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box border">
+    <blockquote>"让每一次投递都是清醒的选择，让每一段经历都指向更好的未来。"</blockquote>
+    <p style="margin-top:0.8rem;margin-bottom:0;"><strong>Slogan：Know Before You Apply.</strong>（投递之前，先看清。）</p>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 二、愿景与使命 ==================== -->
+  <h2>二、产品愿景与使命</h2>
+
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number" style="font-size:1.2rem;">🎯 愿景</span>
+      <span class="stat-label">成为每个职场人的"职业决策第一站"</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number" style="font-size:1.2rem;">💡 使命</span>
+      <span class="stat-label">用 AI 消除职业决策中的信息不对称</span>
+    </div>
+  </div>
+
+  <h3>产品原则</h3>
+  <div class="principle-grid">
+    <div class="principle-card border">
+      <div class="principle-icon">🛡️</div>
+      <h4>尊重事实边界</h4>
+      <p>AI 只在用户已有经历基础上优化表述，不新增虚构内容</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">🔍</div>
+      <h4>信息透明</h4>
+      <p>用户知道 AI 从哪里获取信息、如何得出结论</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">✋</div>
+      <h4>自主决策权</h4>
+      <p>AI 提供判断和推荐，最终决定权永远在用户手中</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">🌱</div>
+      <h4>长期主义</h4>
+      <p>不鼓励"速成"，鼓励"可持续的职业成长"</p>
+    </div>
+  </div>
+
+  <h3>伦理红线</h3>
+  <ol class="ethics-list">
+    <li>不呈现个人联系方式（电话、邮箱、社交账号）</li>
+    <li>不生成"套近乎"话术（如"跟面试官聊他的论文来拉近关系"）</li>
+    <li>所有结论附带可追溯来源</li>
+    <li>不主动推断未公开信息</li>
+    <li>搜索结果为空时如实告知，不编造</li>
+    <li>职业规划不制造焦虑，不推销不切实际的目标</li>
+  </ol>
+
+  <hr>
+
+  <!-- ==================== 三、目标用户 ==================== -->
+  <h2>三、目标用户</h2>
+
+  <div class="persona-grid">
+    <div class="persona-card border">
+      <div class="persona-icon">🚀</div>
+      <h4>主动求职者</h4>
+      <p>1-10 年经验<br>正在找工作的职场人</p>
+      <p><small>投递前诊断简历、匹配岗位</small></p>
+      <p><small class="card-meta">周均 3-5 次</small></p>
+    </div>
+    <div class="persona-card border">
+      <div class="persona-icon">🧭</div>
+      <h4>职业探索者</h4>
+      <p>考虑跳槽或转型<br>在职人员</p>
+      <p><small>评估目标方向、了解行业</small></p>
+      <p><small class="card-meta">月均 1-2 次</small></p>
+    </div>
+    <div class="persona-card border">
+      <div class="persona-icon">🌱</div>
+      <h4>迷茫新人</h4>
+      <p>应届生或 1-3 年<br>职场新人</p>
+      <p><small>探索职业方向、建立路径</small></p>
+      <p><small class="card-meta">周均 1-2 次</small></p>
+    </div>
+    <div class="persona-card border">
+      <div class="persona-icon">📈</div>
+      <h4>长期成长者</h4>
+      <p>有明确方向<br>希望持续成长</p>
+      <p><small>追踪岗位要求、规划学习</small></p>
+      <p><small class="card-meta">月均 2-3 次</small></p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 四、核心功能架构 ==================== -->
+  <h2>四、核心功能架构</h2>
+
+  <h3>整体架构</h3>
+
+  <!-- Architecture SVG -->
+  <div class="illustration">
+    <svg width="520" height="380" viewBox="0 0 520 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Layer 1: User Entry -->
+      <rect x="60" y="10" width="400" height="40" rx="8" stroke="#333" stroke-width="2" fill="#e8f0fe"/>
+      <text x="260" y="28" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">用户入口</text>
+      <text x="260" y="42" font-size="9" fill="#666" text-anchor="middle">简历上传（PDF/Word/图片） + JD 上传（文本/图片）</text>
+      <!-- Arrow -->
+      <path d="M260 50 L260 70" stroke="#333" stroke-width="2"/>
+      <path d="M260 70 L255 65 L265 65 Z" fill="#333"/>
+      <!-- Layer 2: API Gateway -->
+      <rect x="100" y="75" width="320" height="35" rx="8" stroke="#333" stroke-width="2" fill="#f5f0e6"/>
+      <text x="260" y="97" font-size="10" fill="#333" text-anchor="middle">API 网关层 · 路由分发 · 请求限流 · 缓存控制</text>
+      <!-- Arrow -->
+      <path d="M260 110 L260 130" stroke="#333" stroke-width="2"/>
+      <path d="M260 130 L255 125 L265 125 Z" fill="#333"/>
+      <!-- Layer 3: Orchestrator -->
+      <rect x="80" y="135" width="360" height="45" rx="10" stroke="#7c3aed" stroke-width="2.5" fill="#f5f0ff"/>
+      <text x="260" y="155" font-size="11" fill="#7c3aed" text-anchor="middle" font-weight="bold">🧠 调度中枢（Orchestrator Agent）</text>
+      <text x="260" y="170" font-size="9" fill="#666" text-anchor="middle">拆解请求 → 分配任务 → 聚合结果 → 输出报告</text>
+      <!-- Arrows down to 4 agents -->
+      <path d="M150 180 L120 210" stroke="#333" stroke-width="1.5"/>
+      <path d="M230 180 L230 210" stroke="#333" stroke-width="1.5"/>
+      <path d="M320 180 L340 210" stroke="#333" stroke-width="1.5"/>
+      <path d="M400 180 L420 210" stroke="#333" stroke-width="1.5"/>
+      <!-- Agent 1: Diagnostician -->
+      <rect x="40" y="215" width="115" height="65" rx="6" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="97" y="233" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="bold">诊断专家</text>
+      <text x="97" y="246" font-size="8" fill="#666" text-anchor="middle">JD拆解</text>
+      <text x="97" y="257" font-size="8" fill="#666" text-anchor="middle">六级评分</text>
+      <text x="97" y="268" font-size="8" fill="#666" text-anchor="middle">风险预警</text>
+      <!-- Agent 2: Research -->
+      <rect x="165" y="215" width="115" height="65" rx="6" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="222" y="233" font-size="9" fill="#38bdf8" text-anchor="middle" font-weight="bold">研究员专家</text>
+      <text x="222" y="246" font-size="8" fill="#666" text-anchor="middle">部门搜索</text>
+      <text x="222" y="257" font-size="8" fill="#666" text-anchor="middle">人物画像</text>
+      <text x="222" y="268" font-size="8" fill="#666" text-anchor="middle">研究图谱</text>
+      <!-- Agent 3: Rewrite -->
+      <rect x="290" y="215" width="115" height="65" rx="6" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="347" y="233" font-size="9" fill="#ec4899" text-anchor="middle" font-weight="bold">改写专家</text>
+      <text x="347" y="246" font-size="8" fill="#666" text-anchor="middle">动词升级</text>
+      <text x="347" y="257" font-size="8" fill="#666" text-anchor="middle">关键词注入</text>
+      <text x="347" y="268" font-size="8" fill="#666" text-anchor="middle">多版本生成</text>
+      <!-- Agent 4: Planner -->
+      <rect x="415" y="215" width="95" height="65" rx="6" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="462" y="233" font-size="9" fill="#2d8a4e" text-anchor="middle" font-weight="bold">规划专家</text>
+      <text x="462" y="246" font-size="8" fill="#666" text-anchor="middle">差距分析</text>
+      <text x="462" y="257" font-size="8" fill="#666" text-anchor="middle">学习路径</text>
+      <text x="462" y="268" font-size="8" fill="#666" text-anchor="middle">时间线</text>
+      <!-- Arrows down to model layer -->
+      <path d="M260 280 L260 300" stroke="#333" stroke-width="2"/>
+      <path d="M260 300 L255 295 L265 295 Z" fill="#333"/>
+      <!-- Layer 4: Model Base -->
+      <rect x="60" y="305" width="400" height="35" rx="8" stroke="#333" stroke-width="2" fill="#f5e6d3"/>
+      <text x="260" y="322" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">大模型底座 · MoE-level Routing</text>
+      <text x="260" y="334" font-size="8" fill="#666" text-anchor="middle">DeepSeek-v4 · GLM-5.2 · Qwen3.7</text>
+      <!-- Arrow -->
+      <path d="M260 340 L260 355" stroke="#333" stroke-width="2"/>
+      <path d="M260 355 L255 350 L265 350 Z" fill="#333"/>
+      <!-- Layer 5: Knowledge Base -->
+      <rect x="100" y="358" width="320" height="18" rx="4" stroke="#999" stroke-width="1.5" fill="#fafafa"/>
+      <text x="260" y="371" font-size="9" fill="#666" text-anchor="middle">知识库 · 岗位图谱 · 优秀简历库 · 行业能力模型 · 学习资源库</text>
+    </svg>
+  </div>
+
+  <!-- Module cards -->
+  <h3>五大功能模块</h3>
+  <div class="feature-grid">
+    <div class="feature-card border">
+      <h4>🔬 简历多维诊断</h4>
+      <p>六级维度标准对简历全面体检。0-100 分评分 + 雷达图 + 风险预警 + 优化建议。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>✨ 定制化简历生成</h4>
+      <p>一份母版 → 多个定制版本。经历排序、关键词注入、动词升级、弱项提示。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>🔍 目标部门深度研究</h4>
+      <p>部门定位、关键人物画像、研究方向图谱、部门动态、校友网络（匿名）。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>📈 职业道路规划</h4>
+      <p>能力差距分析、学习路径推荐、发展时间线、进度追踪。</p>
+    </div>
+    <div class="feature-card border">
+      <h4>🔄 自评估与迭代</h4>
+      <p>三层漏斗评估（自动化 + LLM-as-Judge + 人工抽检），持续迭代闭环。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 模块一：简历诊断 ==================== -->
+  <h2>模块一：简历多维诊断</h2>
+  <p><strong>功能定位</strong>：用户进入 OfferMind 的第一站。用六级维度标准对简历进行全面体检。</p>
+
+  <h3>输入</h3>
+  <div class="flow-row">
+    <span class="flow-step border">📄 简历<br><small>PDF / Word / 图片</small></span>
+    <span class="flow-arrow">+</span>
+    <span class="flow-step border">📋 JD<br><small>文本粘贴 / 图片上传</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border" style="border-color:#7c3aed;">🔬 AI 诊断</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border" style="border-color:#2d8a4e;">📊 结构化报告</span>
+  </div>
+
+  <h3>诊断报告输出</h3>
+  <table class="output-table">
+    <thead>
+      <tr>
+        <th>报告板块</th>
+        <th>内容</th>
+        <th>用户价值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>总分与等级</strong></td>
+        <td>0-100 分 + 优秀/良好/合格/待改进</td>
+        <td>一目了然知道简历水平</td>
+      </tr>
+      <tr>
+        <td><strong>六级维度雷达图</strong></td>
+        <td>内容质量 / 结构格式 / 岗位匹配 / 诊断优化 / 公平性 / 模型能力</td>
+        <td>看清强弱项分布</td>
+      </tr>
+      <tr>
+        <td><strong>JD 拆解展示</strong></td>
+        <td>必须项 / 加分项 / 痛点项 三列展示</td>
+        <td>知道 AI 如何理解岗位</td>
+      </tr>
+      <tr>
+        <td><strong>风险预警清单</strong></td>
+        <td>时间悖论 / 职级不匹配 / 表述夸大</td>
+        <td>提前排雷，避免面试穿帮</td>
+      </tr>
+      <tr>
+        <td><strong>优化建议 + 改写示范</strong></td>
+        <td>原文 vs 优化版对比</td>
+        <td>看到"好的表述长什么样"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Radar chart illustration -->
+  <div class="illustration">
+    <svg width="320" height="280" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Radar background rings -->
+      <polygon points="160,40 240,100 220,190 100,190 80,100" stroke="#ddd" stroke-width="1" fill="none"/>
+      <polygon points="160,65 220,110 205,175 115,175 100,110" stroke="#ddd" stroke-width="1" fill="none"/>
+      <polygon points="160,90 200,120 190,160 130,160 120,120" stroke="#ddd" stroke-width="1" fill="none"/>
+      <!-- Radar data area -->
+      <polygon points="160,50 235,105 210,185 110,180 90,105" stroke="#7c3aed" stroke-width="2" fill="rgba(124,58,237,0.15)"/>
+      <!-- Data points -->
+      <circle cx="160" cy="50" r="4" fill="#7c3aed"/>
+      <circle cx="235" cy="105" r="4" fill="#ec4899"/>
+      <circle cx="210" cy="185" r="4" fill="#38bdf8"/>
+      <circle cx="110" cy="180" r="4" fill="#38bdf8"/>
+      <circle cx="90" cy="105" r="4" fill="#ec4899"/>
+      <!-- Axis lines -->
+      <line x1="160" y1="140" x2="160" y2="40" stroke="#ccc" stroke-width="1"/>
+      <line x1="160" y1="140" x2="240" y2="100" stroke="#ccc" stroke-width="1"/>
+      <line x1="160" y1="140" x2="220" y2="190" stroke="#ccc" stroke-width="1"/>
+      <line x1="160" y1="140" x2="100" y2="190" stroke="#ccc" stroke-width="1"/>
+      <line x1="160" y1="140" x2="80" y2="100" stroke="#ccc" stroke-width="1"/>
+      <!-- Labels -->
+      <text x="160" y="28" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">内容质量</text>
+      <text x="255" y="100" font-size="10" fill="#333" font-weight="bold">结构格式</text>
+      <text x="230" y="200" font-size="10" fill="#333" font-weight="bold">岗位匹配</text>
+      <text x="75" y="200" font-size="10" fill="#333" text-anchor="end" font-weight="bold">诊断优化</text>
+      <text x="65" y="100" font-size="10" fill="#333" text-anchor="end" font-weight="bold">公平性</text>
+      <!-- Center score -->
+      <circle cx="160" cy="140" r="22" stroke="#7c3aed" stroke-width="2" fill="#fff"/>
+      <text x="160" y="137" font-size="14" fill="#7c3aed" text-anchor="middle" font-weight="bold">78</text>
+      <text x="160" y="150" font-size="8" fill="#666" text-anchor="middle">总分</text>
+      <!-- Bottom label -->
+      <text x="160" y="240" font-size="10" fill="#666" text-anchor="middle">六级维度雷达图</text>
+      <!-- Legend -->
+      <rect x="100" y="252" width="8" height="8" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="112" y="260" font-size="9" fill="#666">您的简历</text>
+      <rect x="170" y="252" width="8" height="8" fill="none" stroke="#ddd" stroke-width="1"/>
+      <text x="182" y="260" font-size="9" fill="#666">行业基准</text>
+    </svg>
+  </div>
+
+  <p><strong>关键约束</strong>：硬性条件不满足 → 总分上限 59 分，标记"不建议投递"，说明原因。所有建议必须附带具体示范。</p>
+
+  <hr>
+
+  <!-- ==================== 模块二：定制化简历 ==================== -->
+  <h2>模块二：定制化简历生成</h2>
+  <p><strong>功能定位</strong>：一份原始简历 → 针对不同 JD → 自动生成多个定制版本。</p>
+
+  <h3>核心逻辑</h3>
+
+  <!-- Multi-version flow -->
+  <div class="illustration">
+    <svg width="460" height="160" viewBox="0 0 460 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Master resume -->
+      <rect x="10" y="50" width="100" height="50" rx="6" stroke="#333" stroke-width="2.5" fill="#f5f0d3"/>
+      <text x="60" y="72" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">📄 母版简历</text>
+      <text x="60" y="86" font-size="8" fill="#666" text-anchor="middle">永不覆盖</text>
+      <!-- Branch lines -->
+      <path d="M110 65 L160 30" stroke="#7c3aed" stroke-width="1.5"/>
+      <path d="M110 75 L160 75" stroke="#ec4899" stroke-width="1.5"/>
+      <path d="M110 85 L160 120" stroke="#38bdf8" stroke-width="1.5"/>
+      <!-- JD A -->
+      <rect x="160" y="10" width="80" height="35" rx="4" stroke="#7c3aed" stroke-width="2" fill="#fff"/>
+      <text x="200" y="25" font-size="8" fill="#7c3aed" text-anchor="middle">JD_A</text>
+      <text x="200" y="38" font-size="8" fill="#666" text-anchor="middle">强调微服务</text>
+      <!-- Arrow -->
+      <path d="M240 27 L270 27" stroke="#333" stroke-width="1.5"/>
+      <path d="M270 27 L266 23 L266 31 Z" fill="#333"/>
+      <!-- Version A -->
+      <rect x="275" y="10" width="80" height="35" rx="4" stroke="#7c3aed" stroke-width="2" fill="#f5f0ff"/>
+      <text x="315" y="25" font-size="8" fill="#7c3aed" text-anchor="middle" font-weight="bold">版本 A</text>
+      <text x="315" y="38" font-size="8" fill="#666" text-anchor="middle">突出微服务经历</text>
+      <!-- JD B -->
+      <rect x="160" y="57" width="80" height="35" rx="4" stroke="#ec4899" stroke-width="2" fill="#fff"/>
+      <text x="200" y="72" font-size="8" fill="#ec4899" text-anchor="middle">JD_B</text>
+      <text x="200" y="85" font-size="8" fill="#666" text-anchor="middle">强调高并发</text>
+      <!-- Arrow -->
+      <path d="M240 74 L270 74" stroke="#333" stroke-width="1.5"/>
+      <path d="M270 74 L266 70 L266 78 Z" fill="#333"/>
+      <!-- Version B -->
+      <rect x="275" y="57" width="80" height="35" rx="4" stroke="#ec4899" stroke-width="2" fill="#fff0f5"/>
+      <text x="315" y="72" font-size="8" fill="#ec4899" text-anchor="middle" font-weight="bold">版本 B</text>
+      <text x="315" y="85" font-size="8" fill="#666" text-anchor="middle">突出性能优化</text>
+      <!-- JD C -->
+      <rect x="160" y="104" width="80" height="35" rx="4" stroke="#38bdf8" stroke-width="2" fill="#fff"/>
+      <text x="200" y="119" font-size="8" fill="#38bdf8" text-anchor="middle">JD_C</text>
+      <text x="200" y="132" font-size="8" fill="#666" text-anchor="middle">强调团队管理</text>
+      <!-- Arrow -->
+      <path d="M240 121 L270 121" stroke="#333" stroke-width="1.5"/>
+      <path d="M270 121 L266 117 L266 125 Z" fill="#333"/>
+      <!-- Version C -->
+      <rect x="275" y="104" width="80" height="35" rx="4" stroke="#38bdf8" stroke-width="2" fill="#f0f8ff"/>
+      <text x="315" y="119" font-size="8" fill="#38bdf8" text-anchor="middle" font-weight="bold">版本 C</text>
+      <text x="315" y="132" font-size="8" fill="#666" text-anchor="middle">突出带团队经历</text>
+      <!-- Download icons -->
+      <text x="390" y="30" font-size="16" text-anchor="middle">📥</text>
+      <text x="390" y="77" font-size="16" text-anchor="middle">📥</text>
+      <text x="390" y="124" font-size="16" text-anchor="middle">📥</text>
+      <!-- Label -->
+      <text x="420" y="77" font-size="9" fill="#666" text-anchor="middle">Word</text>
+      <text x="420" y="89" font-size="9" fill="#666" text-anchor="middle">PDF</text>
+    </svg>
+  </div>
+
+  <h3>AI 自动执行的五步操作</h3>
+  <div class="flow-row">
+    <span class="flow-step border">1<br><small>经历排序</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">2<br><small>关键词注入</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">3<br><small>表述加权</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">4<br><small>动词升级</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">5<br><small>弱项处理</small></span>
+  </div>
+
+  <h3>岗位类型风格映射</h3>
+  <div style="overflow-x:auto;">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>岗位类型</th>
+          <th>侧重方向</th>
+          <th>表述风格</th>
+          <th>动词偏好</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🖥️ 技术岗</td>
+          <td>技术深度、架构能力、性能指标</td>
+          <td>强调技术选型、系统设计、量化结果</td>
+          <td>搭建、重构、优化、设计、实现</td>
+        </tr>
+        <tr>
+          <td>📱 产品岗</td>
+          <td>用户洞察、需求分析、业务闭环</td>
+          <td>强调用户调研、需求转化、商业价值</td>
+          <td>洞察、定义、推动、验证、迭代</td>
+        </tr>
+        <tr>
+          <td>🎨 设计岗</td>
+          <td>设计思维、用户研究、视觉表达</td>
+          <td>强调设计方法论、用户反馈、作品集</td>
+          <td>构思、设计、测试、优化、落地</td>
+        </tr>
+        <tr>
+          <td>📊 市场/运营</td>
+          <td>增长策略、转化漏斗、ROI</td>
+          <td>强调渠道运营、转化数据、活动策划</td>
+          <td>策划、运营、增长、转化、撬动</td>
+        </tr>
+        <tr>
+          <td>👔 管理岗</td>
+          <td>团队领导、战略决策、资源整合</td>
+          <td>强调团队规模、项目管理、跨部门协同</td>
+          <td>带领、制定、协调、决策、推动</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 模块三：部门研究 ==================== -->
+  <h2>模块三：目标部门深度研究</h2>
+  <p><strong>功能定位</strong>：帮助求职者在投递前，了解目标岗位背后的部门、人物、研究方向——消除信息不对称。</p>
+
+  <table class="output-table">
+    <thead>
+      <tr>
+        <th>报告板块</th>
+        <th>内容</th>
+        <th>信息来源</th>
+        <th>呈现方式</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>🏢 部门定位</strong></td>
+        <td>规模、核心职能、组织架构位置</td>
+        <td>官网 / 年报 / 招聘页</td>
+        <td>摘要卡片</td>
+      </tr>
+      <tr>
+        <td><strong>👤 关键人物画像</strong></td>
+        <td>负责人姓名、教育背景、职业轨迹</td>
+        <td>LinkedIn / 学术主页</td>
+        <td>人物卡片</td>
+      </tr>
+      <tr>
+        <td><strong>🔬 研究方向图谱</strong></td>
+        <td>近期论文 / 专利标题、技术博客关键词</td>
+        <td>Google Scholar / 专利库</td>
+        <td>关键词云 + 时间线</td>
+      </tr>
+      <tr>
+        <td><strong>📰 部门动态</strong></td>
+        <td>近期大事件、战略调整、新项目</td>
+        <td>新闻 / 公司博客</td>
+        <td>动态列表</td>
+      </tr>
+      <tr>
+        <td><strong>🎓 校友网络（匿名）</strong></td>
+        <td>有相同教育背景的成员数量统计</td>
+        <td>LinkedIn 交叉匹配</td>
+        <td>匿名化统计卡片</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>五条伦理红线</h3>
+  <ol class="ethics-list">
+    <li>不呈现个人联系方式——系统搜索时自动过滤</li>
+    <li>不生成"套近乎"话术——系统指令明确禁止</li>
+    <li>所有结论附带可追溯来源——每条信息附 URL 链接</li>
+    <li>不主动推断未公开内容——搜索结果为空时如实告知</li>
+    <li>搜索信息少时诚实说明——"该部门的公开信息较少，仅供参考"</li>
+  </ol>
+
+  <hr>
+
+  <!-- ==================== 模块四：职业规划 ==================== -->
+  <h2>模块四：职业道路规划</h2>
+  <p><strong>功能定位</strong>：帮助用户在更长的时间尺度上规划职业发展。从"单次工具"走向"长期顾问"的关键模块。</p>
+
+  <h3>报告结构</h3>
+  <div class="feature-grid">
+    <div class="feature-card border">
+      <h4>Part 1</h4>
+      <p><strong>当前职业画像</strong><br>硬技能清单、软技能评估、经验领域、职级定位</p>
+    </div>
+    <div class="feature-card border">
+      <h4>Part 2</h4>
+      <p><strong>目标岗位能力模型</strong><br>目标岗位需要的硬技能、软技能、经验、资质</p>
+    </div>
+    <div class="feature-card border">
+      <h4>Part 3</h4>
+      <p><strong>能力差距分析</strong><br>硬技能/软技能/经验/资质差距，分优先级</p>
+    </div>
+    <div class="feature-card border">
+      <h4>Part 4</h4>
+      <p><strong>学习路径推荐</strong><br>分阶段推荐课程/书籍/项目/证书，附带链接</p>
+    </div>
+    <div class="feature-card border">
+      <h4>Part 5</h4>
+      <p><strong>发展时间线</strong><br>3-6个月 / 1年 / 3年 里程碑规划</p>
+    </div>
+    <div class="feature-card border">
+      <h4>Part 6</h4>
+      <p><strong>部门联动（可选）</strong><br>目标部门研究方向映射到学习建议</p>
+    </div>
+  </div>
+
+  <h3>学习路径示例</h3>
+  <div class="code-block">📚 你的个性化学习路径
+
+【🔴 优先级：高】立即开始（1-3个月内）
+  ├── 课程：《SQL 基础入门》（Coursera）
+  ├── 书籍：《精益数据分析》（豆瓣链接）
+  └── 项目：用公开数据集完成一次用户增长分析
+  → 预计投入：每周 3-4 小时
+
+【🟡 优先级：中】近期规划（3-6个月内）
+  ├── 证书：Google Analytics 认证
+  └── 实践：在目前工作中主动承担数据分析职责
+  → 预计投入：每周 2-3 小时
+
+【🟢 优先级：低】长期积累（6-12个月以上）
+  ├── 深入学习：Python 数据分析库（Pandas/NumPy）
+  └── 拓展：关注行业增长案例，建立方法论库
+  → 预计投入：每周 1-2 小时</div>
+
+  <h3>发展时间线示例</h3>
+  <div class="timeline">
+    <div class="timeline-item border">
+      <span class="phase-tag">3-6个月</span>
+      <h4>能力扎实的执行者</h4>
+      <p>掌握 SQL 基础查询 · 独立完成一次完整的增长活动策划 · 完成《精益数据分析》阅读</p>
+      <p><em>→ 阶段性评估：能独立产出数据支撑的活动方案</em></p>
+    </div>
+    <div class="timeline-item border">
+      <span class="phase-tag">1年</span>
+      <h4>独当一面的操盘手</h4>
+      <p>独立负责一条产品线的运营策略 · 熟练掌握 BI 工具（Tableau/神策） · 形成自己的运营方法论</p>
+      <p><em>→ 阶段性评估：能主导季度运营规划</em></p>
+    </div>
+    <div class="timeline-item border">
+      <span class="phase-tag">3年</span>
+      <h4>运营专家 / 运营负责人</h4>
+      <p>带领 3-5 人小团队完成业务目标 · 在行业内建立初步影响力 · 具备跨部门战略协调能力</p>
+      <p><em>→ 阶段性评估：能参与公司级业务决策</em></p>
+    </div>
+  </div>
+
+  <h3>进度追踪功能</h3>
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number">✅</span>
+      <span class="stat-label">标记完成 · 勾选已完成的学习项</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">📊</span>
+      <span class="stat-label">进度百分比 · 如"已完成 3/12 项"</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">➡️</span>
+      <span class="stat-label">自动推荐下一步</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">🔄</span>
+      <span class="stat-label">重新评估 · 上传新简历重新分析</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 模块五：自评估 ==================== -->
+  <h2>模块五：产品自评估与持续迭代</h2>
+  <p><strong>功能定位</strong>：OfferMind 内置的"体检系统"——持续监测诊断质量、公平性和稳定性。</p>
+
+  <h3>三层漏斗评估体系</h3>
+
+  <!-- Evaluation pyramid -->
+  <div class="illustration">
+    <svg width="400" height="200" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Layer 3: top -->
+      <polygon points="200,15 250,65 150,65" stroke="#333" stroke-width="2" fill="#f5e6d3"/>
+      <text x="200" y="45" font-size="9" fill="#333" text-anchor="middle" font-weight="bold">L3: 人工专家抽检</text>
+      <text x="200" y="57" font-size="8" fill="#666" text-anchor="middle">20% 权重</text>
+      <!-- Layer 2: middle -->
+      <polygon points="150,65 250,65 280,115 120,115" stroke="#333" stroke-width="2" fill="#d3e6f5"/>
+      <text x="200" y="88" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">L2: LLM-as-Judge</text>
+      <text x="200" y="103" font-size="8" fill="#666" text-anchor="middle">40% 权重 · Claude / GPT-4o 裁判</text>
+      <!-- Layer 1: bottom -->
+      <polygon points="120,115 280,115 320,165 80,165" stroke="#333" stroke-width="2" fill="#e6f5d3"/>
+      <text x="200" y="138" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">L1: 自动化客观评测</text>
+      <text x="200" y="153" font-size="8" fill="#666" text-anchor="middle">40% 权重 · 数字密度、关键词覆盖率、格式合规</text>
+      <!-- Labels -->
+      <text x="200" y="185" font-size="10" fill="#333" text-anchor="middle">三层漏斗评估体系</text>
+      <!-- Side arrows -->
+      <path d="M80 40 L60 40 L60 160 L80 160" stroke="#999" stroke-width="1" stroke-dasharray="3 2" fill="none"/>
+      <text x="50" y="105" font-size="8" fill="#999" text-anchor="middle">精度</text>
+    </svg>
+  </div>
+
+  <h3>可信度校验</h3>
+  <table class="output-table">
+    <thead>
+      <tr>
+        <th>校验项</th>
+        <th>合格阈值</th>
+        <th>不达标处理</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>人机一致性（ICC）</td>
+        <td>> 0.75</td>
+        <td>调整裁判模型提示词</td>
+      </tr>
+      <tr>
+        <td>裁判模型自洽性（3次标准差）</td>
+        <td>< 3 分</td>
+        <td>细化评分锚点</td>
+      </tr>
+      <tr>
+        <td>维度区分度（各维度方差）</td>
+        <td>> 10</td>
+        <td>拉大量纲</td>
+      </tr>
+      <tr>
+        <td>公平性校验（FAIRE）</td>
+        <td>波动 < 2%</td>
+        <td>增加"禁止考虑人口统计属性"指令</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>持续迭代闭环</h3>
+  <div class="flow-row">
+    <span class="flow-step border">用户使用</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">收集 Bad Case</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">每周人工审查</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">更新评测集</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border">回归测试</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border" style="border-color:#2d8a4e;">部署新版本</span>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 五、视觉风格 ==================== -->
+  <h2>五、产品视觉风格</h2>
+
+  <h3>设计原则</h3>
+  <div class="principle-grid">
+    <div class="principle-card border">
+      <div class="principle-icon">🌑</div>
+      <h4>深邃</h4>
+      <p>深色背景营造沉浸、专注的氛围</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">✨</div>
+      <h4>科技感</h4>
+      <p>玻璃态、光晕、微交互传递 AI 原生品牌调性</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">🎯</div>
+      <h4>聚焦</h4>
+      <p>信息层级清晰，引导用户视线自然流动</p>
+    </div>
+    <div class="principle-card border">
+      <div class="principle-icon">💜</div>
+      <h4>温度</h4>
+      <p>深色但不冰冷，紫色/粉色光晕带来柔和感</p>
+    </div>
+  </div>
+
+  <h3>色彩体系</h3>
+  <div class="color-row">
+    <div class="color-swatch" style="background:#0b0d15;">#0b0d15</div>
+    <div class="color-swatch" style="background:#1a1025;">#1a1025</div>
+    <div class="color-swatch" style="background:#7c3aed;">#7c3aed</div>
+    <div class="color-swatch" style="background:#ec4899;">#ec4899</div>
+    <div class="color-swatch" style="background:#38bdf8;">#38bdf8</div>
+    <div class="color-swatch" style="background:#a78bfa;">#a78bfa</div>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>元素</th>
+        <th>规范</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>背景</strong></td>
+        <td>深色渐变 #0b0d15 → #1a1025 + 紫/粉光晕</td>
+      </tr>
+      <tr>
+        <td><strong>卡片</strong></td>
+        <td>Glassmorphism：rgba(255,255,255,0.06) + backdrop-filter: blur(16px) + 圆角 20px</td>
+      </tr>
+      <tr>
+        <td><strong>主色</strong></td>
+        <td>紫粉渐变 #7c3aed → #ec4899（按钮/强调元素）</td>
+      </tr>
+      <tr>
+        <td><strong>数据色</strong></td>
+        <td>青紫渐变 #38bdf8 → #a78bfa（数字/进度条）</td>
+      </tr>
+      <tr>
+        <td><strong>文字</strong></td>
+        <td>白色 #ffffff / 浅灰 #e0e0e0</td>
+      </tr>
+      <tr>
+        <td><strong>交互</strong></td>
+        <td>卡片跟随鼠标 3D 微倾斜（最大 ±8°）+ 悬停上浮</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 六、技术架构 ==================== -->
+  <h2>六、技术架构概要</h2>
+
+  <h3>技术栈</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>层级</th>
+        <th>技术选型</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🖥️ 前端</td>
+        <td>Vue 3 / React + Tailwind CSS</td>
+        <td>深色玻璃态 UI</td>
+      </tr>
+      <tr>
+        <td>☁️ 前端部署</td>
+        <td>Netlify</td>
+        <td>已部署，支持自动部署</td>
+      </tr>
+      <tr>
+        <td>⚙️ 后端服务</td>
+        <td>Netlify Functions</td>
+        <td>Serverless，无需运维</td>
+      </tr>
+      <tr>
+        <td>🧠 大模型底座</td>
+        <td>DeepSeek-v4 / GLM-5.2 / Qwen3.7</td>
+        <td>MoE-level 路由，按任务动态调用</td>
+      </tr>
+      <tr>
+        <td>🔍 搜索 API</td>
+        <td>Tavily / 百度搜索 API</td>
+        <td>部门研究信息获取</td>
+      </tr>
+      <tr>
+        <td>📚 知识库</td>
+        <td>向量数据库（Milvus / pgvector）</td>
+        <td>优秀简历/技能图谱/能力模型</td>
+      </tr>
+      <tr>
+        <td>📊 评测系统</td>
+        <td>自建评测 Pipeline</td>
+        <td>L1/L2/L3 三层自动化</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Agent 协作架构</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Agent</th>
+        <th>职责</th>
+        <th>模型偏好</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>🧠 调度中枢</strong></td>
+        <td>任务拆解、分配、聚合</td>
+        <td>不调用模型，逻辑路由</td>
+      </tr>
+      <tr>
+        <td><strong>🔬 诊断专家</strong></td>
+        <td>JD 拆解、六级评分、风险预警</td>
+        <td>DeepSeek-v4（推理强）</td>
+      </tr>
+      <tr>
+        <td><strong>🔍 研究员专家</strong></td>
+        <td>信息搜索、聚合、结构化</td>
+        <td>GLM-5.2（提取强）</td>
+      </tr>
+      <tr>
+        <td><strong>✨ 改写专家</strong></td>
+        <td>简历优化、多版本生成</td>
+        <td>Qwen3.7（生成强）</td>
+      </tr>
+      <tr>
+        <td><strong>📈 规划专家</strong></td>
+        <td>差距分析、路径推荐</td>
+        <td>DeepSeek-v4（推理强）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 七、路线图 ==================== -->
+  <h2>七、产品路线图</h2>
+
+  <!-- Roadmap SVG -->
+  <div class="illustration">
+    <svg width="500" height="110" viewBox="0 0 500 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Timeline base -->
+      <path d="M30 55 L470 55" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Phase 1: done -->
+      <circle cx="70" cy="55" r="12" stroke="#2d8a4e" stroke-width="2.5" fill="#e6f5d3"/>
+      <text x="70" y="59" font-size="10" fill="#2d8a4e" text-anchor="middle" font-weight="bold">✓</text>
+      <text x="70" y="30" font-size="9" fill="#2d8a4e" text-anchor="middle" font-weight="bold">Phase 1</text>
+      <text x="70" y="80" font-size="8" fill="#666" text-anchor="middle">基础诊断</text>
+      <text x="70" y="92" font-size="8" fill="#2d8a4e" text-anchor="middle">✅ 已完成</text>
+      <!-- Phase 2: current -->
+      <circle cx="170" cy="55" r="14" stroke="#7c3aed" stroke-width="3" fill="#f5f0ff"/>
+      <text x="170" y="59" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="bold">2</text>
+      <text x="170" y="28" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="bold">Phase 2</text>
+      <text x="170" y="80" font-size="8" fill="#666" text-anchor="middle">诊断升级</text>
+      <text x="170" y="92" font-size="8" fill="#7c3aed" text-anchor="middle" font-weight="bold">← 当前</text>
+      <!-- Phase 3 -->
+      <circle cx="270" cy="55" r="12" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="270" y="59" font-size="9" fill="#333" text-anchor="middle">3</text>
+      <text x="270" y="30" font-size="9" fill="#333" text-anchor="middle">Phase 3</text>
+      <text x="270" y="80" font-size="8" fill="#666" text-anchor="middle">深度研究</text>
+      <text x="270" y="92" font-size="8" fill="#666" text-anchor="middle">Q3 2026</text>
+      <!-- Phase 4 -->
+      <circle cx="370" cy="55" r="12" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="370" y="59" font-size="9" fill="#333" text-anchor="middle">4</text>
+      <text x="370" y="30" font-size="9" fill="#333" text-anchor="middle">Phase 4</text>
+      <text x="370" y="80" font-size="8" fill="#666" text-anchor="middle">职业规划</text>
+      <text x="370" y="92" font-size="8" fill="#666" text-anchor="middle">Q4 2026</text>
+      <!-- Phase 5 -->
+      <circle cx="450" cy="55" r="12" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="450" y="59" font-size="9" fill="#333" text-anchor="middle">5</text>
+      <text x="450" y="30" font-size="9" fill="#333" text-anchor="middle">Phase 5</text>
+      <text x="450" y="80" font-size="8" fill="#666" text-anchor="middle">自评估</text>
+      <text x="450" y="92" font-size="8" fill="#666" text-anchor="middle">持续演进</text>
+    </svg>
+  </div>
+
+  <table class="output-table">
+    <thead>
+      <tr>
+        <th>阶段</th>
+        <th>时间</th>
+        <th>核心目标</th>
+        <th>交付内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Phase 1 ✅</strong></td>
+        <td>已完成</td>
+        <td>基础诊断能力</td>
+        <td>指标体系构建、前端上传页面、DeepSeek 接入、Netlify 部署</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 2</strong></td>
+        <td>当前阶段</td>
+        <td>诊断升级 + 定制化简历</td>
+        <td>JD 拆解、六级维度评分、风险预警、一键优化、下载 Word/PDF</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 3</strong></td>
+        <td>Q3 2026</td>
+        <td>深度研究 + 多版本管理</td>
+        <td>部门搜索、人物画像、研究方向图谱、多 JD 版本管理</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 4</strong></td>
+        <td>Q4 2026</td>
+        <td>职业规划 + 学习路径</td>
+        <td>能力差距分析、学习推荐、发展时间线、进度追踪</td>
+      </tr>
+      <tr>
+        <td><strong>Phase 5</strong></td>
+        <td>持续演进</td>
+        <td>自评估闭环</td>
+        <td>评测系统上线、Bad Case 收集、版本迭代追踪</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 八、成功指标 ==================== -->
+  <h2>八、成功指标</h2>
+
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number">≥ 4.2</span>
+      <span class="stat-label">诊断满意度（1-5分）</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">≥ 30%</span>
+      <span class="stat-label">深度研究点击率</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">≥ 40%</span>
+      <span class="stat-label">定制化简历下载率</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">≥ 30%</span>
+      <span class="stat-label">7 日留存率</span>
+    </div>
+  </div>
+
+  <table class="output-table">
+    <thead>
+      <tr>
+        <th>指标</th>
+        <th>衡量标准</th>
+        <th>收集方式</th>
+        <th>目标值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>诊断满意度</td>
+        <td>用户评分（1-5）</td>
+        <td>报告底部反馈</td>
+        <td>≥ 4.2</td>
+      </tr>
+      <tr>
+        <td>深度研究点击率</td>
+        <td>诊断后点击"研究部门"的比例</td>
+        <td>前端埋点</td>
+        <td>≥ 30%</td>
+      </tr>
+      <tr>
+        <td>定制化简历下载率</td>
+        <td>优化后下载简历的比例</td>
+        <td>前端埋点</td>
+        <td>≥ 40%</td>
+      </tr>
+      <tr>
+        <td>职业规划模块使用率</td>
+        <td>访问用户中使用规划功能的比例</td>
+        <td>前端埋点</td>
+        <td>≥ 20%（上线3个月）</td>
+      </tr>
+      <tr>
+        <td>7 日留存率</td>
+        <td>首次访问后 7 天内再次访问</td>
+        <td>前端埋点</td>
+        <td>≥ 30%</td>
+      </tr>
+      <tr>
+        <td>人机一致性</td>
+        <td>ICC（组内相关系数）</td>
+        <td>自评估系统</td>
+        <td>> 0.75</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 附录 ==================== -->
+  <h2>九、附录</h2>
+
+  <h3>术语表</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>术语</th>
+        <th>释义</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>JD</strong></td><td>Job Description，岗位描述</td></tr>
+      <tr><td><strong>STAR</strong></td><td>Situation-Task-Action-Result，情境-任务-行动-结果</td></tr>
+      <tr><td><strong>ICC</strong></td><td>Intraclass Correlation Coefficient，组内相关系数，衡量评分一致性</td></tr>
+      <tr><td><strong>Ground Truth</strong></td><td>基准答案，此处指 HR 专家评分的标准结果</td></tr>
+      <tr><td><strong>LLM-as-Judge</strong></td><td>用大模型作为裁判评估另一个模型的输出质量</td></tr>
+      <tr><td><strong>MoE-level Routing</strong></td><td>多模型路由，根据任务类型动态选择最优模型</td></tr>
+      <tr><td><strong>Glassmorphism</strong></td><td>玻璃态设计风格，磨砂透明+模糊背景的 UI 风格</td></tr>
+    </tbody>
+  </table>
+
+  <h3>参考信源</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>类型</th>
+        <th>信源</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>理论框架</strong></td><td>麦克利兰胜任力模型、素质冰山模型、STAR 法则</td></tr>
+      <tr><td><strong>书籍</strong></td><td>《人员素质测评》《人才测评》《招聘、甄选与录用》</td></tr>
+      <tr><td><strong>评测数据集</strong></td><td>ResumeBench、CareerCorpus、RJDB、PJB、FAIRE、FairCV</td></tr>
+      <tr><td><strong>前沿参考</strong></td><td>OpenSquilla（多模型集成）、JiuwenSwarm（蜂群智能）</td></tr>
+    </tbody>
+  </table>
+
+  <p style="text-align:center;opacity:0.5;margin-top:2rem;">
+    <small>文档版本：V3.0 · 最后更新：2026年7月</small>
+  </p>
+
+  <hr>
+
+  <footer class="site-footer">
+    <p>Eileen's Flowing Thoughts · 用 DoodleCSS 构建</p>
+  </footer>
+
+</body>
+</html>
