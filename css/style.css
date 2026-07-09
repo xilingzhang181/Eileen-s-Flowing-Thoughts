@@ -1,5 +1,5 @@
-/* Eileen's Flowing Thoughts — Hand-drawn sketch style */
-@import url('https://fonts.googleapis.com/css2?family=Short+Stack&family=Caveat:wght@400;600&display=swap');
+/* Eileen's Flowing Thoughts — Hand-drawn sketch style (refined) */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Caveat:wght@400;600&family=Short+Stack&display=swap');
 
 /* ========== CSS Variables ========== */
 :root {
@@ -23,9 +23,9 @@
 }
 
 body {
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 1.5rem 2rem 2rem;
+  padding: 1.5rem 2.5rem 2rem;
   background: var(--bg);
   color: var(--ink);
   font-family: 'Short Stack', 'Segoe UI', cursive;
@@ -44,15 +44,15 @@ a:hover {
 /* ========== Header ========== */
 .site-header {
   text-align: center;
-  padding: 2rem 0 0.8rem;
+  padding: 1.8rem 0 0.5rem;
   position: relative;
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: 2.6rem;
-  font-family: 'Caveat', 'Short Stack', cursive;
-  font-weight: 600;
+  font-size: 3rem;
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--ink);
 }
@@ -65,26 +65,29 @@ a:hover {
 /* Header decorative elements */
 .header-deco-left {
   position: absolute;
-  left: 10%;
-  top: 1.5rem;
+  left: 8%;
+  top: 2rem;
   display: flex;
   align-items: flex-start;
-  gap: 4px;
-  opacity: 0.6;
+  gap: 6px;
+  opacity: 0.55;
 }
 
 .header-deco-right {
   position: absolute;
-  right: 12%;
-  top: 1rem;
-  opacity: 0.6;
+  right: 10%;
+  top: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.55;
 }
 
 .subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--ink-light);
-  margin: 0.3rem 0 1.2rem;
-  opacity: 0.7;
+  margin: 0.15rem 0 1rem;
+  opacity: 0.6;
 }
 
 /* Stars */
@@ -94,31 +97,36 @@ a:hover {
 }
 
 .star-small {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
-.star-swing {
-  font-size: 1.2rem;
+.star-med {
+  font-size: 0.85rem;
+}
+
+.star-sparkle {
+  font-size: 1rem;
   animation: twinkle 3s ease-in-out infinite;
 }
 
-.star-deco {
+.deco-feather-star {
   position: absolute;
-  top: 5px;
-  right: -10px;
-  font-size: 0.8rem;
+  top: 8px;
+  right: 20px;
+  font-size: 1rem;
+  opacity: 0.5;
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.5; transform: rotate(0deg); }
-  50% { opacity: 1; transform: rotate(15deg); }
+  0%, 100% { opacity: 0.4; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(12deg) scale(1.1); }
 }
 
-/* Nav */
+/* Nav — straight underline for active */
 nav ul {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 2.2rem;
   flex-wrap: wrap;
   padding: 0;
   margin: 0;
@@ -130,23 +138,23 @@ nav ul li {
 }
 
 nav ul li a {
-  font-size: 1.15rem;
-  padding: 0.2rem 0;
+  font-size: 1.1rem;
+  padding: 0.15rem 0;
   transition: color 0.2s;
 }
 
 nav ul li a.active {
   text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: var(--accent);
+  text-decoration-style: solid;
   text-underline-offset: 4px;
   text-decoration-thickness: 2px;
 }
 
 nav ul li a:hover {
   text-decoration: underline;
-  text-decoration-style: wavy;
+  text-decoration-style: solid;
   text-decoration-color: var(--border-light);
+  text-underline-offset: 4px;
 }
 
 /* ========== Dividers ========== */
@@ -155,7 +163,7 @@ nav ul li a:hover {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1.8rem 0;
+  margin: 1.5rem 0;
   user-select: none;
 }
 
@@ -167,72 +175,127 @@ nav ul li a:hover {
 
 .dot-dot-dot {
   color: var(--border-light);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: 3px;
 }
 
 .leaf-deco {
-  font-size: 0.9rem;
-  opacity: 0.5;
+  font-size: 0.85rem;
+  opacity: 0.45;
 }
 
 /* ========== Hero ========== */
 .hero {
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
-.hero-decorations {
+.hero-layout {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 0.5rem;
 }
 
-.hero-deco {
+/* Hero side decorations */
+.hero-side {
   flex: 0 0 auto;
+  position: relative;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 180px;
+  opacity: 0.85;
+}
+
+.hero-left-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.deco-cloud {
+  margin-bottom: -8px;
+  margin-left: -30px;
+  opacity: 0.7;
+}
+
+.deco-book {
+  display: block;
+}
+
+.deco-plant {
+  margin-top: -5px;
+  margin-left: -40px;
+  opacity: 0.85;
+}
+
+.hero-right {
+  width: 130px;
   position: relative;
   opacity: 0.85;
 }
 
+.deco-feather {
+  display: block;
+}
+
+/* Hero center */
 .hero-center {
   flex: 1;
   text-align: center;
   min-width: 0;
+  padding-top: 0.5rem;
 }
 
 .hero-title {
   font-family: 'Caveat', 'Short Stack', cursive;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin: 0 0 0.8rem;
+  margin: 0 0 0;
   color: var(--ink);
 }
 
 .heart-icon {
   color: #f0b0a0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   vertical-align: super;
 }
 
+.hero-title-underline {
+  display: block;
+  margin: 0.2rem auto 0.8rem;
+  max-width: 200px;
+  opacity: 0.6;
+}
+
 .hero-desc {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--ink-light);
   line-height: 2;
-  margin: 0 0 1rem;
+  margin: 0 0 0.8rem;
+}
+
+.hero-dash-row {
+  margin: 0.4rem auto;
+  max-width: 350px;
+  opacity: 0.45;
 }
 
 .hero-dash-line {
-  margin: 0.5rem auto;
-  max-width: 320px;
-  opacity: 0.5;
+  width: 100%;
+  height: 24px;
 }
 
 .hero-icons {
   display: flex;
   justify-content: center;
   gap: 2.5rem;
-  margin-top: 0.8rem;
-  opacity: 0.75;
+  margin-top: 0.6rem;
+  opacity: 0.7;
 }
 
 .hero-icon {
@@ -243,43 +306,20 @@ nav ul li a:hover {
   transform: translateY(-3px) rotate(5deg);
 }
 
-/* Hero decorations positioning */
-.hero-deco-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.hero-deco-right {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.deco-cloud {
-  margin-top: -10px;
-  margin-left: -20px;
-}
-
-.deco-plant {
-  margin-top: -15px;
-}
-
 /* ========== Section Titles ========== */
 .section-title {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   font-family: 'Caveat', 'Short Stack', cursive;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin: 1.5rem 0 0.8rem;
+  margin: 1.2rem 0 0.6rem;
   color: var(--ink);
 }
 
 .section-icon {
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 /* ========== Cards ========== */
@@ -287,7 +327,7 @@ nav ul li a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin: 1rem 0;
+  margin: 0.8rem 0;
 }
 
 .sketch-card {
@@ -308,11 +348,11 @@ nav ul li a:hover {
 .sketch-card h3 {
   margin: 0.5rem 0 0.3rem;
   font-family: 'Caveat', 'Short Stack', cursive;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 
 .sketch-card p {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--ink-light);
   margin: 0.3rem 0;
 }
@@ -328,7 +368,7 @@ nav ul li a:hover {
 }
 
 .card-meta {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--ink-light);
   opacity: 0.55;
 }
@@ -336,34 +376,34 @@ nav ul li a:hover {
 /* Card cover */
 .card-cover {
   width: 100%;
-  height: 150px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   border: 1px dashed var(--border-light);
   border-radius: 2px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .card-cover-emoji {
-  font-size: 3rem;
+  font-size: 2.8rem;
 }
 
 .card-star {
   position: absolute;
   top: 6px;
   right: 8px;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  font-size: 0.75rem;
+  opacity: 0.55;
 }
 
 /* Tape decoration */
 .tape {
   position: absolute;
-  width: 50px;
-  height: 18px;
-  opacity: 0.35;
+  width: 48px;
+  height: 16px;
+  opacity: 0.32;
   z-index: 2;
 }
 
@@ -388,32 +428,32 @@ nav ul li a:hover {
   position: absolute;
   bottom: 8px;
   right: 10px;
-  width: 16px;
-  height: 30px;
+  width: 14px;
+  height: 28px;
   border: 1.5px solid var(--border-light);
-  border-radius: 8px 8px 0 0;
-  opacity: 0.35;
+  border-radius: 7px 7px 0 0;
+  opacity: 0.3;
 }
 
 .paperclip::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 3px;
+  left: 2px;
   width: 8px;
-  height: 18px;
+  height: 16px;
   border: 1.5px solid var(--border-light);
-  border-radius: 5px 5px 0 0;
+  border-radius: 4px 4px 0 0;
   border-bottom: none;
 }
 
 /* Section link */
 .section-link {
-  margin: 0.8rem 0 0;
+  margin: 0.6rem 0 0;
 }
 
 .section-link a {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--ink-light);
   border-bottom: 1px dashed var(--border-light);
 }
@@ -434,12 +474,12 @@ nav ul li a:hover {
 .search-toggle {
   background: var(--bg);
   border: 1.5px solid var(--border-light);
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 0.35rem 0.45rem;
+  padding: 0.4rem 0.5rem;
   display: flex;
   align-items: center;
-  opacity: 0.7;
+  opacity: 0.65;
   transition: opacity 0.2s, border-color 0.2s;
 }
 
@@ -550,32 +590,37 @@ nav ul li a:hover {
 .site-footer {
   text-align: center;
   padding: 2rem 0 1rem;
-  margin-top: 2rem;
-  font-size: 0.88rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
   color: var(--ink-light);
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 /* ========== Responsive ========== */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   body {
     padding: 1rem 1.2rem 1.5rem;
   }
 
   .site-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
-  .hero-decorations {
+  .hero-layout {
     flex-direction: column;
+    align-items: center;
   }
 
-  .hero-deco {
+  .hero-side {
     display: none;
   }
 
+  .hero-center {
+    padding-top: 0;
+  }
+
   .hero-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .card-grid {
@@ -587,7 +632,7 @@ nav ul li a:hover {
   }
 
   nav ul li a {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .header-deco-left,
@@ -598,11 +643,11 @@ nav ul li a:hover {
 
 @media (max-width: 480px) {
   .site-header h1 {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 
   nav ul {
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
 
   .hero-icons {
