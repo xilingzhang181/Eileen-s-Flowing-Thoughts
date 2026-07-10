@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 90" width="240" height="90">
+<defs>
+  <style>
+    .ink{stroke:#353535;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .ink2{stroke:#4a4a4a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .soft{stroke:#7a7a7a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  </style>
+</defs>
+<path class="ink" d="M15 55 C35 30, 52 26, 76 38 C96 47, 106 52, 126 48 C152 42, 170 38, 208 37"/>
+<path class="ink2" d="M44 30 l6 -5 M50 28 l0 -8 M56 30 l6 -5" opacity="0.7"/>
+<path d="M168 9 l7 18 20 1 -16 11 6 19 -17 -11 -17 11 6 -19 -16 -11 20 -1z" fill="#efd37a" stroke="#353535" stroke-width="3" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 60" width="90" height="60">
+<defs>
+  <style>
+    .ink{stroke:#353535;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .ink2{stroke:#4a4a4a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .soft{stroke:#7a7a7a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  </style>
+</defs>
+<path d="M5 30 L82 6 L50 54 L42 35 Z" fill="#f5f8fc" stroke="#5d6e7d" stroke-width="2.5" stroke-linejoin="round"/>
+<path class="ink2" d="M82 6 L42 35 M42 35 L50 54"/>
+</svg>

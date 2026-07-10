@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 85" width="60" height="85">
+<defs>
+  <style>
+    .ink{stroke:#353535;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .ink2{stroke:#4a4a4a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .soft{stroke:#7a7a7a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  </style>
+</defs>
+<path d="M30 8 C17 8, 8 18, 8 31 C8 40, 13 48, 20 54 C23 57, 24 62, 24 66 H36 C36 62, 38 57, 41 54 C48 48, 52 40, 52 31 C52 18, 43 8, 30 8 Z" fill="#f7e09c" stroke="#4a4a4a" stroke-width="2.6"/>
+<path class="ink2" d="M24 66 H36 M25 71 H35 M26 76 H34"/>
+<rect x="23" y="66" width="14" height="14" rx="3" fill="#dfd6c3" stroke="#4a4a4a" stroke-width="2"/>
+<path class="ink2" d="M24 31 C28 24, 33 24, 36 31 C36 36, 34 38, 32 42 H28 C26 38, 24 36, 24 31Z"/>
+<path class="ink2" d="M29 42 H31"/>
+<path d="M30 0 v5 M10 10 l4 4 M50 10 l-4 4 M4 30 h5 M56 30 h-5" stroke="#efcf76" stroke-width="3" stroke-linecap="round"/>
+</svg>

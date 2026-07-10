@@ -12,17 +12,13 @@
 <body>
 
   <header class="site-header">
-    <!-- Left decoration: curved line + star + star -->
+    <!-- Left: curved swoosh + star -->
     <div class="header-deco-left">
-      <svg width="50" height="30" viewBox="0 0 50 30" fill="none">
-        <path d="M5 25 Q15 5 25 10 Q35 15 45 5" stroke="#8B7355" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      </svg>
-      <span class="star star-small">&#9734;</span>
+      <img src="handdrawn_svg_icons_pack/header_swoosh_star.svg" alt="" class="deco-svg header-swoosh">
     </div>
-    <!-- Right decoration: sparkle + star -->
+    <!-- Right: sparkles cluster -->
     <div class="header-deco-right">
-      <span class="star star-sparkle">&#10022;</span>
-      <span class="star star-med">&#9734;</span>
+      <img src="handdrawn_svg_icons_pack/sparkles_cluster.svg" alt="" class="deco-svg header-sparkles">
     </div>
 
     <h1 class="site-title">Eileen's Flowing Thoughts</h1>
@@ -38,18 +34,10 @@
         <li><a href="about.html">关于</a></li>
       </ul>
     </nav>
-    <!-- Search: notepad + magnifier icon -->
+    <!-- Search: notepad + magnifier -->
     <div class="search-wrapper">
       <button class="search-toggle" aria-label="搜索">
-        <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
-          <rect x="2" y="4" width="22" height="26" rx="2" stroke="#5a4a3a" stroke-width="1.5" fill="none"/>
-          <line x1="7" y1="0" x2="7" y2="8" stroke="#5a4a3a" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="11" cy="18" r="4.5" stroke="#5a4a3a" stroke-width="1.5" fill="none"/>
-          <line x1="14.5" y1="21.5" x2="20" y2="27" stroke="#5a4a3a" stroke-width="1.8" stroke-linecap="round"/>
-          <!-- Notebook lines -->
-          <line x1="6" y1="12" x2="12" y2="12" stroke="#5a4a3a" stroke-width="0.6" opacity="0.4"/>
-          <line x1="6" y1="15" x2="12" y2="15" stroke="#5a4a3a" stroke-width="0.6" opacity="0.4"/>
-        </svg>
+        <img src="handdrawn_svg_icons_pack/search_box.svg" alt="搜索" class="deco-svg search-icon-img">
       </button>
       <div class="search-box">
         <input type="text" class="search-input" />
@@ -59,57 +47,22 @@
     </div>
   </header>
 
-  <!-- Divider: dots + star + long line + star + dots -->
-  <div class="divider">
-    <span class="dot-dot-dot">&#183;&#183;&#183;</span>
-    <span class="star">&#9734;</span>
-    <span class="divider-line"></span>
-    <span class="star">&#9734;</span>
-    <span class="dot-dot-dot">&#183;&#183;&#183;</span>
+  <!-- Divider: dots + star + line + star -->
+  <div class="divider-main">
+    <img src="handdrawn_svg_icons_pack/divider_star_dots.svg" alt="" class="deco-svg divider-svg">
   </div>
 
   <!-- Hero / Welcome -->
   <section class="hero">
     <div class="hero-layout">
-      <!-- Left decoration: open book + clouds + plants -->
+      <!-- Left: clouds + open book + plants -->
       <div class="hero-side hero-left">
-        <div class="hero-left-top">
-          <!-- Clouds -->
-          <svg class="deco-cloud" width="90" height="50" viewBox="0 0 90 50" fill="none">
-            <ellipse cx="30" cy="30" rx="22" ry="14" stroke="#a0c4d8" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
-            <ellipse cx="55" cy="26" rx="20" ry="12" stroke="#a0c4d8" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
-          </svg>
-          <!-- Open book -->
-          <svg class="deco-book" width="180" height="140" viewBox="0 0 180 140" fill="none">
-            <!-- Left page -->
-            <path d="M90 120 Q90 100 30 90 Q22 88 22 75 L22 30 Q22 20 32 20 L90 30 L90 120Z" fill="#ffffff" stroke="#8B7355" stroke-width="1.3"/>
-            <!-- Right page -->
-            <path d="M90 120 Q90 100 150 90 Q158 88 158 75 L158 30 Q158 20 148 20 L90 30 L90 120Z" fill="#ffffff" stroke="#8B7355" stroke-width="1.3"/>
-            <!-- Spine -->
-            <line x1="90" y1="30" x2="90" y2="120" stroke="#8B7355" stroke-width="1.3"/>
-            <!-- Page lines left -->
-            <line x1="35" y1="40" x2="80" y2="45" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="35" y1="50" x2="80" y2="55" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="35" y1="60" x2="80" y2="65" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="35" y1="70" x2="80" y2="75" stroke="#d5d0c8" stroke-width="0.8"/>
-            <!-- Page lines right -->
-            <line x1="100" y1="45" x2="145" y2="40" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="100" y1="55" x2="145" y2="50" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="100" y1="65" x2="145" y2="60" stroke="#d5d0c8" stroke-width="0.8"/>
-            <line x1="100" y1="75" x2="145" y2="70" stroke="#d5d0c8" stroke-width="0.8"/>
-            <!-- Bookmark ribbon -->
-            <path d="M82 30 L82 72 L78 66 L74 72 L74 30" fill="#e8a87c" stroke="#c8896a" stroke-width="0.7"/>
-          </svg>
+        <div class="hero-left-clouds">
+          <img src="handdrawn_svg_icons_pack/cloud.svg" alt="" class="deco-svg cloud-img cloud-1">
+          <img src="handdrawn_svg_icons_pack/cloud.svg" alt="" class="deco-svg cloud-img cloud-2">
         </div>
-        <!-- Plants -->
-        <svg class="deco-plant" width="70" height="100" viewBox="0 0 70 100" fill="none">
-          <path d="M35 95 L35 50" stroke="#7a9e7e" stroke-width="1.8" stroke-linecap="round"/>
-          <path d="M35 68 Q22 55 18 42 Q15 32 25 35 Q35 42 35 68" fill="#a8c5a0" stroke="#7a9e7e" stroke-width="0.9"/>
-          <path d="M35 55 Q48 42 52 28 Q55 18 45 22 Q35 30 35 55" fill="#a8c5a0" stroke="#7a9e7e" stroke-width="0.9"/>
-          <path d="M35 75 Q14 68 10 55 Q8 48 18 50 Q28 58 35 75" fill="#b5d4ad" stroke="#7a9e7e" stroke-width="0.9"/>
-          <circle cx="25" cy="38" r="2.5" fill="#e8a87c"/>
-          <circle cx="45" cy="25" r="2.5" fill="#e8a87c"/>
-        </svg>
+        <img src="handdrawn_svg_icons_pack/open_book.svg" alt="" class="deco-svg open-book-img">
+        <img src="handdrawn_svg_icons_pack/leaf_sprig.svg" alt="" class="deco-svg plant-img">
       </div>
 
       <!-- Center content -->
@@ -117,165 +70,123 @@
         <h2 class="hero-title">欢迎来到我的小世界 <span class="heart-icon">&#9825;</span></h2>
         <!-- Underline decoration -->
         <svg class="hero-title-underline" width="200" height="12" viewBox="0 0 200 12" fill="none">
-          <path d="M10 6 Q50 2 100 6 Q150 10 190 6" stroke="#e8a87c" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M10 6 Q50 2 100 6 Q150 10 190 6" stroke="#e8a87c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
         </svg>
         <p class="hero-desc">这里记录着我的作品、思考、学习笔记和创作视频。<br>每一段文字，每一个作品，都是思绪流淌的痕迹。</p>
-        <!-- Wavy dashed line with icons -->
+        <!-- Wavy dashed line -->
         <div class="hero-dash-row">
           <svg class="hero-dash-line" width="100%" height="24" viewBox="0 0 400 24" preserveAspectRatio="none" fill="none">
             <path d="M0 12 Q25 4 50 12 Q75 20 100 12 Q125 4 150 12 Q175 20 200 12 Q225 4 250 12 Q275 20 300 12 Q325 4 350 12 Q375 20 400 12" stroke="#c4b5a0" stroke-width="1.2" stroke-dasharray="6 4" fill="none"/>
           </svg>
         </div>
+        <!-- Small icons: book, lightbulb, paper airplane -->
         <div class="hero-icons">
-          <!-- Small book -->
-          <svg class="hero-icon" width="28" height="24" viewBox="0 0 28 24" fill="none">
-            <rect x="3" y="2" width="12" height="18" rx="1" fill="#a8c5a0" stroke="#7a9e7e" stroke-width="1" transform="rotate(-8 9 11)"/>
-            <rect x="10" y="1" width="12" height="18" rx="1" fill="#fff" stroke="#8B7355" stroke-width="1" transform="rotate(4 16 10)"/>
-          </svg>
-          <!-- Lightbulb -->
-          <svg class="hero-icon" width="24" height="28" viewBox="0 0 24 28" fill="none">
-            <circle cx="12" cy="11" r="8" fill="#fff5d4" stroke="#e8a87c" stroke-width="1.2"/>
-            <path d="M8 19 L8 23 L16 23 L16 19" stroke="#c8896a" stroke-width="0.9" fill="#e8a87c"/>
-            <line x1="12" y1="1" x2="12" y2="2" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-            <line x1="4" y1="4" x2="5.5" y2="5.5" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-            <line x1="20" y1="4" x2="18.5" y2="5.5" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-          </svg>
-          <!-- Paper plane -->
-          <svg class="hero-icon" width="36" height="30" viewBox="0 0 36 30" fill="none">
-            <path d="M2 22 L16 14 L12 6 L16 5 L34 2 L30 10 L18 16 L24 24 L20 24 L12 18 L2 22Z" stroke="#8B7355" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
-            <!-- Dotted trail -->
-            <path d="M2 22 L0 24" stroke="#c4b5a0" stroke-width="0.8" stroke-dasharray="2 2"/>
-          </svg>
+          <img src="handdrawn_svg_icons_pack/small_book.svg" alt="" class="deco-svg hero-icon-img">
+          <img src="handdrawn_svg_icons_pack/lightbulb.svg" alt="" class="deco-svg hero-icon-img">
+          <img src="handdrawn_svg_icons_pack/paper_airplane.svg" alt="" class="deco-svg hero-icon-img">
         </div>
       </div>
 
-      <!-- Right decoration: feather pen + ink bottle -->
+      <!-- Right: feather pen + ink bottle -->
       <div class="hero-side hero-right">
-        <!-- Feather pen -->
-        <svg class="deco-feather" width="130" height="180" viewBox="0 0 130 180" fill="none">
-          <!-- Feather shaft -->
-          <path d="M70 12 Q74 50 72 80 Q70 110 68 130" stroke="#8B7355" stroke-width="1.8" fill="none"/>
-          <!-- Feather body right -->
-          <path d="M70 12 Q92 30 88 60 Q84 85 72 80 Q62 70 70 12" fill="#c8dff0" stroke="#a0c4d8" stroke-width="1"/>
-          <!-- Feather body left -->
-          <path d="M70 12 Q50 28 52 55 Q55 78 72 80 Q66 48 70 12" fill="#d8edf8" stroke="#a0c4d8" stroke-width="1"/>
-          <!-- Feather tip detail -->
-          <path d="M68 130 Q66 140 64 148" stroke="#8B7355" stroke-width="1" fill="none"/>
-          <!-- Ink bottle -->
-          <rect x="50" y="148" width="35" height="28" rx="4" fill="#5a6a7a" stroke="#4a5a6a" stroke-width="1.2"/>
-          <rect x="54" y="142" width="27" height="10" rx="3" fill="#4a5a6a" stroke="#3a4a5a" stroke-width="1"/>
-          <ellipse cx="67.5" cy="142" rx="13.5" ry="4" fill="#3a4a5a"/>
-          <!-- Ink dots -->
-          <circle cx="62" cy="158" r="2" fill="#2a3a4a" opacity="0.4"/>
-          <circle cx="70" cy="162" r="1.5" fill="#2a3a4a" opacity="0.3"/>
-        </svg>
-        <!-- Decorative star near feather -->
-        <span class="star deco-feather-star">&#10022;</span>
+        <img src="handdrawn_svg_icons_pack/quill_ink.svg" alt="" class="deco-svg quill-img">
       </div>
     </div>
   </section>
 
-  <div class="divider">
-    <span class="leaf-deco">&#127811;</span>
+  <!-- Divider: leaf + dots + star -->
+  <div class="divider-section">
+    <img src="handdrawn_svg_icons_pack/leaf_sprig.svg" alt="" class="deco-svg divider-leaf">
     <span class="dot-dot-dot">&#183;&#183;&#183;</span>
-    <span class="divider-line"></span>
+    <span class="divider-line-sm"></span>
     <span class="dot-dot-dot">&#183;&#183;&#183;</span>
-    <span class="leaf-deco">&#127811;</span>
+    <img src="handdrawn_svg_icons_pack/leaf_sprig.svg" alt="" class="deco-svg divider-leaf divider-leaf-flip">
   </div>
 
   <!-- Latest Works -->
   <h2 class="section-title">
-    <svg class="section-icon" width="26" height="22" viewBox="0 0 26 22" fill="none">
-      <!-- Landscape / picture icon -->
-      <rect x="1" y="1" width="24" height="20" rx="2" stroke="#8B7355" stroke-width="1.2" fill="none"/>
-      <circle cx="8" cy="8" r="2.5" fill="#e8a87c" stroke="#c8896a" stroke-width="0.6"/>
-      <path d="M1 16 L8 10 L14 15 L19 9 L25 15" stroke="#8B7355" stroke-width="1" fill="none" stroke-linejoin="round"/>
-    </svg>
-    最新作品 <span class="star">&#10022;</span>
+    <img src="handdrawn_svg_icons_pack/latest_works_icon.svg" alt="" class="deco-svg section-icon-img">
+    最新作品 <img src="handdrawn_svg_icons_pack/little_star.svg" alt="" class="deco-svg little-star">
   </h2>
   <div class="card-grid">
     <article class="card sketch-card">
-      <div class="tape tape-left"></div>
+      <img src="handdrawn_svg_icons_pack/tape_blue.svg" alt="" class="deco-svg tape tape-left">
       <div class="card-cover" style="background:#e8f0fe;">
         <span class="card-cover-emoji">&#x1F680;</span>
-        <span class="star card-star">&#10022;</span>
+        <img src="handdrawn_svg_icons_pack/little_star.svg" alt="" class="deco-svg card-star">
       </div>
       <h3><a href="https://offerfit-resume.netlify.app/" target="_blank">OfferFit</a></h3>
       <p>AI简历优化工具——上传简历+JD，自动分析匹配度、生成优化版本。</p>
       <small class="card-meta">2026.07 · <a href="offerfit/index.html">开发实录</a></small>
-      <div class="paperclip"></div>
+      <img src="handdrawn_svg_icons_pack/paperclip.svg" alt="" class="deco-svg paperclip">
     </article>
     <article class="card sketch-card">
-      <div class="tape tape-right"></div>
+      <img src="handdrawn_svg_icons_pack/tape_beige.svg" alt="" class="deco-svg tape tape-right">
       <div class="card-cover" style="background:#f5e6d3;">
         <span class="card-cover-emoji">&#x1F5BC;&#xFE0F;</span>
-        <span class="star card-star">&#9734;</span>
+        <img src="handdrawn_svg_icons_pack/little_star.svg" alt="" class="deco-svg card-star">
       </div>
       <h3>待补充作品</h3>
       <p>更多作品正在路上……</p>
       <small class="card-meta">敬请期待</small>
-      <div class="paperclip"></div>
+      <img src="handdrawn_svg_icons_pack/paperclip.svg" alt="" class="deco-svg paperclip">
     </article>
   </div>
   <p class="section-link"><a href="works.html">查看全部作品 &rarr;</a></p>
 
-  <div class="divider"><span class="divider-line"></span></div>
+  <div class="divider-section">
+    <span class="divider-line-sm"></span>
+  </div>
 
   <!-- Latest Thoughts -->
   <h2 class="section-title">
-    <svg class="section-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <!-- Lightbulb / thought icon -->
-      <circle cx="12" cy="10" r="7" fill="#fff5d4" stroke="#8B7355" stroke-width="1.2"/>
-      <path d="M8 17 L8 20 L16 20 L16 17" stroke="#8B7355" stroke-width="1" fill="none"/>
-      <line x1="12" y1="1" x2="12" y2="2.5" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-      <line x1="5" y1="4.5" x2="6.5" y2="6" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-      <line x1="19" y1="4.5" x2="17.5" y2="6" stroke="#e8a87c" stroke-width="1" stroke-linecap="round"/>
-    </svg>
-    最新思考 <span class="star">&#10022;</span>
+    <img src="handdrawn_svg_icons_pack/lightbulb.svg" alt="" class="deco-svg section-icon-img">
+    最新思考 <img src="handdrawn_svg_icons_pack/little_star.svg" alt="" class="deco-svg little-star">
   </h2>
   <div class="card-grid">
     <article class="card sketch-card">
-      <div class="tape tape-left"></div>
+      <img src="handdrawn_svg_icons_pack/tape_blue.svg" alt="" class="deco-svg tape tape-left">
       <h3>关于创作的碎片</h3>
       <p>灵感总是不期而至，在最平凡的时刻闪现。记录下来，就是最好的收藏……</p>
       <small class="card-meta">2026.07.05</small>
-      <div class="paperclip"></div>
+      <img src="handdrawn_svg_icons_pack/paperclip.svg" alt="" class="deco-svg paperclip">
     </article>
     <article class="card sketch-card">
-      <div class="tape tape-right"></div>
+      <img src="handdrawn_svg_icons_pack/tape_beige.svg" alt="" class="deco-svg tape tape-right">
       <h3>读《小王子》有感</h3>
       <p>一本好书就像一面镜子，让你在文字间看见自己的影子……</p>
       <small class="card-meta">2026.06.20</small>
-      <div class="paperclip"></div>
+      <img src="handdrawn_svg_icons_pack/paperclip.svg" alt="" class="deco-svg paperclip">
     </article>
   </div>
   <p class="section-link"><a href="thoughts.html">查看全部思考 &rarr;</a></p>
 
-  <div class="divider"><span class="divider-line"></span></div>
+  <div class="divider-section">
+    <span class="divider-line-sm"></span>
+  </div>
 
   <!-- Latest Videos -->
   <h2 class="section-title">
-    <svg class="section-icon" width="24" height="20" viewBox="0 0 24 20" fill="none">
-      <rect x="1" y="1" width="22" height="18" rx="3" stroke="#8B7355" stroke-width="1.2" fill="none"/>
-      <polygon points="9,4 9,16 19,10" fill="#e8a87c" stroke="#c8896a" stroke-width="0.6"/>
-    </svg>
-    最新视频 <span class="star">&#10022;</span>
+    <img src="handdrawn_svg_icons_pack/search_box.svg" alt="" class="deco-svg section-icon-img section-icon-vid">
+    最新视频 <img src="handdrawn_svg_icons_pack/little_star.svg" alt="" class="deco-svg little-star">
   </h2>
   <div class="card-grid">
     <article class="card sketch-card">
-      <div class="tape tape-left"></div>
+      <img src="handdrawn_svg_icons_pack/tape_blue.svg" alt="" class="deco-svg tape tape-left">
       <div class="card-cover" style="background:#f5d3e6;">
         <span class="card-cover-emoji">&#9654;&#xFE0F;</span>
       </div>
       <h3>示例视频标题</h3>
       <p>视频内容的简短介绍，让观众快速了解视频主题。</p>
       <small class="card-meta">2026.07</small>
-      <div class="paperclip"></div>
+      <img src="handdrawn_svg_icons_pack/paperclip.svg" alt="" class="deco-svg paperclip">
     </article>
   </div>
   <p class="section-link"><a href="videos.html">查看全部视频 &rarr;</a></p>
 
-  <div class="divider"><span class="divider-line"></span></div>
+  <div class="divider-section">
+    <span class="divider-line-sm"></span>
+  </div>
 
   <footer class="site-footer">
     <p>Eileen's Flowing Thoughts · 用手工搭建 · <a href="https://github.com/xilingzhang181" target="_blank">GitHub</a></p>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72">
+<defs>
+  <style>
+    .ink{stroke:#353535;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .ink2{stroke:#4a4a4a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .soft{stroke:#7a7a7a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  </style>
+</defs>
+<rect x="6" y="6" width="58" height="58" rx="7" ry="7" fill="none" stroke="#353535" stroke-width="3"/>
+<circle cx="36" cy="33" r="11" fill="none" stroke="#353535" stroke-width="3"/>
+<path class="ink" d="M44 42 L54 52"/>
+<path class="ink2" d="M58 10 l0 -6 M61 13 l6 0"/>
+</svg>

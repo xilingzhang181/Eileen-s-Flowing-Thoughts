@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 210" width="140" height="210">
+<defs>
+  <style>
+    .ink{stroke:#353535;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .ink2{stroke:#4a4a4a;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
+    .soft{stroke:#7a7a7a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+  </style>
+</defs>
+<path d="M87 14 C103 19, 112 30, 113 47 C114 67, 103 90, 93 109 C83 127, 75 147, 70 176 L62 174 C66 144, 71 121, 78 98 C85 73, 93 49, 89 23 Z" fill="#dce9f4" stroke="#5e6f79" stroke-width="2.8"/>
+<path class="soft" d="M77 28 C89 45, 90 61, 87 83 M73 44 C83 55, 83 71, 79 89 M69 62 C76 70, 76 85, 73 101 M84 38 L102 26 M83 53 L106 45 M81 67 L103 63 M77 81 L97 80 M73 94 L92 96"/>
+<path class="ink2" d="M67 171 L59 195"/>
+<path d="M49 169 c10 4 19 4 27 0 l-2 28 c-8 5 -18 5 -26 0z" fill="#7a8b96" stroke="#353535" stroke-width="2.4"/>
+<path d="M47 177 H76" class="ink2"/>
+<path d="M42 196 C42 183, 54 180, 61 180 C69 180, 80 183, 81 196 C81 207, 72 209, 61 209 C50 209, 42 206, 42 196 Z" fill="#2c3645" opacity="0.18"/>
+<path class="ink2" d="M111 130 C127 138, 129 149, 117 160" opacity="0.7"/>
+</svg>
