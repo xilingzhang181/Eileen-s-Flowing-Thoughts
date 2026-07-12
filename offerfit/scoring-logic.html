@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>评分标准制定逻辑 · OfferFit产品开发实录</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/doodle.css@0.0.2/doodle.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ========== Scoring Logic styles ========== */
+
+    .logic-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card.border {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+    }
+    .stat-card .stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .stat-label {
+      font-size: 0.82rem;
+      opacity: 0.7;
+    }
+
+    /* Weight comparison table */
+    .weight-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .weight-table th, .weight-table td {
+      padding: 0.7rem 0.6rem;
+      border: 1.5px solid #333;
+      vertical-align: middle;
+    }
+    .weight-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: center;
+    }
+    .weight-table td:first-child {
+      text-align: left;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .weight-table td {
+      text-align: center;
+    }
+    .weight-table .avg-col {
+      background: #f5f0ff;
+      font-weight: bold;
+    }
+    .weight-table .final-col {
+      background: #e6f5d3;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Insight card */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .insight-card.border {
+      padding: 1.2rem;
+    }
+    .insight-card .insight-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .insight-card h4 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+    }
+    .insight-card p {
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    /* Flow diagram */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .flow-step {
+      padding: 0.6rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .flow-arrow {
+      font-size: 1.2rem;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+    }
+
+    /* Code block */
+    .code-block {
+      background: #faf8f5;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.7rem 0.6rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .compare-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    /* Sub-dimension cards */
+    .sub-dim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .sub-dim-card.border {
+      padding: 1rem;
+    }
+    .sub-dim-card .score-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .sub-dim-card h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+    }
+    .sub-dim-card p {
+      font-size: 0.82rem;
+      margin: 0;
+      opacity: 0.8;
+    }
+
+    /* Iteration diagram */
+    .iteration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .iteration-card.border {
+      padding: 1rem;
+      text-align: center;
+    }
+    .iteration-card .iter-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    .iteration-card h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.9rem;
+    }
+    .iteration-card p {
+      font-size: 0.8rem;
+      margin: 0;
+      opacity: 0.75;
+    }
+
+    /* Illustration */
+    .illustration {
+      text-align: center;
+      margin: 2rem 0;
+      opacity: 0.85;
+    }
+    .illustration svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Summary table */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    .summary-table th, .summary-table td {
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .summary-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+      width: 30%;
+    }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .sub-dim-grid { grid-template-columns: 1fr; }
+      .iteration-grid { grid-template-columns: 1fr 1fr; }
+      .weight-table { font-size: 0.75rem; }
+      .weight-table th, .weight-table td { padding: 0.4rem 0.3rem; }
+    }
+  </style>
+</head>
+<body class="doodle">
+
+  <header class="site-header">
+    <h1>Eileen's Flowing Thoughts</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../works.html">作品</a></li>
+        <li><a href="../thoughts.html">思考</a></li>
+        <li><a href="../docs.html" class="active">文档</a></li>
+        <li><a href="../videos.html">视频</a></li>
+        <li><a href="../guestbook.html">留言</a></li>
+        <li><a href="../about.html">关于</a></li>
+      </ul>
+    </nav>
+    <div class="search-wrapper">
+      <button class="search-toggle" aria-label="搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10.5" cy="10.5" r="7" stroke="#333" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M16 16 L21 21" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="search-box">
+        <input type="text" class="search-input" />
+        <button class="search-close">×</button>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  </header>
+
+  <hr>
+
+  <p><a href="index.html">← 返回 OfferFit 产品开发实录</a></p>
+
+  <h1>评分标准制定逻辑</h1>
+  <small class="card-meta">OfferFit 六级维度评分体系的设计原理与迭代逻辑</small>
+  <div style="margin:0.8rem 0;">
+    <small class="logic-badge border">评分设计</small>
+    <small class="logic-badge border">HR 校准</small>
+    <small class="logic-badge border">迭代机制</small>
+  </div>
+
+  <!-- Header illustration: HR screening process -->
+  <div class="illustration">
+    <svg width="520" height="140" viewBox="0 0 520 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- HR person -->
+      <circle cx="60" cy="45" r="18" stroke="#333" stroke-width="2.5" fill="#f5e6d3"/>
+      <path d="M42 63 Q40 85 50 105 Q60 112 70 105 Q80 85 78 63" stroke="#333" stroke-width="2.5" fill="#d3e6f5"/>
+      <!-- Eye focus arrows -->
+      <path d="M80 40 L120 40" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M80 50 L120 50" stroke="#ec4899" stroke-width="2" stroke-dasharray="4 3"/>
+      <path d="M80 60 L120 60" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 3"/>
+      <!-- Timeline: 6-15 seconds -->
+      <rect x="130" y="20" width="80" height="50" rx="8" stroke="#333" stroke-width="2" fill="#fff"/>
+      <text x="170" y="42" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">6-15秒</text>
+      <text x="170" y="58" font-size="9" fill="#666" text-anchor="middle">初筛时间</text>
+      <!-- 4 eye movements -->
+      <path d="M220 35 L240 35" stroke="#333" stroke-width="1.5"/>
+      <path d="M240 35 L236 31 L236 39 Z" fill="#333"/>
+      <rect x="245" y="15" width="55" height="35" rx="4" stroke="#7c3aed" stroke-width="2" fill="#f5f0ff"/>
+      <text x="272" y="30" font-size="8" fill="#7c3aed" text-anchor="middle">第一眼</text>
+      <text x="272" y="42" font-size="8" fill="#666" text-anchor="middle">整体印象</text>
+      <path d="M305 35 L325 35" stroke="#333" stroke-width="1.5"/>
+      <path d="M325 35 L321 31 L321 39 Z" fill="#333"/>
+      <rect x="330" y="15" width="55" height="35" rx="4" stroke="#ec4899" stroke-width="2" fill="#fff0f5"/>
+      <text x="357" y="30" font-size="8" fill="#ec4899" text-anchor="middle">第二眼</text>
+      <text x="357" y="42" font-size="8" fill="#666" text-anchor="middle">扫内容</text>
+      <path d="M390 55 L410 55" stroke="#333" stroke-width="1.5"/>
+      <path d="M410 55 L406 51 L406 59 Z" fill="#333"/>
+      <rect x="415" y="38" width="55" height="35" rx="4" stroke="#38bdf8" stroke-width="2" fill="#f0f8ff"/>
+      <text x="442" y="53" font-size="8" fill="#38bdf8" text-anchor="middle">第三眼</text>
+      <text x="442" y="65" font-size="8" fill="#666" text-anchor="middle">对标岗位</text>
+      <path d="M475 55 L490 55" stroke="#333" stroke-width="1.5"/>
+      <path d="M490 55 L486 51 L486 59 Z" fill="#333"/>
+      <rect x="495" y="38" width="20" height="35" rx="4" stroke="#2d8a4e" stroke-width="2" fill="#e6f5d3"/>
+      <text x="505" y="60" font-size="9" fill="#2d8a4e" text-anchor="middle">✓</text>
+      <!-- Bottom: dimension mapping -->
+      <text x="272" y="75" font-size="8" fill="#7c3aed" text-anchor="middle">→ 结构格式</text>
+      <text x="357" y="75" font-size="8" fill="#ec4899" text-anchor="middle">→ 内容质量</text>
+      <text x="442" y="90" font-size="8" fill="#38bdf8" text-anchor="middle">→ 岗位匹配</text>
+      <!-- Sparkles -->
+      <path d="M110 20 L113 15 L116 20 L113 25 Z" fill="#7c3aed" opacity="0.5"/>
+      <path d="M480 20 L483 15 L486 20 L483 25 Z" fill="#ec4899" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 一、维度来源 ==================== -->
+  <h2>一、一级维度分值的来源</h2>
+
+  <h3>1.1 为什么是这六个维度？</h3>
+
+  <p>基于两个东西的<strong>交叉验证</strong>：</p>
+
+  <div class="insight-grid">
+    <div class="insight-card border">
+      <div class="insight-icon">👁️</div>
+      <h4>HR 初筛的认知流程</h4>
+      <p>一个 HR 看一份简历，平均花 <strong>6-15 秒</strong>。注意力按顺序流动：整体印象 → 扫内容 → 对标岗位 → 找疑点。</p>
+    </div>
+    <div class="insight-card border">
+      <div class="insight-icon">📚</div>
+      <h4>学术界已有研究的参照</h4>
+      <p>人才测评领域，履历分析的经典框架通常涵盖：内容质量、结构规范性、岗位匹配度三个核心块。</p>
+    </div>
+  </div>
+
+  <!-- HR attention flow diagram -->
+  <div class="code-block">HR 初筛简历时的注意力流动：
+
+第一眼：整体印象（排版顺不顺眼）          → 对应"结构与格式"
+第二眼：扫内容（有没有亮眼的数字/项目）     → 对应"内容质量"
+第三眼：对标岗位（这个人跟JD像不像）       → 对应"岗位匹配度"
+第四眼：找疑点（有没有不对劲的地方）        → 对应"风险预警"（合并进诊断优化）
+
+"公平性"和"模型能力"是产品品质层面的保障维度，用户看不到但产品必须有。</div>
+
+  <h3>1.2 为什么是这个权重？</h3>
+
+  <p>这是一个<strong>"专家意见校准"</strong>的过程，而不是理论推导出来的。</p>
+
+  <div class="highlight-box border">
+    <p><strong>做法</strong>：拿了 10 份真实的简历和对应的 JD，找了 <strong>3 位资深 HR</strong>（分别在互联网、金融、消费品行业），让他们独立判断："如果满分 100，各维度应该占多少？"</p>
+  </div>
+
+  <h3>HR 专家独立评分结果</h3>
+
+  <div style="overflow-x:auto;">
+    <table class="weight-table">
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>HR-A</th>
+          <th>HR-B</th>
+          <th>HR-C</th>
+          <th>平均值</th>
+          <th>最终取整</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>内容质量</td>
+          <td>32</td>
+          <td>28</td>
+          <td>30</td>
+          <td class="avg-col">30</td>
+          <td class="final-col">30</td>
+        </tr>
+        <tr>
+          <td>结构与格式</td>
+          <td>13</td>
+          <td>18</td>
+          <td>14</td>
+          <td class="avg-col">15</td>
+          <td class="final-col">15</td>
+        </tr>
+        <tr>
+          <td>岗位匹配度</td>
+          <td>22</td>
+          <td>20</td>
+          <td>18</td>
+          <td class="avg-col">20</td>
+          <td class="final-col">20</td>
+        </tr>
+        <tr>
+          <td>诊断优化</td>
+          <td>18</td>
+          <td>20</td>
+          <td>22</td>
+          <td class="avg-col">20</td>
+          <td class="final-col">20</td>
+        </tr>
+        <tr>
+          <td>公平性</td>
+          <td>10</td>
+          <td>8</td>
+          <td>12</td>
+          <td class="avg-col">10</td>
+          <td class="final-col">10</td>
+        </tr>
+        <tr>
+          <td>模型能力</td>
+          <td>5</td>
+          <td>6</td>
+          <td>4</td>
+          <td class="avg-col">5</td>
+          <td class="final-col">5</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>结论</strong>：权重来源是<strong>真实 HR 的集体判断 + 取整后的共识</strong>。</p>
+
+  <h3>1.3 这个权重是否绝对科学？</h3>
+
+  <div class="highlight-box border">
+    <blockquote>坦率说：<strong>不绝对科学，但它是一个可用的、可迭代的起点。</strong></blockquote>
+    <p style="margin-top:0.8rem;">权重本质上是价值判断，不是数学推导出来的。它只能通过反复测试来校准——如果我们发现"内容质量 30 分"导致太多简历得分集中在同一区间（缺乏区分度），就会调整。这也是为什么我们在 PRD 里设计了"自评估体系"——评测数据会反过来告诉我们权重是否需要调整。</p>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 二、二级指标 ==================== -->
+  <h2>二、二级指标分值的来源</h2>
+
+  <h3>2.1 维度一：内容质量（30分）</h3>
+
+  <p><strong>逻辑</strong>：基于<strong>"信息缺失的代价"</strong>——缺失某项信息，对求职者的影响有多大？</p>
+
+  <div class="sub-dim-grid">
+    <div class="sub-dim-card border">
+      <span class="score-badge" style="background:#f5e6d3;">12分</span>
+      <h4>STAR / 量化</h4>
+      <p><strong>缺失代价：致命</strong><br>HR 无法判断真实贡献大小 → 直接淘汰</p>
+    </div>
+    <div class="sub-dim-card border">
+      <span class="score-badge" style="background:#d3e6f5;">10分</span>
+      <h4>内容相关性</h4>
+      <p><strong>缺失代价：高</strong><br>HR 不确定是否对口 → 可能淘汰</p>
+    </div>
+    <div class="sub-dim-card border">
+      <span class="score-badge" style="background:#e6f5d3;">8分</span>
+      <h4>语言质量</h4>
+      <p><strong>缺失代价：中</strong><br>HR 看得费力 → 降低印象分，但不会直接淘汰</p>
+    </div>
+  </div>
+
+  <div class="highlight-box border">
+    <p><strong>核心逻辑</strong>：STAR/量化是<strong>决定性的</strong>，语言质量是<strong>加分性的</strong>。这是分值差异的逻辑依据。</p>
+    <p style="margin-top:0.5rem;">STAR 法则（Situation-Task-Action-Result）是 HR 筛选简历时最基础也最常用的评估框架，已被行业验证过。</p>
+    <p style="margin-top:0.5rem;"><strong>量化程度</strong>的灵感来自李开复的评分思路：数简历上有多少数据（业绩、用户数、节省成本等），再数有多少形容词。高质量简历应高信息密度、低形容词堆砌。</p>
+  </div>
+
+  <h3>2.2 维度二：结构与格式（15分）</h3>
+
+  <p>结构完整性、格式规范、信息组织逻辑——三个各占 <strong>5 分</strong>，拉平了。</p>
+
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number">5</span>
+      <span class="stat-label">结构完整性</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">5</span>
+      <span class="stat-label">格式规范</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">5</span>
+      <span class="stat-label">信息组织逻辑</span>
+    </div>
+  </div>
+
+  <p><strong>逻辑</strong>：这三项对用户简历的影响是<strong>"有/无"的关系</strong>，而不是"程度"的关系。要么有、要么没有，所以平均分配。</p>
+
+  <h3>2.3 维度三：岗位匹配度（20分）</h3>
+
+  <p>分配逻辑是<strong>HR 筛选流程的真实还原</strong>：</p>
+
+  <!-- HR screening flow -->
+  <div class="flow-row">
+    <span class="flow-step border" style="border-color:#7c3aed;">JD 硬性条件<br><small>8分 · 第一关</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border" style="border-color:#ec4899;">关键词覆盖率<br><small>7分 · 第二关</small></span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-step border" style="border-color:#38bdf8;">经验相关性<br><small>5分 · 第三关</small></span>
+  </div>
+
+  <div class="highlight-box border">
+    <p><strong>第一关</strong>：JD 硬性条件（8分）——条件不符会被直接 pass，因此占最高权重。</p>
+    <p><strong>第二关</strong>：关键词覆盖率（7分）——系统根据简历与 JD 匹配程度筛选出优质候选人。</p>
+    <p><strong>第三关</strong>：经验相关性（5分）——需要 HR 细致解读，部分信息无法通过简单关键词匹配获取，权重相对较低。</p>
+  </div>
+
+  <h3>2.4 维度四：诊断优化（20分）</h3>
+
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number">7</span>
+      <span class="stat-label">问题识别准确率</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">7</span>
+      <span class="stat-label">建议针对性</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number">6</span>
+      <span class="stat-label">优化后提升效果</span>
+    </div>
+  </div>
+
+  <p><strong>理由</strong>：前两项是可量化的，提升效果需要前后对比才能评估，在工程实践中更难测量。</p>
+
+  <hr>
+
+  <!-- ==================== 三、为什么算进简历评分 ==================== -->
+  <h2>三、为什么"诊断优化"和"公平性"也算进简历评分？</h2>
+
+  <div class="highlight-box border">
+    <p><strong>OfferFit 卖的不是"简历打分器"，卖的是"AI 诊断服务"。</strong></p>
+    <p>用户在意的不是"你给我的简历打多少分"，而是：</p>
+    <ul>
+      <li>"你的诊断准不准？"（诊断优化效果）</li>
+      <li>"你的建议有没有偏见？"（公平性）</li>
+      <li>"你处理不同格式的能力行不行？"（模型能力）</li>
+    </ul>
+  </div>
+
+  <!-- Dimension split diagram -->
+  <div class="illustration">
+    <svg width="480" height="120" viewBox="0 0 480 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left group: Resume quality -->
+      <rect x="10" y="10" width="220" height="90" rx="10" stroke="#7c3aed" stroke-width="2" fill="#f5f0ff"/>
+      <text x="120" y="32" font-size="11" fill="#7c3aed" text-anchor="middle" font-weight="bold">评估简历本身</text>
+      <text x="120" y="50" font-size="9" fill="#666" text-anchor="middle">（用户输入的质量）</text>
+      <rect x="25" y="58" width="55" height="25" rx="4" stroke="#7c3aed" stroke-width="1.5" fill="#fff"/>
+      <text x="52" y="74" font-size="8" fill="#7c3aed" text-anchor="middle">内容质量</text>
+      <rect x="90" y="58" width="55" height="25" rx="4" stroke="#7c3aed" stroke-width="1.5" fill="#fff"/>
+      <text x="117" y="74" font-size="8" fill="#7c3aed" text-anchor="middle">结构格式</text>
+      <rect x="155" y="58" width="55" height="25" rx="4" stroke="#7c3aed" stroke-width="1.5" fill="#fff"/>
+      <text x="182" y="74" font-size="8" fill="#7c3aed" text-anchor="middle">岗位匹配</text>
+      <!-- VS -->
+      <text x="240" y="60" font-size="16" fill="#999" text-anchor="middle" font-weight="bold">vs</text>
+      <!-- Right group: Product quality -->
+      <rect x="250" y="10" width="220" height="90" rx="10" stroke="#ec4899" stroke-width="2" fill="#fff0f5"/>
+      <text x="360" y="32" font-size="11" fill="#ec4899" text-anchor="middle" font-weight="bold">评估产品本身</text>
+      <text x="360" y="50" font-size="9" fill="#666" text-anchor="middle">（我们 AI 的质量）</text>
+      <rect x="265" y="58" width="55" height="25" rx="4" stroke="#ec4899" stroke-width="1.5" fill="#fff"/>
+      <text x="292" y="74" font-size="8" fill="#ec4899" text-anchor="middle">诊断优化</text>
+      <rect x="330" y="58" width="55" height="25" rx="4" stroke="#ec4899" stroke-width="1.5" fill="#fff"/>
+      <text x="357" y="74" font-size="8" fill="#ec4899" text-anchor="middle">公平性</text>
+      <rect x="395" y="58" width="55" height="25" rx="4" stroke="#ec4899" stroke-width="1.5" fill="#fff"/>
+      <text x="422" y="74" font-size="8" fill="#ec4899" text-anchor="middle">模型能力</text>
+    </svg>
+  </div>
+
+  <p><strong>如果你作为产品人，方向是"AI 职业顾问"，那么产品的可信度本身就是体验的一部分。</strong> 用户需要知道这个 AI 靠不靠谱。</p>
+
+  <p>这两类维度分开看，而不是混为一谈。我们把它放在同一套评分体系里，是因为最终输出给用户的体验是一份完整的诊断报告。</p>
+
+  <hr>
+
+  <!-- ==================== 四、迭代机制 ==================== -->
+  <h2>四、这套体系后续怎么迭代？</h2>
+
+  <p>分值不是一成不变的。我们的自评估体系里有<strong>两根指针</strong>：</p>
+
+  <div class="iteration-grid">
+    <div class="iteration-card border">
+      <div class="iter-icon">📊</div>
+      <h4>维度区分度</h4>
+      <p>如果所有简历得分都集中在 80-85 之间，说明评分细则失效，需要拉大量纲</p>
+    </div>
+    <div class="iteration-card border">
+      <div class="iter-icon">🤝</div>
+      <h4>人机一致性（ICC）</h4>
+      <p>如果 HR 专家评分和 AI 评分的差异持续偏大，说明某个维度的定义或赋值需要调整</p>
+    </div>
+  </div>
+
+  <div class="highlight-box border">
+    <p><strong>V3.2 的评分标准是一个"经过校准的起点"，而不是终点。</strong></p>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 五、职业规划模块 ==================== -->
+  <h2>五、关于职业规划模块的评分</h2>
+
+  <p>目前职业规划模块的差距分析部分是直接对照目标岗位能力模型做<strong>"有/无"判断</strong>，还没有像简历诊断那样的精细化权重结构。</p>
+
+  <div class="highlight-box border">
+    <p><strong>原因</strong>：产品当前阶段诊断模块的优先级最高，职业规划模块还相对粗糙。</p>
+    <p>简单说，就是<strong>一份简历跟目标岗位比，每项差距的严重程度是不是应该不同</strong>（比如"缺少 SQL"比"缺少演讲技能"更关键）。</p>
+  </div>
+
+  <p>这块的权重来源和诊断模块一样——同样是<strong>找几位真实 HR 问出来的</strong>。因为职业规划本质上是 HR 视角的延伸——他们更清楚不同岗位"最致命的能力缺口"是什么。</p>
+
+  <!-- Job type example -->
+  <div class="flow-row">
+    <span class="flow-step border">数据分析师<br><small>缺少 SQL = 致命</small></span>
+    <span class="flow-arrow">vs</span>
+    <span class="flow-step border">销售代表<br><small>缺少演讲能力 = 致命</small></span>
+  </div>
+
+  <p>目前的实现方式是：根据用户的目标岗位类型（技术/产品/设计/市场/管理），匹配对应的能力模型，然后做简单的"必备 vs 缺失"判断，再根据行业通用认知给出加权建议。</p>
+
+  <p><strong>下一步</strong>：用真实的职业路径数据来校准——如果大量用户反馈"你推荐的 SQL 课程帮助我通过了面试"，那这个推荐的权重自然就高了。</p>
+
+  <hr>
+
+  <!-- ==================== 六、总结 ==================== -->
+  <h2>六、总结</h2>
+
+  <table class="summary-table">
+    <tr>
+      <th>为什么是这六个维度？</th>
+      <td>HR 认知流程 + 学术文献交叉验证</td>
+    </tr>
+    <tr>
+      <th>为什么是这个权重？</th>
+      <td>3 位资深 HR 的独立判断取平均</td>
+    </tr>
+    <tr>
+      <th>为什么二级指标分值不同？</th>
+      <td>基于"缺失代价"的逻辑（致命 vs 影响 vs 加分）</td>
+    </tr>
+    <tr>
+      <th>这个体系科学吗？</th>
+      <td>可用、可迭代的起点；通过自评估体系持续校准</td>
+    </tr>
+    <tr>
+      <th>职业规划模块的权重怎么来的？</th>
+      <td>同样基于 HR 经验判断 + 岗位类型匹配，后续结合真实职业路径数据迭代</td>
+    </tr>
+  </table>
+
+  <div class="highlight-box border" style="text-align:center;">
+    <p style="font-size:1.1rem;margin:0;"><strong>它不是数学推导出来的，而是从 HR 的真实判断里"蒸馏"出来的。</strong></p>
+    <p style="margin:0.5rem 0 0;">它最大的价值不在于"正确"，而在于<strong>"可解释、可迭代"</strong>。</p>
+  </div>
+
+  <hr>
+
+  <footer class="site-footer">
+    <p>Eileen's Flowing Thoughts · 用 DoodleCSS 构建</p>
+  </footer>
+
+</body>
+</html>
