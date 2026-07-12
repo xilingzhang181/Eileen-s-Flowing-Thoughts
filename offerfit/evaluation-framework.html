@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>评分标准制定逻辑 · OfferFit产品开发实录</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/doodle.css@0.0.2/doodle.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ========== Evaluation-specific styles ========== */
+
+    .eval-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card.border {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+    }
+    .stat-card .stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .stat-label {
+      font-size: 0.82rem;
+      opacity: 0.7;
+    }
+
+    /* Dimension cards */
+    .dimension-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+    .dimension-card.border {
+      padding: 1.2rem;
+    }
+    .dimension-card .dim-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .dimension-card .dim-score {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .dimension-card h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .dimension-card p {
+      margin: 0.3rem 0 0;
+      font-size: 0.88rem;
+      opacity: 0.8;
+    }
+
+    /* Score table */
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .score-table th, .score-table td {
+      padding: 0.6rem 0.5rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .score-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    /* Bar chart */
+    .bar-chart {
+      margin: 1.5rem 0;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      gap: 0.5rem;
+    }
+    .bar-label {
+      width: 90px;
+      font-size: 0.85rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      border: 1.5px solid #333;
+      position: relative;
+      background: #fafafa;
+    }
+    .bar-fill {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.5rem;
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Funnel pyramid */
+    .funnel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+      gap: 0.3rem;
+    }
+    .funnel-tier {
+      text-align: center;
+      padding: 1rem;
+      border: 2px solid #333;
+    }
+    .funnel-tier.tier-3 {
+      width: 35%;
+      background: #f5e6d3;
+    }
+    .funnel-tier.tier-2 {
+      width: 60%;
+      background: #d3e6f5;
+    }
+    .funnel-tier.tier-1 {
+      width: 85%;
+      background: #e6f5d3;
+    }
+    .funnel-tier strong {
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #999;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+    }
+    .timeline-item::before {
+      content: '●';
+      position: absolute;
+      left: -1.8rem;
+      top: 1rem;
+      font-size: 1.1rem;
+    }
+    .timeline-item h4 {
+      margin: 0 0 0.3rem;
+    }
+    .timeline-item .phase-tag {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* Dataset cards */
+    .dataset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .dataset-card.border {
+      padding: 1rem;
+    }
+    .dataset-card h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+    }
+    .dataset-card .ds-meta {
+      font-size: 0.78rem;
+      opacity: 0.6;
+      margin-bottom: 0.4rem;
+    }
+    .dataset-card p {
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    /* Baseline comparison */
+    .baseline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .baseline-card.border {
+      padding: 1rem;
+      text-align: center;
+    }
+    .baseline-card .bl-icon {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+    }
+    .baseline-card h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.95rem;
+    }
+    .baseline-card p {
+      font-size: 0.82rem;
+      margin: 0;
+      opacity: 0.75;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .checklist li {
+      padding: 0.6rem 0 0.6rem 2rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      border: 2px solid #2d8a4e;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.4rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #2d8a4e;
+    }
+
+    /* Pitfall list */
+    .pitfall-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .pitfall-list li {
+      padding: 0.6rem 0 0.6rem 2rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .pitfall-list li::before {
+      content: '⚠';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    /* Illustration */
+    .illustration {
+      text-align: center;
+      margin: 2rem 0;
+      opacity: 0.85;
+    }
+    .illustration svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Formula block */
+    .formula-block {
+      background: #f5f0e6;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .formula-block code {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+    }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.7rem 0.6rem;
+      border: 1.5px solid #333;
+      vertical-align: top;
+    }
+    .compare-table th {
+      background: #f5f0e6;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .dimension-grid { grid-template-columns: 1fr; }
+      .dataset-grid { grid-template-columns: 1fr; }
+      .baseline-grid { grid-template-columns: 1fr; }
+      .funnel-tier.tier-3 { width: 60%; }
+      .funnel-tier.tier-2 { width: 80%; }
+      .funnel-tier.tier-1 { width: 100%; }
+      .compare-table { font-size: 0.75rem; }
+      .compare-table th, .compare-table td { padding: 0.4rem 0.3rem; }
+      .bar-label { width: 70px; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body class="doodle">
+
+  <header class="site-header">
+    <h1>Eileen's Flowing Thoughts</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../works.html">作品</a></li>
+        <li><a href="../thoughts.html">思考</a></li>
+        <li><a href="../docs.html" class="active">文档</a></li>
+        <li><a href="../videos.html">视频</a></li>
+        <li><a href="../guestbook.html">留言</a></li>
+        <li><a href="../about.html">关于</a></li>
+      </ul>
+    </nav>
+    <div class="search-wrapper">
+      <button class="search-toggle" aria-label="搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10.5" cy="10.5" r="7" stroke="#333" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M16 16 L21 21" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="search-box">
+        <input type="text" class="search-input" />
+        <button class="search-close">×</button>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  </header>
+
+  <hr>
+
+  <p><a href="index.html">← 返回 OfferFit 产品开发实录</a></p>
+
+  <h1>评分标准制定逻辑</h1>
+  <small class="card-meta">六级维度 · 百分制 · 评测框架 · 数据集来源 · 评估体系</small>
+  <div style="margin:0.8rem 0;">
+    <small class="eval-badge border">评测框架</small>
+    <small class="eval-badge border">数据集</small>
+    <small class="eval-badge border">评估体系</small>
+  </div>
+
+  <!-- Header illustration -->
+  <div class="illustration">
+    <svg width="520" height="130" viewBox="0 0 520 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Clipboard -->
+      <rect x="40" y="15" width="70" height="90" rx="4" stroke="#333" stroke-width="2.5" fill="#fff"/>
+      <path d="M65 15 L65 5 L85 5 L85 15" stroke="#333" stroke-width="2.5" fill="none"/>
+      <path d="M55 35 L95 35" stroke="#999" stroke-width="1.5"/>
+      <path d="M55 45 L90 45" stroke="#999" stroke-width="1.5"/>
+      <path d="M55 55 L95 55" stroke="#999" stroke-width="1.5"/>
+      <path d="M55 65 L85 65" stroke="#999" stroke-width="1.5"/>
+      <path d="M55 75 L95 75" stroke="#999" stroke-width="1.5"/>
+      <path d="M55 85 L80 85" stroke="#999" stroke-width="1.5"/>
+      <!-- Checkmarks on clipboard -->
+      <path d="M48 35 L52 39 L58 31" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M48 55 L52 59 L58 51" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M48 75 L52 79 L58 71" stroke="#2d8a4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- Arrow to AI -->
+      <path d="M120 60 L170 60" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+      <path d="M170 60 L165 55 L165 65 Z" fill="#333"/>
+      <!-- AI Brain -->
+      <rect x="180" y="20" width="80" height="65" rx="10" stroke="#333" stroke-width="2.5" fill="#e8f0fe"/>
+      <circle cx="205" cy="45" r="8" fill="#7c3aed" opacity="0.7"/>
+      <circle cx="235" cy="45" r="8" fill="#ec4899" opacity="0.7"/>
+      <circle cx="220" cy="62" r="6" fill="#38bdf8" opacity="0.7"/>
+      <path d="M205 45 L235 45" stroke="#666" stroke-width="1.5"/>
+      <path d="M205 45 L220 62" stroke="#666" stroke-width="1.5"/>
+      <path d="M235 45 L220 62" stroke="#666" stroke-width="1.5"/>
+      <!-- Antenna -->
+      <path d="M220 20 L220 8" stroke="#333" stroke-width="2"/>
+      <circle cx="220" cy="5" r="4" fill="#ec4899"/>
+      <text x="220" y="100" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">AI 评分引擎</text>
+      <!-- Arrow to output -->
+      <path d="M270 55 L320 55" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+      <path d="M320 55 L315 50 L315 60 Z" fill="#333"/>
+      <!-- Radar chart output -->
+      <polygon points="380,25 420,45 410,75 350,75 340,45" stroke="#7c3aed" stroke-width="2" fill="rgba(124,58,237,0.15)"/>
+      <polygon points="380,35 410,48 403,68 357,68 350,48" stroke="#ddd" stroke-width="1" fill="none"/>
+      <circle cx="380" cy="25" r="3" fill="#7c3aed"/>
+      <circle cx="420" cy="45" r="3" fill="#ec4899"/>
+      <circle cx="410" cy="75" r="3" fill="#38bdf8"/>
+      <circle cx="350" cy="75" r="3" fill="#38bdf8"/>
+      <circle cx="340" cy="45" r="3" fill="#ec4899"/>
+      <text x="380" y="100" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">六维雷达图</text>
+      <!-- Score output -->
+      <text x="380" y="58" font-size="18" fill="#7c3aed" text-anchor="middle" font-weight="bold">78</text>
+      <!-- Arrow to report -->
+      <path d="M425 55 L460 55" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+      <path d="M460 55 L455 50 L455 60 Z" fill="#333"/>
+      <!-- Report -->
+      <rect x="465" y="25" width="40" height="55" rx="3" stroke="#333" stroke-width="2" fill="#f5f0d3"/>
+      <path d="M475 38 L495 38" stroke="#2d8a4e" stroke-width="2"/>
+      <path d="M475 48 L490 48" stroke="#999" stroke-width="1.5"/>
+      <path d="M475 58 L495 58" stroke="#999" stroke-width="1.5"/>
+      <path d="M475 68 L485 68" stroke="#999" stroke-width="1.5"/>
+      <text x="485" y="95" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">评估报告</text>
+      <!-- Sparkles -->
+      <path d="M160 20 L163 15 L166 20 L163 25 Z" fill="#7c3aed" opacity="0.5"/>
+      <path d="M300 20 L303 15 L306 20 L303 25 Z" fill="#ec4899" opacity="0.5"/>
+      <path d="M450 15 L453 10 L456 15 L453 20 Z" fill="#38bdf8" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 一、评测框架 ==================== -->
+  <h2>一、简历诊断大模型评测框架</h2>
+
+  <div class="highlight-box border">
+    <p><strong>设计方法</strong>：采用<strong>"自下而上"与"自上而下"相结合</strong>的方法。</p>
+    <p><strong>自上而下</strong>：从简历筛选的底层逻辑出发——HR 究竟在看什么？核心是"匹配"二字：岗位是否匹配、能力是否可证、潜力是否可见。</p>
+    <p><strong>自下而上</strong>：系统检索整合四个层面的已有标准——HR 实操标准、学术评测基准、AI 公平性框架、已有工具评测维度。</p>
+  </div>
+
+  <h3>六级维度总览</h3>
+
+  <div class="dimension-grid">
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#f5e6d3;color:#333;">30</div>
+        <h4>维度一：简历内容质量</h4>
+      </div>
+      <p>STAR/量化程度 · 内容相关性 · 信息密度与语言质量</p>
+    </div>
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#d3e6f5;color:#333;">15</div>
+        <h4>维度二：结构与格式规范</h4>
+      </div>
+      <p>结构完整性 · 格式规范与可读性 · 信息组织逻辑</p>
+    </div>
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#e6f5d3;color:#333;">20</div>
+        <h4>维度三：岗位匹配度</h4>
+      </div>
+      <p>硬性条件匹配 · 技能关键词覆盖率 · 经验相关性</p>
+    </div>
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#f5d3e6;color:#333;">20</div>
+        <h4>维度四：诊断与优化效果</h4>
+      </div>
+      <p>问题识别准确率 · 建议针对性 · 优化后质量提升</p>
+    </div>
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#d3f5f5;color:#333;">10</div>
+        <h4>维度五：公平性与偏见检测</h4>
+      </div>
+      <p>人口统计学偏见 · 非职务相关信息干扰</p>
+    </div>
+    <div class="dimension-card border">
+      <div class="dim-header">
+        <div class="dim-score" style="background:#f0e6ff;color:#333;">5</div>
+        <h4>维度六：模型基础能力</h4>
+      </div>
+      <p>信息抽取准确性 · 跨语言/格式处理 · 推理与解释</p>
+    </div>
+  </div>
+
+  <!-- Score distribution bar chart -->
+  <h3>分值分布</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">内容质量</span>
+      <div class="bar-track"><div class="bar-fill" style="width:30%;background:#7c3aed;">30分</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">结构格式</span>
+      <div class="bar-track"><div class="bar-fill" style="width:15%;background:#a78bfa;">15分</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">岗位匹配</span>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;background:#ec4899;">20分</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">诊断优化</span>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;background:#38bdf8;">20分</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">公平性</span>
+      <div class="bar-track"><div class="bar-fill" style="width:10%;background:#2d8a4e;">10分</div></div>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">模型能力</span>
+      <div class="bar-track"><div class="bar-fill" style="width:5%;background:#b8860b;">5分</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 维度详解 ==================== -->
+  <h2>维度详解与评分标准</h2>
+
+  <h3>维度一：简历内容质量（30分）</h3>
+
+  <h4>1.1 经历描述的 STAR/量化程度（12分）</h4>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>评分等级</th>
+        <th>标准描述</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>优秀</strong></td>
+        <td>每段经历均用 STAR 结构撰写，且有具体量化数据（如"效率提升 30%"）</td>
+        <td>10-12</td>
+      </tr>
+      <tr>
+        <td><strong>良好</strong></td>
+        <td>大部分经历有 STAR 结构，部分有量化数据</td>
+        <td>7-9</td>
+      </tr>
+      <tr>
+        <td><strong>一般</strong></td>
+        <td>有经历描述但缺乏 STAR 结构和量化</td>
+        <td>4-6</td>
+      </tr>
+      <tr>
+        <td><strong>较差</strong></td>
+        <td>仅有职责罗列，无成果描述</td>
+        <td>0-3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>1.2 内容相关性与精准度（10分）</h4>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>评分等级</th>
+        <th>标准描述</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>优秀</strong></td>
+        <td>内容完全围绕目标岗位，关键词覆盖率高，核心卖点突出</td>
+        <td>9-10</td>
+      </tr>
+      <tr>
+        <td><strong>良好</strong></td>
+        <td>大部分内容与岗位相关，有一定针对性</td>
+        <td>6-8</td>
+      </tr>
+      <tr>
+        <td><strong>一般</strong></td>
+        <td>内容与岗位部分相关，有通用化倾向</td>
+        <td>3-5</td>
+      </tr>
+      <tr>
+        <td><strong>较差</strong></td>
+        <td>内容与岗位关联度低，明显是"万能简历"</td>
+        <td>0-2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>1.3 信息密度与语言质量（8分）</h4>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>评分等级</th>
+        <th>标准描述</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>优秀</strong></td>
+        <td>语言精炼、信息密度高、无冗余，数据/形容词比高</td>
+        <td>7-8</td>
+      </tr>
+      <tr>
+        <td><strong>良好</strong></td>
+        <td>语言流畅，有一定信息量</td>
+        <td>5-6</td>
+      </tr>
+      <tr>
+        <td><strong>一般</strong></td>
+        <td>有套话空话，信息密度一般</td>
+        <td>3-4</td>
+      </tr>
+      <tr>
+        <td><strong>较差</strong></td>
+        <td>大量形容词堆砌，缺乏实质信息</td>
+        <td>0-2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>维度二：结构与格式规范（15分）</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>子维度</th>
+        <th>评估内容</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>结构完整性</strong></td>
+        <td>是否包含完整必要信息：教育背景、工作/项目经历、技能、联系方式等</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td><strong>格式规范与可读性</strong></td>
+        <td>字体一致性、间距、边距、排版整洁度，是否有错别字</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td><strong>信息组织逻辑</strong></td>
+        <td>信息分类是否清晰合理，最重要的信息是否在简历前 1/3 处</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>维度三：岗位匹配度（20分）</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>子维度</th>
+        <th>评估内容</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>硬性条件匹配</strong></td>
+        <td>学历、专业、工作年限、必备技能证书等"硬性条件"是否满足岗位要求</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td><strong>技能关键词覆盖率</strong></td>
+        <td>简历中岗位 JD 核心关键词的命中情况（包含 3+ 关键词的候选人面试概率是未包含者的 4.2 倍）</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td><strong>经验相关性</strong></td>
+        <td>过往经历与目标岗位的相关性：行业、职责、企业规模匹配</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>维度四：诊断与优化效果（20分）</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>子维度</th>
+        <th>评估内容</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>问题识别准确率</strong></td>
+        <td>模型能否准确识别：内容空洞、缺乏量化、结构混乱、格式错误、关键词缺失等</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td><strong>建议针对性与可操作性</strong></td>
+        <td>建议是否具体可执行（如"将'负责项目管理'改为'主导 XX 项目，提前 2 周交付，客户满意度 95%'"）</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td><strong>优化后质量提升度</strong></td>
+        <td>对比优化前后简历，在维度一上的提升幅度（可用 ROUGE、BERTScore 辅助衡量）</td>
+        <td>6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>维度五：公平性与偏见检测（10分）</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>子维度</th>
+        <th>评估内容</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>人口统计学偏见</strong></td>
+        <td>模型是否对不同性别、年龄、地域、种族等群体给出系统性差异评分</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td><strong>非职务相关信息干扰</strong></td>
+        <td>模型在"匿名化简历"与"完整简历"上的评分一致性</td>
+        <td>5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>维度六：模型基础能力（5分）</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>子维度</th>
+        <th>评估内容</th>
+        <th>分值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>信息抽取准确性</strong></td>
+        <td>模型能否准确从简历中抽取教育背景、工作经历、技能等结构化信息</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td><strong>跨语言/格式处理</strong></td>
+        <td>处理不同语言（中英文等）和不同格式（PDF、Word、图片等）简历的能力</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td><strong>推理与解释能力</strong></td>
+        <td>模型的评分是否有合理的解释和依据，能否给出透明的评估理由</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 等级划分 ==================== -->
+  <h2>评分汇总与等级划分</h2>
+
+  <div class="stats-row">
+    <div class="stat-card border">
+      <span class="stat-number" style="color:#2d8a4e;">85-100</span>
+      <span class="stat-label">优秀 · 诊断精准、优化有效、公平性良好</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number" style="color:#b8860b;">70-84</span>
+      <span class="stat-label">良好 · 表现较好，部分维度有提升空间</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number" style="color:#e67e22;">60-69</span>
+      <span class="stat-label">合格 · 基本可用，需在特定维度加强</span>
+    </div>
+    <div class="stat-card border">
+      <span class="stat-number" style="color:#c0392b;">&lt;60</span>
+      <span class="stat-label">待改进 · 存在明显短板，需系统性优化</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 二、数据集来源 ==================== -->
+  <h2>二、评测数据集来源</h2>
+
+  <h3>通用简历解析与内容质量评测（维度一、二、六）</h3>
+
+  <div class="dataset-grid">
+    <div class="dataset-card border">
+      <h4>📊 ResumeBench</h4>
+      <div class="ds-meta">2,500 份 · 50 种模板 · 30 个职业 · 5 种语言</div>
+      <p>首个隐私合规的简历解析基准，采用"人在回路"生成管道。已有 24 个 SOTA 模型评测基线。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>🏆 CareerCorpus</h4>
+      <div class="ds-meta">302 份 · 专家双标注 · 6 个职业类别</div>
+      <p>标注质量高，适合作为<strong>黄金标准测试集</strong>。Mendeley Data 公开下载，CC-BY-4.0 协议。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>💬 Resume Training Dataset</h4>
+      <div class="ds-meta">22,855 份 · 含简历修改对话</div>
+      <p>包含用户与 AI 助手的简历修改对话，适用于诊断与优化效果评估。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>📁 ResumeAtlas</h4>
+      <div class="ds-meta">13,389 份 · 43 个简历类别</div>
+      <p>大规模简历分类数据集，适用于内容质量评估和模型基础能力评测。</p>
+    </div>
+  </div>
+
+  <h3>岗位匹配与检索评测（维度三）</h3>
+
+  <div class="dataset-grid">
+    <div class="dataset-card border">
+      <h4>🔗 RJDB</h4>
+      <div class="ds-meta">5 万+ 组三元组 · 技能-职业图谱</div>
+      <p>涵盖"职位描述-匹配简历-不匹配简历"三元组，支持多种 HR 任务。开源：<br><small>github.com/megagonlabs/rjdb</small></p>
+    </div>
+    <div class="dataset-card border">
+      <h4>🎯 PJB</h4>
+      <div class="ds-meta">近 20 万份简历 · 6 个行业领域</div>
+      <p>面向推理的人-职检索评测，不仅评测"谁得分更高"，更诊断"系统在哪里失败"。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>📋 RecruitmentBenchmark-2025</h4>
+      <div class="ds-meta">18,500 份简历 · 2,100 份 JD</div>
+      <p>包含简历和职位描述的配对数据，适用于岗位匹配度评估。</p>
+    </div>
+  </div>
+
+  <h3>公平性与偏见评测（维度五）</h3>
+
+  <div class="dataset-grid">
+    <div class="dataset-card border">
+      <h4>⚖️ FAIRE</h4>
+      <div class="ds-meta">种族和性别偏见检测 · 可直接复现</div>
+      <p>专门测试 AI 简历评估中的种族和性别偏见，通过直接评分和排名两种方法测量。开源。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>👥 PopResume</h4>
+      <div class="ds-meta">60.8K 份简历 · 5 个职业</div>
+      <p>面向因果公平性审计，采用路径特定效应（PSE）评估，能区分"业务必需"与"歧视性"差异。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>🌐 JobResQA</h4>
+      <div class="ds-meta">581 个 QA 对 · 5 种语言（含中文）</div>
+      <p>多语言问答基准，通过占位符控制人口统计属性，适用于偏见研究和跨语言能力评测。</p>
+    </div>
+    <div class="dataset-card border">
+      <h4>🇨🇳 FairCV</h4>
+      <div class="ds-meta">中文数据集 · 多维度偏见</div>
+      <p>中文互联网求职简历数据集，针对性别、年龄、地域等多维度偏见的大模型评测。</p>
+    </div>
+  </div>
+
+  <h3>数据集选用建议</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>评测维度</th>
+        <th>推荐数据集</th>
+        <th>理由</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>维度一（内容质量）</td>
+        <td><strong>CareerCorpus</strong></td>
+        <td>有专家双标注，可作为 Ground Truth</td>
+      </tr>
+      <tr>
+        <td>维度二（结构格式）</td>
+        <td><strong>ResumeBench</strong></td>
+        <td>含 50 种模板，可测结构化理解</td>
+      </tr>
+      <tr>
+        <td>维度三（岗位匹配）</td>
+        <td><strong>RJDB 或 PJB</strong></td>
+        <td>规模大，覆盖多行业</td>
+      </tr>
+      <tr>
+        <td>维度四（诊断优化）</td>
+        <td><strong>Resume Training Dataset</strong></td>
+        <td>含简历修改对话</td>
+      </tr>
+      <tr>
+        <td>维度五（公平性）</td>
+        <td><strong>FAIRE + FairCV（中文）</strong></td>
+        <td>分别覆盖国际和中文场景</td>
+      </tr>
+      <tr>
+        <td>维度六（模型能力）</td>
+        <td><strong>ResumeBench + JobResQA</strong></td>
+        <td>覆盖多语言和抽取能力</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>实施建议</h3>
+  <ol class="checklist">
+    <li>先用 <strong>CareerCorpus（302 份）</strong>做小规模验证——有专家标注，成本低，可快速验证模型评分与专家评分的一致性</li>
+    <li>再用 <strong>ResumeBench（2,500 份）</strong>做全面评测——规模适中，覆盖广，已有 SOTA 模型基线可对比</li>
+    <li>公平性专项评测用 <strong>FAIRE + FairCV</strong>——覆盖中英文不同场景</li>
+    <li>岗位匹配专项用 <strong>RJDB 或 PJB</strong>——如需深度诊断模型推理能力，优先 PJB</li>
+  </ol>
+
+  <hr>
+
+  <!-- ==================== 三、评估体系 ==================== -->
+  <h2>三、评估体系</h2>
+
+  <div class="highlight-box border">
+    <p>评估体系的核心不是"能不能打分"，而是<strong>"分数是否可信、可复现、可对标"</strong>。</p>
+  </div>
+
+  <h3>三层漏斗架构</h3>
+
+  <!-- Funnel illustration -->
+  <div class="illustration">
+    <svg width="420" height="210" viewBox="0 0 420 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Layer 3: top (smallest) -->
+      <polygon points="210,15 265,70 155,70" stroke="#333" stroke-width="2.5" fill="#f5e6d3"/>
+      <text x="210" y="45" font-size="10" fill="#333" text-anchor="middle" font-weight="bold">L3: 人工专家抽检</text>
+      <text x="210" y="60" font-size="9" fill="#666" text-anchor="middle">20% 权重</text>
+      <!-- Layer 2: middle -->
+      <polygon points="155,70 265,70 300,120 120,120" stroke="#333" stroke-width="2.5" fill="#d3e6f5"/>
+      <text x="210" y="93" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">L2: LLM-as-Judge</text>
+      <text x="210" y="110" font-size="9" fill="#666" text-anchor="middle">40% 权重 · Claude / GPT-4o 裁判</text>
+      <!-- Layer 1: bottom (largest) -->
+      <polygon points="120,120 300,120 345,170 75,170" stroke="#333" stroke-width="2.5" fill="#e6f5d3"/>
+      <text x="210" y="143" font-size="11" fill="#333" text-anchor="middle" font-weight="bold">L1: 自动化客观评测</text>
+      <text x="210" y="160" font-size="9" fill="#666" text-anchor="middle">40% 权重 · 数字密度、关键词覆盖率、格式合规</text>
+      <!-- Bottom label -->
+      <text x="210" y="195" font-size="11" fill="#333" text-anchor="middle">三层漏斗评估体系</text>
+      <!-- Side decoration: precision arrow -->
+      <path d="M55 40 L55 170" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M55 170 L50 165 L60 165 Z" fill="#999"/>
+      <text x="45" y="105" font-size="9" fill="#999" text-anchor="middle" transform="rotate(-90, 45, 105)">精度递增</text>
+    </svg>
+  </div>
+
+  <div class="formula-block border">
+    <strong>最终分数</strong> = L1 × 0.4 + L2 × 0.4 + L3 × 0.2，并输出<strong>置信区间</strong>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 核心指标 ==================== -->
+  <h2>核心指标体系</h2>
+
+  <h3>L1：自动指标</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th>自动计算指标</th>
+        <th>算法/工具</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>内容质量-量化程度</strong></td>
+        <td>简历中数字（百分比、金额、人数）的密度（个/百字）</td>
+        <td>正则提取</td>
+      </tr>
+      <tr>
+        <td><strong>岗位匹配-关键词覆盖</strong></td>
+        <td>简历与 JD 的 Jaccard 相似度（核心词集合交集/并集）</td>
+        <td>分词 + TF-IDF</td>
+      </tr>
+      <tr>
+        <td><strong>格式规范性</strong></td>
+        <td>是否包含教育/经历/技能三模块；页数 ≤ 2；日期格式统一</td>
+        <td>规则校验</td>
+      </tr>
+      <tr>
+        <td><strong>信息抽取准确性</strong></td>
+        <td>模型抽取的实体与 Ground Truth 的 F1 值</td>
+        <td>精准匹配 / Levenshtein</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula-block border">
+    <strong>公式</strong>：维度一量化得分 = min(数字密度 / 基准密度(1.5个/百字), 1) × 该维度满分
+  </div>
+
+  <h3>L2：LLM-as-Judge 指标</h3>
+  <table class="score-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>输入</strong></td>
+        <td>原始简历 + 目标岗位 JD + 模型给出的诊断报告/优化建议</td>
+      </tr>
+      <tr>
+        <td><strong>输出</strong></td>
+        <td>按 6 个维度的细则，输出 0-100 分及理由</td>
+      </tr>
+      <tr>
+        <td><strong>关键操作</strong></td>
+        <td>同一个样本跑 3 次（温度=0），取<strong>中位数</strong>，计算<strong>标准差</strong>作为置信度</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>L3：人工抽检指标</h3>
+  <p>抽检 10%~20% 的样本，由 3 位 HR 背靠背打分，计算<strong>组内相关系数（ICC）</strong>，若 ICC < 0.7 则需调整 L2 的评估提示词。</p>
+
+  <hr>
+
+  <!-- ==================== 基线对标 ==================== -->
+  <h2>基线对标体系</h2>
+  <p>模型好坏是<strong>比出来</strong>的。必须设置 3 条基线：</p>
+
+  <div class="baseline-grid">
+    <div class="baseline-card border">
+      <div class="bl-icon">🎲</div>
+      <h4>随机基线</h4>
+      <p>随机生成诊断意见或规则模板</p>
+      <p><strong>用途</strong>：看模型是否"至少不是废话"</p>
+    </div>
+    <div class="baseline-card border">
+      <div class="bl-icon">🏆</div>
+      <h4>SOTA 基线</h4>
+      <p>GPT-4o / Claude 在数据集上的结果</p>
+      <p><strong>用途</strong>：看模型距离顶级差多远</p>
+    </div>
+    <div class="baseline-card border">
+      <div class="bl-icon">👤</div>
+      <h4>人类基线</h4>
+      <p>3 年+ HR 专家打分（L3 数据）</p>
+      <p><strong>用途</strong>：看模型能否达到"类人水平"</p>
+    </div>
+  </div>
+
+  <p><strong>报告输出</strong>：模型得分 vs 三条基线，分别计算<strong>绝对差值</strong>和<strong>效应量（Cohen's d）</strong>。</p>
+
+  <hr>
+
+  <!-- ==================== 执行流程 ==================== -->
+  <h2>评估执行流程（SOP）</h2>
+  <p>分 4 个阶段，总周期约 2~3 周：</p>
+
+  <!-- Timeline illustration -->
+  <div class="illustration">
+    <svg width="500" height="100" viewBox="0 0 500 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Timeline base -->
+      <path d="M30 50 L470 50" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Phase 1 -->
+      <circle cx="80" cy="50" r="14" stroke="#7c3aed" stroke-width="2.5" fill="#f5f0ff"/>
+      <text x="80" y="54" font-size="10" fill="#7c3aed" text-anchor="middle" font-weight="bold">1</text>
+      <text x="80" y="25" font-size="9" fill="#7c3aed" text-anchor="middle" font-weight="bold">Phase 1</text>
+      <text x="80" y="78" font-size="8" fill="#666" text-anchor="middle">配置与预热</text>
+      <text x="80" y="90" font-size="8" fill="#999" text-anchor="middle">2天</text>
+      <!-- Phase 2 -->
+      <circle cx="190" cy="50" r="14" stroke="#ec4899" stroke-width="2.5" fill="#fff0f5"/>
+      <text x="190" y="54" font-size="10" fill="#ec4899" text-anchor="middle" font-weight="bold">2</text>
+      <text x="190" y="25" font-size="9" fill="#ec4899" text-anchor="middle" font-weight="bold">Phase 2</text>
+      <text x="190" y="78" font-size="8" fill="#666" text-anchor="middle">自动化批量跑分</text>
+      <text x="190" y="90" font-size="8" fill="#999" text-anchor="middle">3天</text>
+      <!-- Phase 3 -->
+      <circle cx="300" cy="50" r="14" stroke="#38bdf8" stroke-width="2.5" fill="#f0f8ff"/>
+      <text x="300" y="54" font-size="10" fill="#38bdf8" text-anchor="middle" font-weight="bold">3</text>
+      <text x="300" y="25" font-size="9" fill="#38bdf8" text-anchor="middle" font-weight="bold">Phase 3</text>
+      <text x="300" y="78" font-size="8" fill="#666" text-anchor="middle">LLM裁判打分</text>
+      <text x="300" y="90" font-size="8" fill="#999" text-anchor="middle">3天</text>
+      <!-- Phase 4 -->
+      <circle cx="410" cy="50" r="14" stroke="#2d8a4e" stroke-width="2.5" fill="#e6f5d3"/>
+      <text x="410" y="54" font-size="10" fill="#2d8a4e" text-anchor="middle" font-weight="bold">4</text>
+      <text x="410" y="25" font-size="9" fill="#2d8a4e" text-anchor="middle" font-weight="bold">Phase 4</text>
+      <text x="410" y="78" font-size="8" fill="#666" text-anchor="middle">人工抽检</text>
+      <text x="410" y="90" font-size="8" fill="#999" text-anchor="middle">3天</text>
+    </svg>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item border">
+      <span class="phase-tag">2天</span>
+      <h4>Phase 1：配置与预热</h4>
+      <p>从评测集中抽取 <strong>20 份"校准集"</strong>（覆盖好/中/差简历）。让 3 位 HR 专家独立打分 → 得到人类基准分。用这 20 份调试 LLM-as-Judge 提示词，直到 ICC ≥ 0.75。</p>
+    </div>
+    <div class="timeline-item border">
+      <span class="phase-tag">3天</span>
+      <h4>Phase 2：自动化批量跑分</h4>
+      <p>将评测集（如 ResumeBench 2,500 份）输入模型 → 产出诊断报告。同时跑 GPT-4o 作为 SOTA 基线（成本可控跑 500 份子集）。跑通所有 L1 自动指标。</p>
+    </div>
+    <div class="timeline-item border">
+      <span class="phase-tag">3天</span>
+      <h4>Phase 3：LLM 裁判打分</h4>
+      <p>将模型诊断报告 + 原始简历 + JD 灌入"裁判模型"（Claude 3.7 或 GPT-4o）。每个样本跑 3 次取中位数，产出 6 维分数。同时裁判模型也要跑人工校准集的 20 份，校验一致性。</p>
+    </div>
+    <div class="timeline-item border">
+      <span class="phase-tag">3天</span>
+      <h4>Phase 4：人工抽检与报告生成</h4>
+      <p>随机抽检 10%（250 份），HR 盲审打分。计算 L1/L2/L3 的<strong>加权总分</strong>，以及各维度子分数雷达图。输出《模型评估报告》，含强项/弱项/改进建议。</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ==================== 可信度校验 ==================== -->
+  <h2>可信度校验机制</h2>
+  <p>这是评估体系的<strong>灵魂</strong>，否则结果无人信服：</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>校验项</th>
+        <th>合格阈值</th>
+        <th>若不达标怎么办</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>人机一致性（ICC）</strong></td>
+        <td>> 0.75</td>
+        <td>调整 L2 裁判提示词，重新标注</td>
+      </tr>
+      <tr>
+        <td><strong>裁判模型自洽性（3次跑分标准差）</strong></td>
+        <td>< 3 分</td>
+        <td>提示词不清晰，需细化评分锚点</td>
+      </tr>
+      <tr>
+        <td><strong>维度区分度（各维度方差）</strong></td>
+        <td>> 10</td>
+        <td>若所有简历分数集中在 80-85，说明评分细则失效，需拉大量纲</td>
+      </tr>
+      <tr>
+        <td><strong>对抗样本检测</strong></td>
+        <td>含明显错误的简历得分显著低于正常简历</td>
+        <td>若未检出，说明敏感度不够</td>
+      </tr>
+      <tr>
+        <td><strong>公平性校验（FAIRE）</strong></td>
+        <td>人口统计属性替换后分数波动 < 2%</td>
+        <td>若波动大，在提示词中增加"禁止考虑性别/年龄"指令</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ==================== 最终产出物 ==================== -->
+  <h2>最终产出物清单</h2>
+
+  <ul class="checklist">
+    <li><strong>评估代码仓库</strong> — 含所有指标计算脚本、评估提示词模板、数据预处理 pipeline</li>
+    <li><strong>模型评分报告</strong> — 总分、六维雷达图、与基线对比柱状图</li>
+    <li><strong>Bad Case 分析集</strong> — 模型表现最差的 50 份简历及原因归类</li>
+    <li><strong>优化优先级矩阵</strong> — X 轴 = HR 认为的重要性，Y 轴 = 模型当前表现，优先修复右上象限</li>
+    <li><strong>置信区间表</strong> — 每个维度的 95% 置信区间，如"内容质量 72±3.5 分"</li>
+  </ul>
+
+  <hr>
+
+  <!-- ==================== 踩坑提醒 ==================== -->
+  <h2>踩坑提醒（实战经验）</h2>
+
+  <ul class="pitfall-list">
+    <li><strong>裁判模型不能既当运动员又当裁判员</strong>：如果你的模型是微调过的 Llama，裁判用 GPT-4o；如果本身就是 GPT-4o，裁判换 Claude。</li>
+    <li><strong>岗位 JD 缺失处理</strong>：部分公开数据集没有 JD，此时<strong>暂停维度三（岗位匹配）</strong>，只评测内容质量和格式，单独报告。</li>
+    <li><strong>中文评测特别注意</strong>：如果用英文 ResumeBench，需额外加上 FairCV（中文）做中文专项；中英分开报告，不混算总分。</li>
+  </ul>
+
+  <hr>
+
+  <footer class="site-footer">
+    <p>Eileen's Flowing Thoughts · 用 DoodleCSS 构建</p>
+  </footer>
+
+</body>
+</html>
