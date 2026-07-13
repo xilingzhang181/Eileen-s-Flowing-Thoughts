@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视觉收藏夹 · Eileen's Flowing Thoughts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Caveat:wght@400;600&family=Short+Stack&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gallery-hero {
+      text-align: center;
+      padding: 1.5rem 0 1rem;
+    }
+    .gallery-hero h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    .gallery-hero p {
+      color: var(--ink-light);
+      opacity: 0.6;
+      margin: 0.3rem 0 0;
+    }
+    .category-section {
+      margin: 2rem 0;
+    }
+    .category-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1.5px dashed var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .category-count {
+      font-size: 0.8rem;
+      background: var(--yellow);
+      padding: 0.1rem 0.5rem;
+      border-radius: 10px;
+      opacity: 0.7;
+    }
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .image-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .image-card:hover {
+      transform: translateY(-3px);
+    }
+    .image-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .image-card .image-name {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.82rem;
+      color: var(--ink-light);
+    }
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .lightbox.show { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Short Stack', cursive;
+    }
+    .upload-note {
+      margin: 2rem 0;
+      padding: 1.2rem;
+      background: var(--yellow);
+      border: 1.5px dashed var(--accent-warm);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--ink-light);
+    }
+    .upload-note code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.85rem;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: var(--ink-light);
+      border-bottom: 1px dashed var(--border-light);
+    }
+    .back-link:hover { color: var(--accent-warm); border-bottom-color: var(--accent-warm); }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <h1 class="site-title">Eileen's Flowing Thoughts</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">首页</a></li>
+        <li><a href="works.html">作品</a></li>
+        <li><a href="thoughts.html">思考</a></li>
+        <li><a href="docs.html">文档</a></li>
+        <li><a href="videos.html">视频</a></li>
+        <li><a href="guestbook.html">留言</a></li>
+        <li><a href="about.html">关于</a></li>
+      </ul>
+    </nav>
+    <div class="search-wrapper">
+      <button class="search-toggle" aria-label="搜索">🔍</button>
+      <div class="search-box">
+        <input type="text" class="search-input" />
+        <button class="search-close">&times;</button>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  </header>
+
+  <hr class="divider">
+
+  <main style="max-width: 960px; margin: 0 auto; padding: 0 1.5rem;">
+    <a href="docs.html" class="back-link">&larr; 返回文档</a>
+
+    <div class="gallery-hero">
+      <h1>Visual Collection ✨</h1>
+      <p>视觉收藏夹 · 收集好看的 UI 设计、产品灵感和视觉参考</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 1-产品与落地页 -->
+    <div class="category-section">
+      <h2 class="category-title">🏠 产品与落地页 <span class="category-count">7 张</span></h2>
+      <div class="image-grid">
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/1.jpg" alt="1.jpg"><div class="image-name">1.jpg — AI 咨询公司落地页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/3.jpg" alt="3.jpg"><div class="image-name">3.jpg — VR 体验应用营销页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/4.jpg" alt="4.jpg"><div class="image-name">4.jpg — 金融应用营销页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/5.jpg" alt="5.jpg"><div class="image-name">5.jpg — 生产力应用营销页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/19.jpg" alt="19.jpg"><div class="image-name">19.jpg — AI 产品工作室落地页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/28.jpg" alt="28.jpg"><div class="image-name">28.jpg — 数字解决方案代理</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/1-产品与落地页/29.jpg" alt="29.jpg"><div class="image-name">29.jpg — 智能穿戴产品页</div></div>
+      </div>
+    </div>
+
+    <!-- 2-仪表盘与工作台 -->
+    <div class="category-section">
+      <h2 class="category-title">📊 仪表盘与工作台 <span class="category-count">5 张</span></h2>
+      <div class="image-grid">
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/2-仪表盘与工作台/7.jpg" alt="7.jpg"><div class="image-name">7.jpg — HR 管理仪表盘</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/2-仪表盘与工作台/10.jpg" alt="10.jpg"><div class="image-name">10.jpg — 订阅分析仪表盘</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/2-仪表盘与工作台/11.jpg" alt="11.jpg"><div class="image-name">11.jpg — 自由职业工作台</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/2-仪表盘与工作台/12.jpg" alt="12.jpg"><div class="image-name">12.jpg — 个人效率应用</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/2-仪表盘与工作台/27.jpg" alt="27.jpg"><div class="image-name">27.jpg — 任务管理仪表盘</div></div>
+      </div>
+    </div>
+
+    <!-- 3-生活与健康 -->
+    <div class="category-section">
+      <h2 class="category-title">🌿 生活与健康 <span class="category-count">4 张</span></h2>
+      <div class="image-grid">
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/3-生活与健康/6.jpg" alt="6.jpg"><div class="image-name">6.jpg — 健身追踪仪表盘</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/3-生活与健康/13.jpg" alt="13.jpg"><div class="image-name">13.jpg — 健康日历应用</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/3-生活与健康/14.jpg" alt="14.jpg"><div class="image-name">14.jpg — 音乐流媒体仪表盘</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/3-生活与健康/15.jpg" alt="15.jpg"><div class="image-name">15.jpg — 手机主屏设计</div></div>
+      </div>
+    </div>
+
+    <!-- 4-学习与教育 -->
+    <div class="category-section">
+      <h2 class="category-title">📚 学习与教育 <span class="category-count">2 张</span></h2>
+      <div class="image-grid">
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/4-学习与教育/25.jpg" alt="25.jpg"><div class="image-name">25.jpg — 语言学习平台</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/4-学习与教育/26.jpg" alt="26.jpg"><div class="image-name">26.jpg — 在线课程平台</div></div>
+      </div>
+    </div>
+
+    <!-- 5-设计概念与视觉 -->
+    <div class="category-section">
+      <h2 class="category-title">🎨 设计概念与视觉 <span class="category-count">15 张</span></h2>
+      <div class="image-grid">
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/2.jpg" alt="2.jpg"><div class="image-name">2.jpg — 社交媒体信息图</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/8.jpg" alt="8.jpg"><div class="image-name">8.jpg — NFT 市场发现页</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/9.jpg" alt="9.jpg"><div class="image-name">9.jpg — 3D 角色设计场景</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/16.jpg" alt="16.jpg"><div class="image-name">16.jpg — 项目管理 SaaS</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/17.jpg" alt="17.jpg"><div class="image-name">17.jpg — 云/AI 平台概念</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/18.jpg" alt="18.jpg"><div class="image-name">18.jpg — 极简落地页概念</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/20.jpg" alt="20.jpg"><div class="image-name">20.jpg — SaaS 平台设计概念</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/21.jpg" alt="21.jpg"><div class="image-name">21.jpg — 智能家居自动化</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/22.jpg" alt="22.jpg"><div class="image-name">22.jpg — 极简搜索界面</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/23.jpg" alt="23.jpg"><div class="image-name">23.jpg — 世界水日海报</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/24.jpg" alt="24.jpg"><div class="image-name">24.jpg — 极简 Flow 概念</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/30.jpg" alt="30.jpg"><div class="image-name">30.jpg — 设计作品集展示</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/31.jpg" alt="31.jpg"><div class="image-name">31.jpg — Google Careers 重设计</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/32.png" alt="32.png"><div class="image-name">32.png — 品牌 Logo 设计</div></div>
+        <div class="image-card" onclick="openLightbox(this)"><img src="视觉收藏夹/5-设计概念与视觉/33.jpg" alt="33.jpg"><div class="image-name">33.jpg — 动态图形设计</div></div>
+      </div>
+    </div>
+
+    <!-- Upload guide -->
+    <div class="upload-note">
+      <strong>📎 如何添加新图片？</strong><br><br>
+      把图片放进 <code>视觉收藏夹/</code> 对应的分类文件夹中，文件名随意（中文、英文、数字均可）。<br>
+      然后告诉我"新增了图片"，我会自动更新这个页面。<br><br>
+      <strong>分类文件夹：</strong><br>
+      <code>1-产品与落地页</code> · <code>2-仪表盘与工作台</code> · <code>3-生活与健康</code><br>
+      <code>4-学习与教育</code> · <code>5-设计概念与视觉</code> · <code>6-其他灵感</code>
+    </div>
+
+    <hr class="divider">
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <footer class="site-footer">
+    <p>Eileen's Flowing Thoughts · 视觉收藏夹 · <a href="https://github.com/xilingzhang181" target="_blank">GitHub</a></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function openLightbox(card) {
+      const img = card.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').classList.add('show');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('show');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
